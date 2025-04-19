@@ -1,0 +1,244 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Didáctico de Máquina de Atwood</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <header>
+            <div class="logo-container">
+                <img src="GIEDI-LOGO.png" alt="GIEDI Logo" id="giedi-logo">
+            </div>
+            <h1 id="title">Simulador Didáctico de Máquina de Atwood</h1>
+            <button id="langToggle">English</button>
+        </header>
+
+        <div id="main-content">
+            <div id="simulation-container">
+                <div id="animation-area">
+                    <svg id="atwood-svg" viewBox="0 0 400 500">
+                        <!-- Base structure -->
+                        <rect x="100" y="50" width="200" height="20" fill="#8B4513" />
+                        <rect x="190" y="50" width="20" height="20" fill="#8B4513" />
+                        
+                        <!-- Rope -->
+                        <path id="rope" d="M200 100 L200 100 L200 250 M200 100 L200 100 L200 250" stroke="black" stroke-width="2" fill="none" />
+                        
+                        <!-- Real-time data display -->
+                        <g id="realtime-data" style="display: none;">
+                            <rect x="10" y="10" width="180" height="80" rx="5" ry="5" fill="rgba(255,255,255,0.8)" stroke="#ddd" />
+                            <text x="20" y="30" font-size="12" fill="#333">Tiempo: <tspan id="time-value">0.00 s</tspan></text>
+                            <text x="20" y="50" font-size="12" fill="#333">Velocidad: <tspan id="velocity-value">0.00 m/s</tspan></text>
+                            <text x="20" y="70" font-size="12" fill="#333">Distancia: <tspan id="distance-value">0.00 m</tspan></text>
+                            
+                            <!-- Progress bar background -->
+                            <rect x="10" y="90" width="180" height="10" rx="5" ry="5" fill="#eee" />
+                            <!-- Progress bar fill -->
+                            <rect id="simulation-progress" x="10" y="90" width="0" height="10" rx="5" ry="5" fill="#4CAF50" />
+                        </g>
+                    </svg>
+                </div>
+                <div id="controls">
+                    <div class="control-group">
+                        <h3 id="pulley-type-label">Tipo de Polea</h3>
+                        <div class="radio-group">
+                            <input type="radio" id="massless-pulley" name="pulley-type" value="massless" checked>
+                            <label for="massless-pulley" id="massless-pulley-label">Polea de masa despreciable</label>
+                            <input type="radio" id="massive-pulley" name="pulley-type" value="massive">
+                            <label for="massive-pulley" id="massive-pulley-label">Polea con masa considerable</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="pulley-params" style="display: none;">
+                        <h3 id="pulley-params-label">Parámetros de la Polea</h3>
+                        <div class="select-group">
+                            <label for="pulley-mass" id="pulley-mass-label">Masa (kg):</label>
+                            <select id="pulley-mass">
+                                <option value="0.1">0.1</option>
+                                <option value="0.2">0.2</option>
+                                <option value="0.5">0.5</option>
+                                <option value="1.0">1.0</option>
+                            </select>
+                        </div>
+                        <div class="select-group">
+                            <label for="pulley-radius" id="pulley-radius-label">Radio (m):</label>
+                            <select id="pulley-radius">
+                                <option value="0.05">0.05</option>
+                                <option value="0.1">0.1</option>
+                                <option value="0.15">0.15</option>
+                                <option value="0.2">0.2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3 id="masses-label">Masas en los Platos (kg)</h3>
+                        <div class="select-group">
+                            <label for="mass1-value" id="mass1-value-label">Masa 1:</label>
+                            <select id="mass1-value">
+                                <option value="0.1">0.1</option>
+                                <option value="0.2">0.2</option>
+                                <option value="0.5">0.5</option>
+                                <option value="1.0" selected>1.0</option>
+                                <option value="2.0">2.0</option>
+                            </select>
+                        </div>
+                        <div class="select-group">
+                            <label for="mass2-value" id="mass2-value-label">Masa 2:</label>
+                            <select id="mass2-value">
+                                <option value="0.1">0.1</option>
+                                <option value="0.2">0.2</option>
+                                <option value="0.5">0.5</option>
+                                <option value="1.0">1.0</option>
+                                <option value="2.0">2.0</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3 id="distance-label">Distancia de Caída (cm)</h3>
+                        <div class="range-group">
+                            <input type="range" id="fall-distance" min="50" max="150" step="10" value="100">
+                            <span id="distance-value-display">100 cm</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3 id="error-options-label">Opciones de Error</h3>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="random-errors">
+                            <label for="random-errors" id="random-errors-label">Habilitar errores aleatorios</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3 id="animation-controls-label">Controles de Animación</h3>
+                        <div class="button-group">
+                            <button id="run-btn">Ejecutar Experimento</button>
+                            <button id="pause-btn" disabled>Pausar</button>
+                            <button id="reset-btn">Reiniciar</button>
+                        </div>
+                        <div class="button-group" style="margin-top: 10px;">
+                            <button id="slow-motion-btn" class="toggle-btn">Cámara Lenta</button>
+                            <button id="show-trajectory-btn" class="toggle-btn">Mostrar Trayectoria</button>
+                            <button id="admin-btn">Administrador</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="data-container">
+                <div id="results-table-container">
+                    <h3 id="results-label">Resultados</h3>
+                    <table id="results-table">
+                        <thead>
+                            <tr>
+                                <th id="run-column">Corrida</th>
+                                <th id="mass1-column">Masa 1 (kg)</th>
+                                <th id="mass2-column">Masa 2 (kg)</th>
+                                <th id="distance-column">Distancia (cm)</th>
+                                <th id="time-column">Tiempo (s)</th>
+                                <th id="acceleration-column">Aceleración (m/s²)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="data-analysis">
+                    <div class="analysis-buttons">
+                        <button id="stats-btn">Calcular Estadísticas</button>
+                        <button id="export-btn">Exportar Datos</button>
+                    </div>
+                    <div id="stats-container" style="display: none;">
+                        <h3 id="stats-label">Estadísticas Descriptivas</h3>
+                        <table id="stats-table">
+                            <tr>
+                                <td id="mean-label">Media:</td>
+                                <td id="mean-value">-</td>
+                            </tr>
+                            <tr>
+                                <td id="median-label">Mediana:</td>
+                                <td id="median-value">-</td>
+                            </tr>
+                            <tr>
+                                <td id="stdev-label">Desviación Estándar:</td>
+                                <td id="stdev-value">-</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="chart-type-container">
+                        <label for="chart-type" id="chart-type-label">Tipo de gráfico:</label>
+                        <select id="chart-type">
+                            <option value="bar">Histograma</option>
+                            <option value="line">Curva de distribución</option>
+                            <option value="scatter">Dispersión</option>
+                        </select>
+                        <button id="export-chart-btn">Exportar Gráfico</button>
+                    </div>
+                    <div id="chart-container">
+                        <canvas id="results-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p id="author-info">Autor: Rodrigo Agosta | Grupo de Investigación: GIEDI | Institución: Facultad Regional Santa Fe</p>
+        </footer>
+    </div>
+
+    <!-- Admin modal -->
+    <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="admin-title">Modo Administrador</h2>
+            <div id="password-section">
+                <label for="admin-password" id="password-label">Contraseña:</label>
+                <input type="password" id="admin-password">
+                <button id="submit-password">Ingresar</button>
+                <p id="password-error" class="error"></p>
+            </div>
+            <div id="admin-data" style="display: none;">
+                <h3 id="true-values-label">Valores Verdaderos</h3>
+                <table id="true-values-table">
+                    <tr>
+                        <td id="true-pulley-mass-label">Masa de la Polea:</td>
+                        <td id="true-pulley-mass">-</td>
+                    </tr>
+                    <tr>
+                        <td id="true-pulley-radius-label">Radio de la Polea:</td>
+                        <td id="true-pulley-radius">-</td>
+                    </tr>
+                    <tr>
+                        <td id="true-mass1-label">Masa 1:</td>
+                        <td id="true-mass1">-</td>
+                    </tr>
+                    <tr>
+                        <td id="true-mass2-label">Masa 2:</td>
+                        <td id="true-mass2">-</td>
+                    </tr>
+                    <tr>
+                        <td id="true-fall-distance-label">Distancia de Caída:</td>
+                        <td id="true-fall-distance">-</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "chart.js": "https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"
+        }
+    }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

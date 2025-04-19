@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+    --color-utn-regular: oklch(0.68 0.141385 233.5329);
+    --color-utn-light: oklch(0.96 0.0103 247.93);
+    --color-utn-dark: oklch(0.48 0.0541 273.69);
+
+    --font-rubik: "Rubik", sans-serif;
+}

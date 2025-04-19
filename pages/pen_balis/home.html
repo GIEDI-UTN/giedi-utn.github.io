@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Simulador de Péndulo Balístico</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <script type="importmap">
+        {
+            "imports": {
+                "plotly": "https://cdn.jsdelivr.net/npm/plotly.js-dist@2.29.0/+esm"
+            }
+        }
+    </script>
+    <script src="simulation.js" type="module" defer></script>
+
+
+</head>
+<body>
+    <div class="container">
+        <button id="language-toggle" class="language-toggle">EN</button>
+        <header>
+            <h1>Simulador de Péndulo Balístico</h1>
+            <p> Grupo GIEDI - Facultad Regional Santa Fe - Universidad Tecnológica Nacional</p>
+        </header>
+        
+        <main>
+            <div class="simulation-container">
+                <div class="simulation-area" id="simulation-area">
+                    <!-- SVG para la simulación -->
+                    <svg id="simulation-svg" width="100%" height="100%" viewBox="0 0 800 400">
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#ff3333" />
+                            </marker>
+                        </defs>
+                        <g id="background">
+                            <rect x="0" y="0" width="800" height="400" fill="#f5f5f5" />
+                            <line x1="0" y1="350" x2="800" y2="350" stroke="#999" stroke-width="1" />
+                        </g>
+                        <g id="pendulum-system">
+                            <line id="pendulum-rod" x1="400" y1="100" x2="400" y2="250" stroke="#333" stroke-width="3" />
+                            <circle id="pivot" cx="400" cy="100" r="5" fill="#333" />
+                            <circle id="pendulum-bob" cx="400" cy="250" r="25" fill="#3498db" />
+                            <circle id="projectile" cx="100" cy="250" r="10" fill="#e74c3c" />
+                            <line id="velocity-vector" x1="0" y1="0" x2="0" y2="0" stroke="#ff3333" stroke-width="2" marker-end="url(#arrowhead)" display="none" />
+                        </g>
+                        <text id="angle-text" x="450" y="180" font-size="16" fill="#333"></text>
+                        <text id="height-text" x="450" y="200" font-size="16" fill="#333"></text>
+                    </svg>
+                </div>
+                
+                <div class="charts-container">
+                    <div id="angle-chart" class="chart"></div>
+                </div>
+            </div>
+            
+            <div class="controls-container">
+                <div class="parameters">
+                    <h2>Parámetros</h2>
+                    
+                    <div class="parameter-group">
+                        <label for="projectile-mass">Masa del proyectil (kg):</label>
+                        <input type="number" id="projectile-mass" min="0.01" max="10" step="0.01" value="0.05">
+                        <input type="range" id="projectile-mass-slider" min="0.01" max="10" step="0.01" value="0.05">
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="initial-velocity">Velocidad inicial (m/s):</label>
+                        <input type="number" id="initial-velocity" min="1" max="100" step="1" value="50">
+                        <input type="range" id="initial-velocity-slider" min="1" max="100" step="1" value="50">
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="pendulum-length">Longitud del péndulo (m):</label>
+                        <input type="number" id="pendulum-length" min="0.5" max="5" step="0.1" value="1.5">
+                        <input type="range" id="pendulum-length-slider" min="0.5" max="5" step="0.1" value="1.5">
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="pendulum-mass">Masa del péndulo (kg):</label>
+                        <input type="number" id="pendulum-mass" min="0.1" max="20" step="0.1" value="5">
+                        <input type="range" id="pendulum-mass-slider" min="0.1" max="20" step="0.1" value="5">
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="gravity">Gravedad (m/s²):</label>
+                        <input type="number" id="gravity" min="1" max="20" step="0.1" value="9.8">
+                        <input type="range" id="gravity-slider" min="1" max="20" step="0.1" value="9.8">
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="impact-angle">Ángulo de impacto (°):</label>
+                        <input type="number" id="impact-angle" min="0" max="90" step="1" value="0">
+                        <input type="range" id="impact-angle-slider" min="0" max="90" step="1" value="0">
+                    </div>
+                </div>
+                
+                <div class="simulation-controls">
+                    <button id="start-btn" class="btn primary">Iniciar Simulación</button>
+                    <button id="reset-btn" class="btn secondary">Reiniciar</button>
+                    <div class="toggle-container">
+                        <label for="error-toggle">Añadir Errores Experimentales:</label>
+                        <label class="switch">
+                            <input type="checkbox" id="error-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-container">
+                        <label for="slow-motion">Cámara Lenta:</label>
+                        <label class="switch">
+                            <input type="checkbox" id="slow-motion">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    
+                    <!-- Nuevos controles para experimentos múltiples -->
+                    <div class="toggle-container">
+                        <label for="multiple-experiments">Experimentos Múltiples:</label>
+                        <label class="switch">
+                            <input type="checkbox" id="multiple-experiments">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="parameter-group">
+                        <label for="num-experiments">Número de Experimentos:</label>
+                        <input type="number" id="num-experiments" min="2" max="50" step="1" value="5" disabled>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nueva sección para resultados de experimentos múltiples -->
+            <div class="data-container" style="display: none;">
+                <h2>Registro de Experimentos</h2>
+                <div class="actions-row">
+                    <button id="run-analysis-btn" class="btn primary">Realizar Análisis Estadístico</button>
+                    <button id="export-data-btn" class="btn export-btn">Exportar Datos</button>
+                </div>
+                <div class="table-container">
+                    <table id="experiments-table" class="experiments-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Masa Proyectil (kg)</th>
+                                <th>Velocidad (m/s)</th>
+                                <th>Masa Péndulo (kg)</th>
+                                <th>Longitud (m)</th>
+                                <th>Ángulo Impacto (°)</th>
+                                <th>Ángulo Máx (°)</th>
+                                <th>Altura Máx (m)</th>
+                                <th>Velocidad Final (m/s)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="experiments-table-body">
+                            <!-- Aquí se agregarán dinámicamente los experimentos -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Nueva sección para estadísticas -->
+            <div id="statistics-container" class="statistics-container">
+                <h2>Análisis Estadístico</h2>
+                <div id="statistics-content">
+                    <!-- Aquí se mostrarán las estadísticas calculadas -->
+                </div>
+                
+                <!-- Gráficos estadísticos -->
+                <div class="statistical-charts">
+                    <div class="chart-wrapper">
+                        <div id="histogram-chart" class="chart"></div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div id="scatter-chart" class="chart"></div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div id="evolution-chart" class="chart"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calculations-container">
+                <h2>Cálculos Físicos</h2>
+                <div class="calculations-grid">
+                    <div class="calculation">
+                        <h3>Valores Teóricos</h3>
+                        <table id="theoretical-values">
+                            <tr>
+                                <td>Velocidad del proyectil:</td>
+                                <td id="theo-velocity">- m/s</td>
+                            </tr>
+                            <tr>
+                                <td>Ángulo máximo:</td>
+                                <td id="theo-angle">- °</td>
+                            </tr>
+                            <tr>
+                                <td>Altura máxima:</td>
+                                <td id="theo-height">- m</td>
+                            </tr>
+                            <tr>
+                                <td>Energía inicial:</td>
+                                <td id="theo-energy-initial">- J</td>
+                            </tr>
+                            <tr>
+                                <td>Energía final:</td>
+                                <td id="theo-energy-final">- J</td>
+                            </tr>
+                            <tr>
+                                <td>Conservación de momento:</td>
+                                <td id="theo-momentum">- kg·m/s</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="calculation">
+                        <h3>Valores Experimentales</h3>
+                        <table id="experimental-values">
+                            <tr>
+                                <td>Velocidad del proyectil:</td>
+                                <td id="exp-velocity">- m/s</td>
+                            </tr>
+                            <tr>
+                                <td>Ángulo máximo:</td>
+                                <td id="exp-angle">- °</td>
+                            </tr>
+                            <tr>
+                                <td>Altura máxima:</td>
+                                <td id="exp-height">- m</td>
+                            </tr>
+                            <tr>
+                                <td>Energía inicial:</td>
+                                <td id="exp-energy-initial">- J</td>
+                            </tr>
+                            <tr>
+                                <td>Energía final:</td>
+                                <td id="exp-energy-final">- J</td>
+                            </tr>
+                            <tr>
+                                <td>Conservación de momento:</td>
+                                <td id="exp-momentum">- kg·m/s</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Simulador de Péndulo Balístico - Herramienta Educativa para Física</p>
+        </footer>
+    </div>
+</body>
+</html>

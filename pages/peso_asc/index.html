@@ -1,0 +1,197 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Peso Aparente en un! Ascensor - GIEDI</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "chart.js": "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/GIEDI-LOGO.png" alt="GIEDI Logo" class="logo">
+        </div>
+        <div class="title-container">
+            <h1>Simulador Interactivo de Peso Aparente en un Ascensor</h1>
+            <div class="author-info">
+                <p>Autor: Rodrigo Agosta</p>
+                <p>Grupo de Investigación: GIEDI</p>
+                <p>Facultad Regional Santa Fe - Universidad Tecnológica Nacional</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="simulator-container">
+            <div class="visualization">
+                <div class="space-background" id="space-background">
+                    <!-- Stars will be dynamically generated here -->
+                </div>
+                <div class="elevator-shaft">
+                    <div class="elevator" id="elevator">
+                        <div class="person" id="person">
+                            <div class="head"></div>
+                            <div class="body"></div>
+                            <div class="arms"></div>
+                            <div class="legs"></div>
+                        </div>
+                        <div class="scale" id="scale">
+                            <div class="scale-display" id="scale-display">0.0 N</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="physics-info">
+                    <div class="info-box">
+                        <h3>Peso Aparente</h3>
+                        <div class="value-display large-value" id="weight-display">0.0 N</div>
+                    </div>
+                    <div class="info-box">
+                        <h3>Aceleración Actual</h3>
+                        <div class="value-display" id="acceleration-display">0.0 m/s²</div>
+                    </div>
+                    <div class="info-box">
+                        <h3>Tiempo de Simulación</h3>
+                        <div class="value-display" id="time-display">0.0 s</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-container">
+                <div class="control-panel">
+                    <div class="panel-section">
+                        <h3>Configuración de la Persona</h3>
+                        <div class="input-group">
+                            <label for="mass-input">Masa (kg):</label>
+                            <input type="number" id="mass-input" min="0" max="120" step="0.5" value="70">
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3>Configuración de la Gravedad</h3>
+                        <div class="input-group">
+                            <label for="gravity-input">Gravedad (m/s²):</label>
+                            <input type="number" id="gravity-input" min="0" max="20" step="0.1" value="9.8">
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3>Configuración de la Aceleración</h3>
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="manual">Manual</button>
+                            <button class="tab-btn" data-tab="preset">Preestablecido</button>
+                        </div>
+                        
+                        <div class="tab-content" id="manual-tab">
+                            <div class="slider-container">
+                                <input type="range" id="acceleration-slider" min="-20" max="20" step="0.1" value="0">
+                                <div class="slider-value" id="slider-value">0.0 m/s²</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="preset-tab" style="display: none;">
+                            <div class="input-group">
+                                <label for="function-select">Función:</label>
+                                <select id="function-select">
+                                    <option value="step">Escalón</option>
+                                    <option value="ramp">Rampa</option>
+                                    <option value="logarithmic">Logarítmica</option>
+                                    <option value="sinusoidal">Senoidal</option>
+                                </select>
+                            </div>
+                            
+                            <div class="function-params" id="step-params">
+                                <div class="input-group">
+                                    <label for="step-value">Valor (m/s²):</label>
+                                    <input type="number" id="step-value" min="-20" max="20" step="0.1" value="5">
+                                </div>
+                                <div class="input-group">
+                                    <label for="step-time">Tiempo de inicio (s):</label>
+                                    <input type="number" id="step-time" min="0" step="0.1" value="1">
+                                </div>
+                            </div>
+                            
+                            <div class="function-params" id="ramp-params" style="display: none;">
+                                <div class="input-group">
+                                    <label for="ramp-final">Valor final (m/s²):</label>
+                                    <input type="number" id="ramp-final" min="-20" max="20" step="0.1" value="10">
+                                </div>
+                                <div class="input-group">
+                                    <label for="ramp-duration">Duración (s):</label>
+                                    <input type="number" id="ramp-duration" min="0.1" step="0.1" value="5">
+                                </div>
+                                <div class="input-group">
+                                    <label for="ramp-start">Tiempo de inicio (s):</label>
+                                    <input type="number" id="ramp-start" min="0" step="0.1" value="1">
+                                </div>
+                            </div>
+                            
+                            <div class="function-params" id="logarithmic-params" style="display: none;">
+                                <div class="input-group">
+                                    <label for="log-max">Valor máximo (m/s²):</label>
+                                    <input type="number" id="log-max" min="-20" max="20" step="0.1" value="10">
+                                </div>
+                                <div class="input-group">
+                                    <label for="log-rate">Tasa de crecimiento:</label>
+                                    <input type="number" id="log-rate" min="0.1" max="5" step="0.1" value="1">
+                                </div>
+                                <div class="input-group">
+                                    <label for="log-start">Tiempo de inicio (s):</label>
+                                    <input type="number" id="log-start" min="0" step="0.1" value="1">
+                                </div>
+                            </div>
+                            
+                            <div class="function-params" id="sinusoidal-params" style="display: none;">
+                                <div class="input-group">
+                                    <label for="sin-amplitude">Amplitud (m/s²):</label>
+                                    <input type="number" id="sin-amplitude" min="-20" max="20" step="0.1" value="5">
+                                </div>
+                                <div class="input-group">
+                                    <label for="sin-frequency">Frecuencia (Hz):</label>
+                                    <input type="number" id="sin-frequency" min="0.1" max="2" step="0.1" value="0.2">
+                                </div>
+                                <div class="input-group">
+                                    <label for="sin-offset">Desplazamiento (m/s²):</label>
+                                    <input type="number" id="sin-offset" min="-20" max="20" step="0.1" value="0">
+                                </div>
+                            </div>
+                            
+                            <button id="apply-function" class="action-btn">Aplicar Función</button>
+                        </div>
+                    </div>
+                    
+                    <div class="panel-section controls-footer">
+                        <button id="start-btn" class="action-btn">Iniciar Simulación</button>
+                        <button id="pause-btn" class="action-btn" disabled>Pausar</button>
+                        <button id="reset-btn" class="action-btn">Reiniciar</button>
+                        <button id="download-btn" class="action-btn" disabled>Descargar Datos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <h3>Peso Aparente vs. Tiempo</h3>
+                <canvas id="weight-chart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <h3>Aceleración vs. Tiempo</h3>
+                <canvas id="acceleration-chart"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p> 2023 GIEDI - Grupo de Investigación - Facultad Regional Santa Fe - Universidad Tecnológica Nacional</p>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Efecto Venturi - GIEDI UTN</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "d3": "https://cdn.jsdelivr.net/npm/d3@7/+esm"
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/GIEDI-LOGO.png" alt="Logo GIEDI" class="logo">
+        </div>
+        <h1>Simulador de Efecto Venturi</h1>
+        <div class="author-info">
+            <p>Autor: Rodrigo Agosta</p>
+            <p>Grupo de Investigación GIEDI - UTN</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="simulator-container">
+            <div class="venturi-visualization">
+                <div id="venturi-diagram"></div>
+                <div id="cavitation-warning" class="hidden">¡FLUIDO EN CAVITACIÓN!</div>
+            </div>
+            <div class="controls-container">
+                <div class="parameters">
+                    <h2>Parámetros del Simulador</h2>
+                    
+                    <div class="parameter-group">
+                        <label for="inlet-diameter">Diámetro de Entrada (ASTM SCH40):</label>
+                        <div class="slider-container">
+                            <select id="inlet-diameter-select">
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                            <span id="inlet-diameter-mm">102.26 mm</span>
+                        </div>
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="throat-diameter">Diámetro de Garganta (mm):</label>
+                        <div class="slider-container">
+                            <input type="range" id="throat-diameter-slider" min="10" max="100" step="10" value="50">
+                            <input type="number" id="throat-diameter" min="10" max="100" step="10" value="50" step="any" lang="es">
+                        </div>
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="flow-rate">Caudal de Entrada (m³/h):</label>
+                        <div class="slider-container">
+                            <input type="range" id="flow-rate-slider" min="0" max="20" step="0.1" value="5">
+                            <input type="number" id="flow-rate" min="0" max="20" step="0.1" value="5" step="any" lang="es">
+                        </div>
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="inlet-pressure">Presión de Entrada (kPa):</label>
+                        <div class="slider-container">
+                            <input type="range" id="inlet-pressure-slider" min="0" max="1000" step="1" value="200">
+                            <input type="number" id="inlet-pressure" min="0" max="1000" step="1" value="200" step="any" lang="es">
+                        </div>
+                    </div>
+                    
+                    <div class="parameter-group">
+                        <label for="temperature">Temperatura (°C):</label>
+                        <div class="slider-container">
+                            <input type="range" id="temperature-slider" min="0" max="100" step="1" value="20">
+                            <input type="number" id="temperature" min="0" max="100" step="1" value="20" step="any" lang="es">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button id="toggle-errors">Activar Errores</button>
+                    <button id="reconfigure-errors" class="hidden">Reconfigurar Errores</button>
+                    <button id="export-data">Exportar Datos</button>
+                    <button id="admin-mode">Modo Administrador</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-container">
+            <div class="data-table">
+                <h2>Datos de la Simulación</h2>
+                <table id="simulation-data">
+                    <thead>
+                        <tr>
+                            <th>Parámetro</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Presión de Entrada</td><td id="inlet-pressure-value">200 kPa</td></tr>
+                        <tr><td>Presión de Garganta</td><td id="throat-pressure-value">Calculando...</td></tr>
+                        <tr><td>Presión de Salida</td><td id="outlet-pressure-value">Calculando...</td></tr>
+                        <tr><td>Caudal</td><td id="flow-rate-value">5 m³/h</td></tr>
+                        <tr><td>Diámetro de Entrada</td><td id="inlet-diameter-value">102.26 mm</td></tr>
+                        <tr><td>Diámetro de Garganta</td><td id="throat-diameter-value">50 mm</td></tr>
+                        <tr><td>Temperatura</td><td id="temperature-value">20 °C</td></tr>
+                        <tr><td>Fluido</td><td>Agua</td></tr>
+                        <tr><td>Densidad del Fluido</td><td id="density-value">Calculando...</td></tr>
+                        <tr><td>Tensión de Vapor</td><td id="vapor-pressure-value">Calculando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="errors-table" class="hidden">
+                <h2>Valores con Errores Aplicados</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parámetro</th>
+                            <th>Valor Teórico</th>
+                            <th>Valor Exacto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="errors-data">
+                        <!-- Datos de errores generados por JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="config.js"></script>
+    <script type="module" src="pipe-standards.js"></script>
+    <script type="module" src="simulator.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Péndulo Simple - GIEDI</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "plotly": "https://cdn.jsdelivr.net/npm/plotly.js-dist@2.24.2/+esm"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="language-selector">
+            <select id="language-selector" class="language-dropdown">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="pt">Português</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="fr">Français</option>
+            </select>
+        </div>
+        <div class="logo-container">
+            <img src="/GIEDI-LOGO.png" alt="GIEDI Logo" class="logo">
+        </div>
+        <h1 data-i18n="simulatorTitle">Simulador de Péndulo Simple</h1>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="simulation-container">
+                <div class="pendulum-simulation">
+                    <div id="pendulum-container">
+                        <div id="pivot"></div>
+                        <div id="string"></div>
+                        <div id="bob"></div>
+                    </div>
+                </div>
+                <div class="control-panel">
+                    <div class="action-buttons">
+                        <button id="launch-button" class="primary-button" data-i18n="launch">Lanzamiento</button>
+                        <button id="stop-button" class="primary-button" disabled data-i18n="finishMeasurement">Finalizar medición</button>
+                        <button id="reset-button" class="secondary-button" data-i18n="reset">Reiniciar</button>
+                    </div>
+                    
+                    <div class="measurement-input">
+                        <label for="cycles-input" data-i18n="cyclesNumber">Número de ciclos (N):</label>
+                        <input type="number" id="cycles-input" min="1" max="100" value="10">
+                    </div>
+
+                    <div class="parameter-section">
+                        <h3 data-i18n="pendulumParams">Parámetros del Péndulo</h3>
+                        <div class="parameter">
+                            <label for="string-length" data-i18n="stringLength">Largo del cordel (cm):</label>
+                            <input type="range" id="string-length" min="10" max="300" step="1" value="100">
+                            <span id="string-length-value">100 cm</span>
+                        </div>
+                        <div class="parameter">
+                            <label for="bob-mass" data-i18n="bobMass">Masa de la esfera (g):</label>
+                            <input type="range" id="bob-mass" min="50" max="500" step="10" value="100">
+                            <span id="bob-mass-value">100 g</span>
+                        </div>
+                        <div class="parameter">
+                            <label for="angle" data-i18n="initialAngle">Ángulo inicial (°):</label>
+                            <input type="range" id="angle" min="5" max="45" step="5" value="15">
+                            <span id="angle-value">15°</span>
+                        </div>
+                    </div>
+                    
+                    <div class="simulation-options">
+                        <h3 data-i18n="simOptions">Opciones de Simulación</h3>
+                        <div class="option">
+                            <label data-i18n="calcMode">Modo de cálculo:</label>
+                            <button id="calculation-mode" class="toggle-button" data-i18n="simplified">Simplificada</button>
+                        </div>
+                        <div class="option">
+                            <label data-i18n="randomErrors">Errores aleatorios:</label>
+                            <button id="random-errors" class="toggle-button active" data-i18n="activated">Activados</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-container">
+                <div class="measurement-table">
+                    <h3 data-i18n="measurementRecord">Registro de Mediciones</h3>
+                    <div class="table-container">
+                        <table id="measurements-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="measurement">Medición</th>
+                                    <th data-i18n="length">Largo (cm)</th>
+                                    <th data-i18n="mass">Masa (g)</th>
+                                    <th data-i18n="angle">Ángulo (°)</th>
+                                    <th data-i18n="cycles">Ciclos (N)</th>
+                                    <th data-i18n="time">Tiempo (s)</th>
+                                    <th data-i18n="period">Período (s)</th>
+                                    <th data-i18n="actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los datos se agregarán dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-actions">
+                        <button id="stats-button" class="secondary-button" data-i18n="statsCalc">Cálculos estadísticos</button>
+                        <button id="export-button" class="secondary-button" data-i18n="exportData">Exportar datos</button>
+                        <button id="admin-button" class="secondary-button" data-i18n="admin">Administrador</button>
+                    </div>
+                </div>
+                
+                <div id="stats-panel" class="stats-panel hidden">
+                    <h3 data-i18n="statAnalysis">Análisis Estadístico</h3>
+                    <div class="stats-container">
+                        <div id="stats-display">
+                            <div id="basic-stats"></div>
+                            <div id="plot-container"></div>
+                        </div>
+                    </div>
+                    <button id="close-stats" class="secondary-button" data-i18n="close">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 data-i18n="adminAccess">Acceso Administrador</h2>
+            <div id="login-section">
+                <input type="password" id="admin-password" data-i18n-placeholder="enterPassword" placeholder="Ingrese la clave">
+                <button id="login-button" data-i18n="access">Acceder</button>
+                <p id="login-error" class="error-message hidden" data-i18n="incorrectPassword">Clave incorrecta</p>
+            </div>
+            <div id="admin-panel" class="hidden">
+                <h3 data-i18n="realValues">Valores Reales</h3>
+                <div id="real-values"></div>
+                <button id="logout-button" class="secondary-button" data-i18n="logout">Cerrar sesión</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Autor: Rodrigo Agosta | Grupo de Investigación: GIEDI | Institución: Facultad Regional Santa Fe - Universidad Tecnológica Nacional</p>
+    </footer>
+    
+    <script type="module" src="simulation.js"></script>
+    <script type="module" src="ui.js"></script>
+    <script type="module" src="data.js"></script>
+</body>
+</html>
