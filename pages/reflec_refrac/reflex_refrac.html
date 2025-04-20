@@ -18,16 +18,16 @@
     <link rel="stylesheet" href="../../src/output.css" />
     <link
       rel="icon"
-      href="./src/media/icon-page-giedi.png"
+      href="../../src/media/icon-page-giedi.png"
       type="image/x-icon"
     />
     <title> GIEDI - UTN </title>
   </head>
 
-  <body class="dark:bg-slate-950 bg-white">
+  <body class="dark:bg-slate-950 bg-utn-light font-rubik">
 
     <!--Comienzo de navbar-->
-    <nav class="bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50">
+    <nav class="bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50 min-w-[350px]">
       <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <a href="../../index.html" class="flex items-center">
           
@@ -109,7 +109,7 @@
           >
             <li>
               <a
-                href="../../index.html"
+                href="#"
                 class="block py-2 pl-3 pr-4 border-b border-gray-100 font-semibold lg:hover:bg-transparent lg:border-0 lg:hover:text-utn-regular lg:p-0 dark:text-gray-400 lg:text-gray-800 lg:dark:hover:text-utn-regular dark:hover:bg-slate-900 dark:hover:rounded-full lg:dark:hover:bg-transparent dark:border-gray-700 lg:dark:font-semibold hover:bg-blue-100 hover:rounded-full"
                 aria-current="page"
                 >Inicio</a
@@ -117,7 +117,7 @@
             </li>
             <li>
               <a
-                href="../../index.html#simuladores"
+                href="#simuladores"
                 class="block py-2 pl-3 pr-4 border-b border-gray-100 font-semibold lg:hover:bg-transparent lg:border-0 lg:hover:text-utn-regular lg:p-0 dark:text-gray-400 lg:text-gray-800 lg:dark:hover:text-utn-regular dark:hover:bg-slate-900 dark:hover:rounded-full lg:dark:hover:bg-transparent dark:border-gray-700 lg:dark:font-semibold hover:bg-blue-100 hover:rounded-full"
                 >Simuladores</a
               >
@@ -130,135 +130,145 @@
     <!--Fin de navbar-->
 
     <!--COMIENZO DE INTERFACE SIMULADOR-->
-    <div class="container flex flex-col items-center max-w-[1400px]">
-          <h1 class="flex text-4xl font-bold text-center mt-8 mb-2 text-slate-900 dark:text-white">
-            Simulador didáctico de refracción y reflexión en materiales</h1>
-          <p class="text-slate-400 dark:text-slate-300">Modifica los valores que se encuentran en el simulador y calculá su ángulo de refracción.</p>
-          <p class="text-slate-400 dark:text-slate-300">Luego, presiona "Agregar medición" por cada medición que obtengas. Necesitas al menos 5 mediciones.</p>
-          <hr class="divider mt-3 text-amber-400">
-
-          <p class="text-amber-500 p-0 m-0">Para reiniciar la simulación a los valores por defecto, toca en "Reiniciar"</p>
+    <div class="flex flex-col items-center justify-center min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl">
+      <h1 class="flex text-3xl md:text-4xl font-bold text-center mt-8 mb-4 text-slate-900 dark:text-white">
+        Simulador didáctico de refracción y reflexión en materiales</h1>
+      <p class="text-utn-dark text-center dark:text-slate-300">Modifica los valores que se encuentran en el simulador y calculá su ángulo de refracción.</p>
+      <p class="text-utn-dark text-center dark:text-slate-300">Luego, presiona "Agregar medición" por cada medición que obtengas. Necesitas al menos 5 mediciones.</p>
+      <p class="text-utn-regular text-center p-0 mt-4">Para reiniciar la simulación a los valores por defecto, toca en "Reiniciar"</p>
           
-          <div class="flex flex-row content-around gap-3 mt-15">
-          <div class="controls-panel w-[310px] border-2 border-amber-500 pb-4 pr-7 pl-7 pt-4 rounded-4xl">
-              <div class="material-controls">
-                  <h3 class="text-xl font-semibold text-amber-600 dark:text-white mb-2">Configuración de la placa</h3>
-                  <hr class="divider mb-3 text-amber-400">
-
-                  <!--selección de material-->
-                  <div class="control-group mb-4">
-                      <label for="material" class="text-lg font-semibold text-center dark:text-white">Selecciona el material</label>
-                      <select id="material" class="text-black border-2 border-amber-500 rounded-full pl-3 mt-1 w-[250px] dark:text-white dark:bg-slate-950">
-                          <option value="acrylic">Acrílico</option>
-                          <option value="zirconium">Circonio</option>
-                          <option value="quartz">Cuarzo</option>
-                          <option value="diamond">Diamante</option>
-                          <option value="ice">Hielo</option>
-                          <option value="glass">Vidrio</option>
-                          <option value="unknown">Material desconocido</option>
-                      </select>
-                  </div>
-
-                  <!--espesor material-->
-                  <div class="control-group flex flex-col mb-4 text-lg dark:text-white">
-                      <label for="thickness" class="text-lg font-semibold">Espesor [mm]</label>
-                      <input type="range" id="thickness" min="1" max="20" value="5" step="1"
-                      class="accent-amber-500 w-[250px] text-lg">
-                      <span id="thickness-value" class="text-amber-500 pt-0 text-center font-semibold text-md"></span>
-                  </div>
-
-                  <!--desplegable selección de medio-->
-                  <div class="control-group mb-4">
-                      <label for="exterior" class="text-lg font-semibold dark:text-white">Selecciona el medio</label>
-                      <select id="exterior" class="text-black border-2 border-amber-500 rounded-full pl-3 mt-1 w-[250px] dark:bg-slate-950 dark:text-white">
-                          <option value="acetaldehyde">Acetaldeído</option>
-                          <option value="water">Agua</option>
-                          <option value="air">Aire</option>
-                          <option value="benzene">Benceno</option>
-                          <option value="glycerin">Glicerina</option>
-                          <option value="heptanol">Heptanol (25°C)</option>
-                          <option value="methanol">Metanol</option>
-                          <option value="sugarSolution30">Solución de azúcar 30%</option>
-                          <option value="sugarSolution80">Solución de azúcar 80%</option>
-                          <option value="vacuum">Vacío</option>
-                      </select>
-                    </div>
-              </div>
-              
-              <div class="laser-controls text-lg font-semibold">
-                  <div class="control-group flex flex-col mb-4 dark:text-white">
-                      <label for="wavelength">Longitud de onda [nm]</label>
-                      <input type="range" id="wavelength" min="380" max="750" value="650" step="1" class="accent-amber-500 w-[250px] text-center">
-                      <span id="wavelength-value" class="text-amber-500 text-md pt-0 text-center"></span>
-                  </div>
-                  <div class="control-group flex flex-col mb-4 dark:text-white">
-                      <label for="angle">Ángulo de incidencia</label>
-                      <input type="range" id="angle" min="0" max="89" value="30" step="1" class="accent-amber-500 w-[250px]">
-                      <span id="angle-value" class="text-amber-500 text-md pt-0 text-center"></span>
-                  </div>
-              </div>
-              
-              <div class="grid-controls mt-9 ">
-                <h3 class="text-xl font-semibold text-amber-600 dark:text-white mb-2">Configuración de la grilla</h3>
-                <hr class="divider mb-3 text-amber-400">
-
-                  <div classs="control-group">
-                      <label class="text-lg font-semibold dark:text-white">Separación</label>
-
-                      <div class="button-group flex flex-row space-x-3 mt-2">
-                          <button id="grid-1mm" class="grid-button bg-amber-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl">1 mm</button>
-                          <button id="grid-5mm" class="grid-button  bg-amber-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl">5 mm</button>
-                          <button id="grid-10mm" class="grid-button  bg-amber-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl">10 mm</button>
-                      </div>
-                  </div>
-              </div>
-              
-              <div class="simulation-options">
-                  <div class="button-group mt-10">
-                      <button id="reset-simulation" class="grid-button dark:bg-slate-900 dark:text-white text-xl border-2 border-amber-500 
-                      hover:bg-amber-500 text-amber-500 hover:text-white
-                      font-semibold pl-3 pr-3 pt-1 pb-2 rounded-xl">Reiniciar simulación</button>
-                  </div>
-              </div>
-          </div>
-          
-          <div class="simulation-view lg:w-[900px] lg:h-[1000px]">
+      <div class="flex flex-col lg:flex-row content-around gap-3 mt-12">
+          <div class="simulation-view w-screen h-[500px]
+          lg:w-[900px] lg:h-[700px]">
               <canvas id="simulation-canvas"></canvas>
+          </div>
+
+          <div class="controls-panel ml-4 mr-4 border-2 border-utn-regular pb-4 pr-7 pl-7 pt-4 rounded-4xl">
+            <div class="material-controls">
+                <h3 class="text-xl font-semibold text-utn-regular dark:text-white mb-2">Configuración de la placa</h3>
+                <hr class="divider mb-3 text-utn-regular">
+
+                <!--selección de material-->
+                <div class="control-group mb-4">
+                    <label for="material" class="text-lg font-semibold text-center dark:text-white">Selecciona el material</label>
+                    <select id="material" class="text-black border-2 w-[284px] border-utn-regular rounded-full pl-2 mt-1 dark:text-white dark:bg-slate-950">
+                        <option value="glass">Vidrio</option>
+                        <option value="acrylic">Acrílico</option>
+                        <option value="zirconium">Circonio</option>
+                        <option value="quartz">Cuarzo</option>
+                        <option value="diamond">Diamante</option>
+                        <option value="ice">Hielo</option>
+                        <option value="unknown">Material desconocido</option>
+                    </select>
+                </div>
+
+                <!--espesor material-->
+                <div class="control-group flex flex-col mb-4 text-lg dark:text-white">
+                    <label for="thickness" class="text-lg font-semibold">Espesor [mm]</label>
+                    <input type="range" id="thickness" min="1" max="20" value="5" step="1"
+                    class="accent-utn-regular rounded-full text-lg border-none bg-utn-light dark:bg-utn-dark cursor-pointer">
+                    <span id="thickness-value" class="text-utn-regular appearance-none pt-0 text-center font-semibold text-md"></span>
+                </div>
+
+                <!--desplegable selección de medio-->
+                <div class="control-group mb-4">
+                    <label for="exterior" class="text-lg font-semibold dark:text-white">Selecciona el medio</label>
+                    <select id="exterior" class="text-black border-2 w-[284px] border-utn-regular rounded-full pl-3 mt-1 dark:bg-slate-950 dark:text-white">
+                        <option value="air">Aire</option>
+                        <option value="acetaldehyde">Acetaldeído</option>
+                        <option value="water">Agua</option>
+                        <option value="benzene">Benceno</option>
+                        <option value="glycerin">Glicerina</option>
+                        <option value="heptanol">Heptanol (25°C)</option>
+                        <option value="methanol">Metanol</option>
+                        <option value="sugarSolution30">Solución de azúcar 30%</option>
+                        <option value="sugarSolution80">Solución de azúcar 80%</option>
+                        <option value="vacuum">Vacío</option>
+                    </select>
+                  </div>
+            </div>
+            
+            <div class="laser-controls text-lg font-semibold">
+                <div class="control-group  dark:text-white hidden">
+                    <label for="wavelength">Longitud de onda [nm]</label>
+                    <input type="range" id="wavelength" min="380" max="750" value="650" step="1" class="accent-utn-regular w-[250px] text-center">
+                    <span id="wavelength-value" class="text-utn-regular text-md pt-0 text-center"></span>
+                </div>
+                <div class="control-group flex flex-col mb-4 dark:text-white">
+                    <label for="angle">Ángulo de incidencia</label>
+                    <input type="range" id="angle" min="0" max="89" value="30" step="1" class="accent-utn-regular">
+                    <span id="angle-value" class="text-utn-regular text-md pt-0 text-center"></span>
+                </div>
+            </div>
+            
+            <div class="grid-controls mt-9 ">
+              <h3 class="text-xl font-semibold text-utn-regular dark:text-white mb-2">Configuración de la grilla</h3>
+              <hr class="divider mb-3 text-utn-regular">
+
+                <div classs="control-group">
+                    <label class="text-lg font-semibold dark:text-white">Separación</label>
+
+                    <div class="button-group flex flex-row space-x-3 mt-2">
+                        <button id="grid-1mm" class="grid-button bg-utn-dark text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">1 mm</button>
+                        <button id="grid-5mm" class="grid-button  bg-utn-dark text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">5 mm</button>
+                        <button id="grid-10mm" class="grid-button  bg-utn-dark text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">10 mm</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="simulation-options">
+                <div class="button-group mt-8 flex flex-col justify-center">
+                    <button id="reset-simulation" class="grid-button dark:bg-utn-regular dark:text-slate-950 text-2xl 
+                    hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular
+                    dark:hover:bg-slate-950 dark:hover:text-utn-regular dark:hover:border-1 dark:hover:border-utn-regular
+                    font-semibold px-3 py-1 rounded-2xl">Reiniciar simulación</button>
+                    <button id="reset-simulation" class="grid-button dark:bg-slate-950 dark:text-gray-400 text-lg border-1 border-gray-400 
+                    hover:bg-utn-regular text-gray-400 hover:text-white hover:border-none
+                    pl-3 pr-3 pt-1 pb-1 mt-2 rounded-2xl">Modo administrador</button>
+                </div>
+            </div>
           </div>
       </div>
     </div>
 
-  <!--COMIENZO SECCIÓN DE DATOS-->
-<div class="data-section flex flex-col items-center border-amber-500 border-2 rounded-2xl p-0 ml-10 mr-10 mt-10">
-    <h3 class="text-2xl font-semibold text-amber-600 dark:text-white mt-4 mb-4">Tabla de datos</h3>
-
-    <div class="table-controls dark:text-white flex justify-start gap-10 mb-4">
-        <button id="add-data" class="cursor-pointer hover:bg-amber-500 dark:text-white text-slate-700 py-1 px-4 font-semibold rounded-xl border-2 border-amber-500">Agregar medición</button>
-        <button id="calculate-stats" class="cursor-pointer hover:bg-amber-500 dark:text-white text-slate-700 py-1 px-4 font-semibold rounded-xl border-2 border-amber-500">Estadísticas</button>
-        <button id="export-data" class="cursor-pointer hover:bg-amber-500 dark:text-white text-slate-700 py-1 px-4 font-semibold rounded-xl border-2 border-amber-500">Exportar datos</button>
+    <div class="data-section flex flex-col items-center border-2 border-utn-regular rounded-2xl p-4 md:mx-auto mx-4 mt-10 max-w-screen-xl">
+      <h3 class="text-2xl font-semibold text-utn-regular dark:text-white mb-4">Tabla de datos</h3>
+    
+      <!-- Controles responsivos -->
+      <div class="table-controls dark:text-white flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-4 w-full max-w-screen-xl md:mx-auto">
+        <button id="add-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
+          Agregar medición
+        </button>
+        <button id="calculate-stats" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
+          Estadísticas
+        </button>
+        <button id="export-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
+          Exportar datos
+        </button>
+      </div>
+    
+      <div class="w-full overflow-x-auto shadow-sm p-2">
+        <div class="min-w-[600px]"> 
+          <table id="data-table" class="w-full text-sm border-collapse">
+            <thead class="bg-utn-light dark:bg-slate-950 uppercase mb-4">
+              <tr class="border-1 border-utn-regular">
+                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">N°</th>
+                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Espesor (mm)</th>
+                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Material</th>
+                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Índice Refracción</th>
+                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Ángulo Incidencia</th>
+                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Ángulo Refracción</th>
+                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">IR Experimental</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Los datos se generarán dinámicamente con JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  
 
-    <div class="table-container mt-4 overflow-x-auto">
-      <table id="data-table" class="dark:text-white w-full border-separate border-spacing-4 pb-14">
-        <thead class="bg-slate-100 dark:bg-slate-700">
-          <tr>
-            <th class="px-6 py-3 border border-slate-300 dark:border-slate-600">N°</th>
-            <th class="px-6 py-3 border border-slate-300 dark:border-slate-600">Espesor (mm)</th>
-            <th class="px-6 py-3 border border-slate-300 dark:border-slate-600">Material</th>
-            <th class="px-6 py-3 border border-slate-300 dark:border-slate-600">Índice Refracción</th>
-            <th class="px-6 py-3 border border-slate-300 dark:border-slate-600">Ángulo Incidencia</th>
-            <th class="px-6 py-3 border border-slate-300 dark:border-slate-600">Ángulo Refracción</th>
-            <th class="px-6 py-3 border border-slate-300 dark:border-slate-600">IR Experimental</th>
-          </tr>
-        </thead>
-        
-        <tbody>
-                <!-- Los datos se generarán dinámicamente con JavaScript -->
-        </tbody>
-      </table>
-    </div>
-</div>
     <!--REVISAR: ESTADÍSTICAS QUE SE MUESTRAN SIN HABER CUMPLIDO REQUISITO. CAMBIAR HIDDEN CON JS-->
     <div id="stats-modal" class="modal hidden">
       <div class="modal-content dark:text-white">
@@ -276,23 +286,27 @@
       </div>
     </div>
 
-
-    <!--COMIENZO FOOTER-->
-    <footer class="bg-white mt-20 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">
+    <!--Comienzo del footer-->
+  <footer class="bg-utn-light mt-20 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
-        <div class="sm:flex sm:items-center sm:justify-between gap-10">
-          <div class="flex justify-center text-amber-500 sm:justify-start">
+        <div class="sm:flex sm:items-center sm:justify-between">
+          <div class="flex justify-center text-utn-regular sm:justify-start">
             <img
-              src="../../src/GIEDI-SVG-NARANJA.svg"
-              alt="Logon institucional GIEDI"
-              class="h-15 w-40"
+              src="../../src/media/GIEDI-LOGO-DARK.png"
+              alt="Logo institucional GIEDI"
+              class="h-15 w-40 hidden dark:block"
+            />
+            <img
+              src="../../src/media/GIEDI-LOGO-LIGHT.png"
+              alt="Logo institucional GIEDI"
+              class="h-15 w-40 block dark:hidden"
             />
           </div>
 
           <div class="flex flex-col">
-            <!--caja de texto footer-->
+            <!--Caja de texto footer-->
             <p
-              class="mt-4 text-center text-sm text-gray-500 lg:mt-0 lg:text-right"
+              class="mt-4 text-center text-sm text-utn-dark lg:mt-0 lg:text-right"
             >
               Copyright &copy; 2025. Grupo de Investigación en Enseñanza de la
               Ingeniería.
@@ -301,7 +315,7 @@
             </p>
 
             <div class="flex flex-row justify-center space-x-4 mt-2">
-              <a href="https://www.instagram.com/giediutnsantafe/">
+              <a href="https://www.instagram.com/giediutnsantafe/" alt="Instagram de GIEDI">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -315,7 +329,7 @@
                 </svg>
               </a>
               <a
-                href="https://www.frsf.utn.edu.ar/investigacion-y-vinculacion/investigacion-y-vinculacion/centros-y-grupos/giedi"
+                href="https://www.frsf.utn.edu.ar/investigacion-y-vinculacion/investigacion-y-vinculacion/centros-y-grupos/giedi" alt="Información sobre GIEDI"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -333,7 +347,8 @@
           </div>
         </div>
       </div>
-    </footer>
+  </footer>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./reflec_refrac.js"></script>

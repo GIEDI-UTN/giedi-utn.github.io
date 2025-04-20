@@ -111,6 +111,7 @@ function resizeCanvas() {
 }
 
 function updateCurrentMaterial() {
+  //Si se selecciona desconocido, generar semilla rand para elegir del array
   if (simulation.material === "unknown") {
     // Excluir "unknown" de las opciones
     const materialKeys = Object.keys(MATERIALS).filter(
@@ -119,7 +120,9 @@ function updateCurrentMaterial() {
     const randomIndex = Math.floor(Math.random() * materialKeys.length);
     const randomMaterial = materialKeys[randomIndex];
     simulation.currentMaterial = MATERIALS[randomMaterial];
-  } else {
+  } 
+  
+  else {
     simulation.currentMaterial = MATERIALS[simulation.material];
   }
 }
@@ -129,8 +132,7 @@ function updateCurrentExteriorMedium() {
     EXTERIOR_MEDIUMS[simulation.exteriorMedium];
 }
 
-//AGREGAR ERRORES SIN EVENT LISTENER
-
+//Errores puestos por defecto
 function applySimulationErrors() {
   const generateError = (value) => {
     const stdDev = value * 0.009; // 0.9% de error típico
@@ -304,7 +306,7 @@ function drawSimulation() {
   ) {
     ctx.fillStyle = "oklch(12.9% 0.042 264.695)";
   } else {
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "oklch(0.96 0.0103 247.93)";
   }
 
   ctx.fillRect(0, 0, width, height);
@@ -346,7 +348,7 @@ function drawGrid(originX, originY, scale) {
   ) {
     ctx.strokeStyle = "#474a56";
   } else {
-    ctx.strokeStyle = "#dddddd";
+    ctx.strokeStyle = "#cdd9e3";
   }
 
   ctx.lineWidth = 0.5;
@@ -576,7 +578,7 @@ function drawLaser(originX, originY, scale) {
   const reflectedEndY = incidenceY - reflectedLength * Math.sin(reflectionRad);
 
   ctx.beginPath();
-  ctx.setLineDash([5, 3]); // Línea discontinua para el rayo reflejado
+  ctx.setLineDash([]); // Línea discontinua para el rayo reflejado
   ctx.moveTo(incidenceX, incidenceY);
   ctx.lineTo(reflectedEndX, reflectedEndY);
   ctx.stroke();
@@ -617,7 +619,7 @@ function drawLaser(originX, originY, scale) {
   ctx.stroke();
 
   // Dibujar ángulos
-  drawAngle(incidenceX, incidenceY, angleRad, Math.PI / 2, 30, "β", "#d35400");
+  drawAngle(incidenceX, incidenceY, angleRad, Math.PI / 2, 30, "β", "#e57f71");
   drawAngle(
     incidenceX,
     incidenceY,
@@ -625,7 +627,7 @@ function drawLaser(originX, originY, scale) {
     Math.PI / 2,
     30,
     "α",
-    "#27ae60"
+    "#52bfa0"
   );
 
   // Guardar los ángulos calculados para uso en mediciones
@@ -698,7 +700,7 @@ function drawMeasurements(originX, originY, scale) {
   ctx.font = "14px Arial";
 
   const infoX = 20;
-  const infoY = 30;
+  const infoY = 15;
   const lineHeight = 20;
 
   if (
@@ -709,7 +711,6 @@ function drawMeasurements(originX, originY, scale) {
   } else {
     ctx.fillStyle = "#020617";
   }
-  ctx.fillText(`Longitud de onda: ${simulation.wavelength} nm`, infoX, infoY);
   ctx.fillText(
     `Ángulo de incidencia: ${simulation.incidenceAngle}°`,
     infoX,
@@ -730,18 +731,18 @@ function drawMeasurements(originX, originY, scale) {
   ctx.textAlign = "right";
   const anglesX = canvas.width - 20;
 
-  ctx.fillStyle = "#d35400";
+  ctx.fillStyle = "#52bfa0";
   ctx.fillText(
     `α (incidencia): ${simulation.calculatedAngles.incidence.toFixed(1)}°`,
     anglesX,
-    infoY
+    infoY+20
   );
 
-  ctx.fillStyle = "#27ae60";
+  ctx.fillStyle = "#e57f71";
   ctx.fillText(
     `β (reflexión): ${simulation.calculatedAngles.reflection.toFixed(1)}°`,
     anglesX,
-    infoY + lineHeight
+    infoY + lineHeight + 15
   );
 }
 
@@ -771,12 +772,13 @@ function addMeasurement() {
   );
 
   // Validate input - if canceled or not a number, return
-  if (userRefractionAngle === null || isNaN(parseFloat(userRefractionAngle))) {
+  if (userRefractionAngle === null || isNaN(parseFloat(userRefractionAngle)) || userRefractionAngle <=0 || userRefractionAngle > 90) {
     alert(
-      "Por favor ingrese un valor numérico válido para el ángulo de refracción."
+      "Por favor, ingrese un valor numérico válido para el ángulo de refracción."
     );
     return;
   }
+
 
   // Parse the user input value
   const refractionAngle = parseFloat(userRefractionAngle);
@@ -811,9 +813,11 @@ function addMeasurement() {
 
   // Agregar a la tabla
   const row = dataTable.insertRow();
+  row.className = "bg-utn-light text-slate-950 dark:bg-slate-950 dark:text-white items-center text-center pt-4";
 
   const cellNum = row.insertCell(0);
   cellNum.textContent = measurement.number;
+  cellNum.className = "py-2";
 
   const cellThickness = row.insertCell(1);
   cellThickness.textContent = measurement.thickness;
@@ -1213,11 +1217,11 @@ function updateAdminPanel() {
 
 function exportData() {
   if (simulation.measurements.length === 0) {
-    alert("No hay datos para exportar");
+    alert("Aún no hay datos para exportar");
     return;
   }
 
-  let text = "DATOS DE EXPERIMENTO DE REFRACCIÓN Y REFLEXIÓN\n";
+  let text = "DATOS DE SIMULACIÓN DE REFRACCIÓN Y REFLEXIÓN\n";
   text += "------------------------------------------------\n\n";
   text += `Fecha: ${new Date().toLocaleDateString()}\n`;
   text += "Grupo de Investigación GIEDI\n";
@@ -1231,16 +1235,15 @@ function exportData() {
   }\n`;
   text += `Espesor: ${simulation.thickness} mm\n`;
   text += `Medio Exterior: ${simulation.currentExteriorMedium.name}\n`;
-  text += `Longitud de onda: ${simulation.wavelength} nm\n`;
 
   text += "MEDICIONES:\n";
   text +=
-    "N°\tEspesor(mm)\tMaterial\tIR\tMedio Exterior\tÁng. Inc.\tÁng. Ref.\tIR Exp.\n";
+    "N°\tEspesor(mm)\tMaterial\tIR\tMedio ext.\tÁng. inc.\tÁng. ref.\tIR Exp.\n";
   text +=
-    "--------------------------------------------------------------------------------\n";
+    "---------------------------------------------------------------------------------------------------------------\n";
 
   simulation.measurements.forEach((m) => {
-    text += `${m.number}\t${m.thickness}\t${m.material}\t${m.refractiveIndex}\t${m.exteriorMedium}\t${m.incidenceAngle}\t${m.refractionAngle}\t${m.experimentalRI}\n`;
+    text += `${m.number}\t\t${m.thickness}\t${m.material}\t\t${m.refractiveIndex}\t${m.exteriorMedium}\t\t${m.incidenceAngle}\t\t${m.refractionAngle}\t\t${m.experimentalRI}\n`;
   });
 
   // Crear y descargar archivo
@@ -1248,7 +1251,7 @@ function exportData() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "datos_refraccion.txt";
+  a.download = "datos_sim_optica.txt";
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -1257,36 +1260,9 @@ function exportData() {
 
 function wavelengthToColor(wavelength) {
   let r, g, b;
-
-  if (wavelength >= 380 && wavelength < 440) {
-    r = (-1 * (wavelength - 440)) / (440 - 380);
-    g = 0;
-    b = 1;
-  } else if (wavelength >= 440 && wavelength < 490) {
     r = 0;
-    g = (wavelength - 440) / (490 - 440);
-    b = 1;
-  } else if (wavelength >= 490 && wavelength < 510) {
-    r = 0;
-    g = 1;
-    b = (-1 * (wavelength - 510)) / (510 - 490);
-  } else if (wavelength >= 510 && wavelength < 580) {
-    r = (wavelength - 510) / (580 - 510);
-    g = 1;
-    b = 0;
-  } else if (wavelength >= 580 && wavelength < 645) {
-    r = 1;
-    g = (-1 * (wavelength - 645)) / (645 - 580);
-    b = 0;
-  } else if (wavelength >= 645 && wavelength <= 750) {
-    r = 1;
-    g = 0;
-    b = 0;
-  } else {
-    r = 0.5;
     g = 0.5;
-    b = 0.5;
-  }
+    b = 1;
 
   // Intensidad
   let factor;
