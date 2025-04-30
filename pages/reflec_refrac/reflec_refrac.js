@@ -477,11 +477,28 @@ function drawMaterialPlate(originX, originY, scale) {
   const plateRight = originX + plateWidth / 2;
   const plateTop = originY; // La placa comienza en Y=0
 
-  // Dibujar la placa
-  ctx.fillStyle = "rgba(135, 206, 250, 0.5)"; // Azul claro semitransparente
-  ctx.strokeStyle = "rgba(70, 130, 180, 0.8)"; // Azul más oscuro
-  ctx.lineWidth = 2;
-
+  
+  // Dibujar la placa. Cambia de color según material. Gris circonio, rosa cuarzo, azul el resto
+  if (simulation.currentMaterial == MATERIALS.zirconium){
+    ctx.fillStyle = "rgba(243, 243, 243, 0.8)"; // Azul claro semitransparente
+    ctx.strokeStyle = "rgba(243, 243, 243, 0.8)"; // Azul más oscuro
+    ctx.lineWidth = 2;
+  }
+  else if (simulation.currentMaterial == MATERIALS.diamond) {
+    ctx.fillStyle = "rgba(243, 243, 243, 0.8)"; // Azul claro semitransparente
+    ctx.strokeStyle = "rgba(243, 243, 243, 0.8)"; // Azul más oscuro
+    ctx.lineWidth = 2;
+  }
+  else if (simulation.currentMaterial == MATERIALS.quartz) {
+    ctx.fillStyle = "rgba(130, 112, 116, 0.5)"; // Azul claro semitransparente
+    ctx.strokeStyle = "rgba(130, 112, 116, 0.5)"; // Azul más oscuro
+    ctx.lineWidth = 2;
+  }
+    else {
+    ctx.fillStyle = "rgba(135, 206, 250, 0.3)"; // Azul claro semitransparente
+    ctx.strokeStyle = "rgba(70, 130, 180, 0.3)"; // Azul más oscuro
+    ctx.lineWidth = 2;
+  }
   ctx.beginPath();
   ctx.rect(plateLeft, plateTop, plateWidth, plateThickness);
   ctx.fill();
@@ -509,20 +526,20 @@ function drawMaterialPlate(originX, originY, scale) {
   // Etiqueta con el medio exterior
   ctx.fillText(
     simulation.currentExteriorMedium.name,
-    originX - 350,
-    plateTop - 80
+    originX - 160,
+    plateTop - 70
   );
 
   // Etiqueta con el medio exterior
   ctx.fillText(
     simulation.currentExteriorMedium.name,
-    originX - 350,
-    plateTop + 150
+    originX - 160,
+    plateTop + 120
   );
 
   //Etiqueta con el material de la placa
   ctx.fillStyle = "rgba(70, 130, 180, 1)";
-  ctx.fillText(materialName, originX - 350, plateTop + 45);
+  ctx.fillText(materialName, originX - 160, plateTop + 45);
 }
 
 function drawLaser(originX, originY, scale) {
@@ -557,7 +574,7 @@ function drawLaser(originX, originY, scale) {
   const incidenceFromNormal = (simulation.realIncidenceAngle * Math.PI) / 180;
 
   // Ángulo de reflexión (igual al de incidencia)
-  const reflectionAngle = incidenceFromNormal;
+  const reflectionAngle = (Math.PI/2)-incidenceFromNormal;
 
   // Ángulo de refracción usando la ley de Snell
   let refractionAngle;
@@ -619,16 +636,16 @@ function drawLaser(originX, originY, scale) {
   ctx.stroke();
 
   // Dibujar ángulos
-  drawAngle(incidenceX, incidenceY, angleRad, Math.PI / 2, 30, "β", "#e57f71");
   drawAngle(
-    incidenceX,
-    incidenceY,
-    Math.PI - angleRad,
-    Math.PI / 2,
-    30,
-    "α",
-    "#52bfa0"
+    incidenceX, incidenceY,
+    Math.PI+angleRad,
+    -Math.PI/2,
+    30,"α","#52bfa0"
   );
+  drawAngle(incidenceX, incidenceY, 
+    -Math.PI / 2, 
+    -reflectionAngle, 
+    30, "β", "#e57f71");
 
   // Guardar los ángulos calculados para uso en mediciones
   simulation.calculatedAngles = {
@@ -645,19 +662,9 @@ function drawAngle(x, y, angle1, angle2, radius, label, color) {
 
   // Dibujar arco
   ctx.beginPath();
-  ctx.arc(x, y, radius, Math.min(angle1, angle2), Math.max(angle1, angle2));
+  ctx.arc(x, y, radius,angle1,angle2);
   ctx.stroke();
 
-  // Calcular posición para la etiqueta
-  const labelAngle = (angle1 + angle2) / 2;
-  const labelX = x + (radius + 10) * Math.cos(labelAngle);
-  const labelY = y - (radius + 10) * Math.sin(labelAngle);
-
-  // Dibujar etiqueta
-  ctx.font = "14px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(label, labelX, labelY);
 }
 
 function drawMeasurements(originX, originY, scale) {
