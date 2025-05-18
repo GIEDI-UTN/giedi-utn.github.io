@@ -101,5 +101,10 @@ h2 p{
 
 table tr{
   border: 1px solid white;
+}
 
+canvas {
+  width: 60%;
+  height: 60%;
+  margin: 20px
 }

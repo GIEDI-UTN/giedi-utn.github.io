@@ -9,36 +9,11 @@ verrta.addEventListener("click", function () {
   );
   let dato = parseFloat(document.querySelector('input[name="dato"]').value);
 
-  mediciones[0] = genError(dato, error);
-  mediciones[1] = genError(dato, error);
-  mediciones[2] = genError(dato, error);
-  mediciones[3] = genError(dato, error);
-  mediciones[4] = genError(dato, error);
-  mediciones[5] = genError(dato, error);
-  mediciones[6] = genError(dato, error);
-  mediciones[7] = genError(dato, error);
-  mediciones[8] = genError(dato, error);
-  mediciones[9] = genError(dato, error);
-  mediciones[10] = genError(dato, error);
-  mediciones[11] = genError(dato, error);
-  mediciones[12] = genError(dato, error);
-  mediciones[13] = genError(dato, error);
-  mediciones[14] = genError(dato, error);
-  mediciones[15] = genError(dato, error);
-  mediciones[16] = genError(dato, error);
-  mediciones[17] = genError(dato, error);
-  mediciones[18] = genError(dato, error);
-  mediciones[19] = genError(dato, error);
-  mediciones[20] = genError(dato, error);
-  mediciones[21] = genError(dato, error);
-  mediciones[22] = genError(dato, error);
-  mediciones[23] = genError(dato, error);
-  mediciones[24] = genError(dato, error);
-  mediciones[25] = genError(dato, error);
-  mediciones[26] = genError(dato, error);
-  mediciones[27] = genError(dato, error);
-  mediciones[28] = genError(dato, error);
-  mediciones[29] = genError(dato, error);
+  mediciones.length = 0; // limpia el arreglo
+  for (let i = 0; i < 5000; i++) {
+    mediciones.push(genError(dato, error));
+  }
+
   rta();
 });
 
@@ -77,69 +52,75 @@ function rta() {
 
   html = "<h2> Resultados </h2>";
 
-  html += `<p> Mediciones realizadas: </p><br>`;
+  html += `<p> Mediciones realizadas: 5000</p><br>`;
   html += `<table>`;
-  html += `<tr>
-  <td> ${mediciones[0]} </td>
-  <td> ${mediciones[1]} </td>
-  <td> ${mediciones[2]} </td>
-  </tr>`;
 
-  html += `<tr>
-  <td> ${mediciones[3]} </td>
-  <td> ${mediciones[4]} </td>
-  <td> ${mediciones[5]} </td>
-  </tr>`;
-
-  html += `<tr>
-  <td> ${mediciones[6]} </td>
-  <td> ${mediciones[7]} </td>
-  <td> ${mediciones[8]} </td>
-  </tr>`;
-
-  html += `<tr>
-  <td> ${mediciones[9]} </td>
-  <td> ${mediciones[10]} </td>
-  <td> ${mediciones[11]} </td>
-  </tr>`;
-
-  html += `<tr>
-  <td> ${mediciones[12]} </td>
-  <td> ${mediciones[13]} </td>
-  <td> ${mediciones[14]} </td>
-  </tr>`;
-
-  html += `<tr>
-  <td> ${mediciones[15]} </td>
-  <td> ${mediciones[16]} </td>
-  <td> ${mediciones[17]} </td>
-  </tr>`;
-
-  html += `<tr>
-  <td> ${mediciones[18]} </td>
-  <td> ${mediciones[19]} </td>
-  <td> ${mediciones[20]} </td>
-  </tr>`;
+  for (let i = 0; i < mediciones.length; i += 3) {
+  html += "<tr>";
+  for (let j = 0; j < 7; j++) {
+    if (mediciones[i + j] !== undefined) {
+      html += `<td> ${mediciones[i + j].toFixed(4)} </td>`;
+    }
+  }
+  html += "</tr>";
+}
 
 
-  html += `<tr>
-  <td> ${mediciones[21]} </td>
-  <td> ${mediciones[22]} </td>
-  <td> ${mediciones[23]} </td>
-  </tr>`;
-
-  html += `<tr>
-  <td> ${mediciones[24]} </td>
-  <td> ${mediciones[25]} </td>
-  <td> ${mediciones[26]} </td>
-  </tr>`;
-
-  html += `<tr>
-  <td> ${mediciones[27]} </td>
-  <td> ${mediciones[28]} </td>
-  <td> ${mediciones[29]} </td>
-  </tr>`;
-  
   html += `</table>`;
   resultado.innerHTML = html;
+
+  graficarDistribucion();
+}
+
+function graficarDistribucion() {
+  // Ordenamos las mediciones
+  const datosOrdenados = [...mediciones].sort((a, b) => a - b);
+
+  // Agrupamos por intervalos para hacer un histograma
+  const bins = 10;
+  const min = datosOrdenados[0];
+  const max = datosOrdenados[datosOrdenados.length - 1];
+  const anchoBin = (max - min) / bins;
+
+  const frecuencias = new Array(bins).fill(0);
+  for (let val of datosOrdenados) {
+    const i = Math.min(Math.floor((val - min) / anchoBin), bins - 1);
+    frecuencias[i]++;
+  }
+
+  const etiquetas = frecuencias.map((_, i) => {
+    const desde = (min + i * anchoBin).toFixed(2);
+    const hasta = (min + (i + 1) * anchoBin).toFixed(2);
+    return `${desde}–${hasta}`;
+  });
+
+  const ctx = document.getElementById("grafico").getContext("2d");
+  if (window.graficoChart) window.graficoChart.destroy(); // evitar superposición
+
+  window.graficoChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: etiquetas,
+      datasets: [
+        {
+          label: "Distribución de mediciones",
+          data: frecuencias,
+          backgroundColor: "rgba(112, 230, 179, 0.5)",
+          borderColor: "rgba(112, 230, 179, 1)",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+          },
+        },
+      },
+    },
+  });
 }
