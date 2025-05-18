@@ -1,6 +1,7 @@
 let resto;
 let sobra = false;
 let mediciones = [5];
+let muestras;
 const verrta = document.getElementById("verrta");
 
 verrta.addEventListener("click", function () {
@@ -8,9 +9,11 @@ verrta.addEventListener("click", function () {
     document.querySelector('input[name="eporcentual"]:checked').value
   );
   let dato = parseFloat(document.querySelector('input[name="dato"]').value);
+  muestras = parseInt(document.querySelector('input[name="nromuestras"]').value);
+
 
   mediciones.length = 0; // limpia el arreglo
-  for (let i = 0; i < 5000; i++) {
+  for (let i = 0; i < muestras; i++) {
     mediciones.push(genError(dato, error));
   }
 
@@ -52,7 +55,7 @@ function rta() {
 
   html = "<h2> Resultados </h2>";
 
-  html += `<p> Mediciones realizadas: 5000</p><br>`;
+  html += `<p> Mediciones realizadas: ${parseFloat(muestras)}</p><br>`;
   html += `<table>`;
 
   for (let i = 0; i < mediciones.length; i += 3) {
