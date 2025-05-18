@@ -80,7 +80,10 @@ function graficarDistribucion() {
   const datosOrdenados = [...mediciones].sort((a, b) => a - b);
 
   // Agrupamos por intervalos para hacer un histograma
-  const bins = parseInt(Math.sqrt(muestras)); 
+  let bins = parseInt(Math.sqrt(muestras)); 
+  if (bins<3){
+    bins = 5;
+  }
   const min = datosOrdenados[0];
   const max = datosOrdenados[datosOrdenados.length - 1];
   const anchoBin = (max - min) / bins;
