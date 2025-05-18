@@ -220,8 +220,23 @@
     white-space: nowrap;
     border-width: 0;
   }
+  .absolute {
+    position: absolute;
+  }
   .fixed {
     position: fixed;
+  }
+  .relative {
+    position: relative;
+  }
+  .top-0 {
+    top: calc(var(--spacing) * 0);
+  }
+  .left-0 {
+    left: calc(var(--spacing) * 0);
+  }
+  .z-1000 {
+    z-index: 1000;
   }
   .container {
     width: 100%;
@@ -338,8 +353,14 @@
   .h-15 {
     height: calc(var(--spacing) * 15);
   }
+  .h-300 {
+    height: calc(var(--spacing) * 300);
+  }
   .h-\[500px\] {
     height: 500px;
+  }
+  .h-full {
+    height: 100%;
   }
   .w-5 {
     width: calc(var(--spacing) * 5);
@@ -352,6 +373,9 @@
   }
   .w-40 {
     width: calc(var(--spacing) * 40);
+  }
+  .w-300 {
+    width: calc(var(--spacing) * 300);
   }
   .w-\[250px\] {
     width: 250px;
@@ -376,6 +400,9 @@
   }
   .min-w-\[600px\] {
     min-width: 600px;
+  }
+  .flex-shrink {
+    flex-shrink: 1;
   }
   .shrink-0 {
     flex-shrink: 0;
@@ -434,6 +461,9 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
+  .gap-10 {
+    gap: calc(var(--spacing) * 10);
+  }
   .space-x-3 {
     :where(& > :not(:last-child)) {
       --tw-space-x-reverse: 0;
@@ -447,6 +477,9 @@
       margin-inline-start: calc(calc(var(--spacing) * 4) * var(--tw-space-x-reverse));
       margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
     }
+  }
+  .overflow-auto {
+    overflow: auto;
   }
   .overflow-x-auto {
     overflow-x: auto;
@@ -468,6 +501,10 @@
   }
   .rounded-xl {
     border-radius: var(--radius-xl);
+  }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
   }
   .border-1 {
     border-style: var(--tw-border-style);
@@ -712,6 +749,10 @@
   }
   .ring-utn-dark {
     --tw-ring-color: var(--color-utn-dark);
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
   }
   .transition-colors {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
@@ -1490,6 +1531,11 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -1515,6 +1561,7 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-outline-style: solid;
     }
   }
 }

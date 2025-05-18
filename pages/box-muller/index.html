@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador de errores</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>
+      Transformada de Box-Muller para mediciones físicas en entornos simulados
+    </h1>
+    <div class="main">
+        <img src="./media/cartesian_rand_transform.png" alt="Ilustración de método Box-Muller">
+      <div class="texto">
+            <p>
+              La transformada de Box-Muller genera números aleatorios con
+              distribución normal (z0, z1) a partir de números aleatorios (u1,
+              u2) que pertenecen al rango (0,1) con distribución uniforme.
+              El algoritmo genera dos números u1, u2 con Math.random() y los
+              transforma en z0, z1 con:
+            </p>
+        <ul class="formulas">
+          <li><code>R = sqrt(-2.ln(u1))</code></li>
+          <li><code>&theta; = 2.&pi;.u2</code></li>
+          <li><code>z0 = R.cos(&theta;)</code></li>
+          <li><code>z1 = R.sin(&theta;)</code></li>
+        </ul>
+      </div>
+
+      <div class="muestra">
+        <h1>Ejemplo</h1>
+        <label for="datoreal">Dato real:</label>
+        <input type="number" name="dato" id="datoreal" placeholder="Ej: 12.3"/>
+
+        <div class="error">
+          <p>Seleccione desviación estándar porcentual:</p>
+
+          <label for="0.1%">± 0.1%</label>
+          <input type="radio" name="eporcentual" id="0.1%" value="0.1" />
+
+          <label for="0.5%">± 0.5%</label>
+          <input type="radio" name="eporcentual" id="0.5%" value="0.5" />
+
+          <label for="1%">± 1%</label>
+          <input type="radio" name="eporcentual" id="1%" value="1"/>
+
+          <label for="2%">± 2%</label>
+          <input type="radio" name="eporcentual" id="2%" value="2"/>
+        </div>
+
+        <button id="verrta">Ver resultados</button>
+
+        <div id="resultado">
+
+        </div>
+
+      </div>
+    </div>
+
+    <script src="./box-muller.js"></script>
+  </body>
+</html>
