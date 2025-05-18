@@ -77,67 +77,67 @@ function rta() {
 
   html = "<h2> Resultados </h2>";
 
-  html += `<p> Mediciones realizadas: 5</p><br>`;
+  html += `<p> Mediciones realizadas: </p><br>`;
   html += `<table>`;
   html += `<tr>
-  <td> ${parseFloat(mediciones[0]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[1]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[2]).toFixed(4)} </td>
+  <td> ${mediciones[0]} </td>
+  <td> ${mediciones[1]} </td>
+  <td> ${mediciones[2]} </td>
   </tr>`;
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[3]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[4]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[5]).toFixed(4)} </td>
+  <td> ${mediciones[3]} </td>
+  <td> ${mediciones[4]} </td>
+  <td> ${mediciones[5]} </td>
   </tr>`;
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[6]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[7]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[8]).toFixed(4)} </td>
+  <td> ${mediciones[6]} </td>
+  <td> ${mediciones[7]} </td>
+  <td> ${mediciones[8]} </td>
   </tr>`;
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[9]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[10]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[11]).toFixed(4)} </td>
+  <td> ${mediciones[9]} </td>
+  <td> ${mediciones[10]} </td>
+  <td> ${mediciones[11]} </td>
   </tr>`;
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[12]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[13]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[14]).toFixed(4)} </td>
+  <td> ${mediciones[12]} </td>
+  <td> ${mediciones[13]} </td>
+  <td> ${mediciones[14]} </td>
   </tr>`;
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[15]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[16]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[17]).toFixed(4)} </td>
+  <td> ${mediciones[15]} </td>
+  <td> ${mediciones[16]} </td>
+  <td> ${mediciones[17]} </td>
   </tr>`;
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[18]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[19]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[20]).toFixed(4)} </td>
+  <td> ${mediciones[18]} </td>
+  <td> ${mediciones[19]} </td>
+  <td> ${mediciones[20]} </td>
   </tr>`;
 
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[21]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[22]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[23]).toFixed(4)} </td>
+  <td> ${mediciones[21]} </td>
+  <td> ${mediciones[22]} </td>
+  <td> ${mediciones[23]} </td>
   </tr>`;
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[24]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[25]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[26]).toFixed(4)} </td>
+  <td> ${mediciones[24]} </td>
+  <td> ${mediciones[25]} </td>
+  <td> ${mediciones[26]} </td>
   </tr>`;
 
   html += `<tr>
-  <td> ${parseFloat(mediciones[27]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[28]).toFixed(4)} </td>
-  <td> ${parseFloat(mediciones[29]).toFixed(4)} </td>
+  <td> ${mediciones[27]} </td>
+  <td> ${mediciones[28]} </td>
+  <td> ${mediciones[29]} </td>
   </tr>`;
   
   html += `</table>`;

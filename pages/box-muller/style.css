@@ -99,7 +99,7 @@ h2 p{
   align-items: center;
 }
 
-table {
+table tr{
   border: 1px solid white;
-  
+
 }
