@@ -6,6 +6,28 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.construccion {
+    background-color: #9b5951;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    width: 100%;
+    margin: 0;
+}
+
+.construccion svg {
+    margin-right: 10px;
+}
+
+.construccion p {
+    font-weight: 500;
+    color: white;
+    font-size: 1.2rem;
+}
+
+
 body {
     background-color: #f0f2f5;
     color: #333;
