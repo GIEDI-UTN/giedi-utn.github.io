@@ -132,80 +132,235 @@
     <!--Fin de navbar-->
 
     <!-- Comienzo container generador de errores -->
-    <div class="flex flex-col items-center justify-center m-8">
-      <h1 class="text-4xl font-bold dark:text-white text-utn-dark">
-        Generador de escenarios
-      </h1>
-      <p class="dark:text-white text-utn-dark">
-        Seleccioná el simulador para el que vas a generar el escenario. Luego,
-        configurá los parámetros y elegí el porcentaje de error a aplicar.
-      </p>
-      <p class="dark:text-white text-utn-dark mb-8">
-        El escenario se descarga en formato JSON y vas a poder subirlo a
-        cualquiera de los simuladores.
-      </p>
+    <div class="flex flex-col items-center justify-center mt-12">
+        <h1 class="text-4xl font-bold dark:text-white text-utn-dark">
+          Generador de escenarios
+        </h1>
+        <p class="dark:text-white text-utn-dark">
+          Seleccioná el simulador para el que vas a generar el escenario. Luego,
+          configurá los parámetros y elegí el porcentaje de error a aplicar.
+        </p>
+        <p class="dark:text-white text-utn-dark mb-8">
+          El escenario se descarga en formato JSON y vas a poder subirlo a
+          cualquiera de los simuladores.
+        </p>
 
-      <!-- Container de botones selección de simulador -->
-      <div
-        class="border-2 border-utn-regular rounded-2xl flex flex-col items-center justify-center"
-      >
-        <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
-          Selecciona el simulador
-        </h2>
-
+        <!-- Container de botones selección de simulador -->
         <div
-          class="flex flex-row justify-center items-center ml-4 dark:text-white text-utn-dark"
+          class="border-2 border-utn-regular rounded-2xl flex flex-col items-center justify-center w-full max-w-7xl"
         >
-          <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer"
-            id="reflec"
-          >
-            Reflexión y refracción
-          </button>
-          <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer"
-            id="ascensor"
-          >
-            Peso aparente
-          </button>
-          <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer"
-            id="pensimple"
-          >
-            Péndulo simple
-          </button>
-          <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer"
-            id="penbalistico"
-          >
-            Péndulo balístico
-          </button>
-          <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer"
-            id="artwood"
-          >
-            Máquina de Artwood
-          </button>
-          <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer"
-            id="venturi"
-          >
-            Tubo de Venturi
-          </button>
-        </div>
+          <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
+            Selecciona el simulador
+          </h2>
 
+          <div
+            class="flex flex-row justify-center items-center ml-4 dark:text-white text-utn-dark"
+          >
+            <button
+              class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+              id="reflec"
+            >
+              Reflexión y refracción
+            </button>
+            <button
+              class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+              id="ascensor"
+            >
+              Peso aparente
+            </button>
+            <button
+              class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+              id="pensimple"
+            >
+              Péndulo simple
+            </button>
+            <button
+              class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+              id="penbalistico"
+            >
+              Péndulo balístico
+            </button>
+            <button
+              class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+              id="artwood"
+            >
+              Máquina de Artwood
+            </button>
+            <button
+              class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+              id="venturi"
+            >
+              Tubo de Venturi
+            </button>
+          </div>
+          <!-- Fin container de botones -->
+        </div>
+        <!-- Siguiente toma el valor del simulador seleccionado y modifica los parámetros de la caja de abajo para generar escenario. Caja - > display block -->
         <button
-          class="bg-utn-regular rounded-full m-4 px-4 py-1 dark:text-slate-950 text-utn-dark text-lg font-semibold cursor-pointer"
+          class="bg-utn-light dark:bg-slate-950 border-2 border-utn-regular rounded-full m-4 px-4 py-1 dark:text-white text-utn-dark text-lg font-semibold cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+          id="mostrar-param"
         >
           Siguiente
         </button>
-      </div>
-      <img src="../../src/media/siguiente.png" alt="Flechas indicando siguiente paso" class="w-10 h-10 m-4">
 
+        <img
+          src="../../src/media/siguiente.png"
+          alt="Flechas indicando siguiente paso"
+          class="w-10 h-10 m-4"
+        />
+
+        <!-- Container con los parámetros -->
+        <div
+          class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl"
+          id="parametros"
+        >
+        <!-- COMIENZO GRID PARÁMETROS-->
+            <h2 class="dark:text-white text-utn-dark text-2xl font-semibold m-4">
+              Configurá los parámetros del simulador
+            </h2>   
+
+            <div
+              class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl"
+            >
+              <div
+                class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center"
+              >
+                <p>Error porcentual</p>
+                <select
+                  id="ePorcentual"
+                  class="border-2 border-utn-regular rounded-lg px-2 py-1 mt-2 bg-transparent w-48"
+                >
+                  <option
+                    value="0.1"
+                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
+                  >
+                    ± 0.1%
+                  </option>
+                  <option
+                    value="0.5"
+                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
+                  >
+                    ± 0.5%
+                  </option>
+                  <option
+                    value="1"
+                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
+                  >
+                    ± 1%
+                  </option>
+                  <option
+                    value="2"
+                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
+                  >
+                    ± 2%
+                  </option>
+                </select>
+              </div>
+
+              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+                <label for="projectileMass">Masa del proyectil (kg)</label>
+                <input
+                  type="number"
+                  id="projectileMass"
+                  step="0.1"
+                  min="0.1"
+                  max="10"
+                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+                />
+              </div>
+
+              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+                <label for="pendulumMass">Masa del cuerpo (kg)</label>
+                <input
+                  type="number"
+                  id="pendulumMass"
+                  step="0.1"
+                  min="0.1"
+                  max="100"
+                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+                />
+              </div>
+
+              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+                <label for="pendulumLength">Largo de la cuerda (m)</label>
+                <input
+                  type="number"
+                  id="pendulumLength"
+                  step="0.1"
+                  min="0.5"
+                  max="5"
+                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+                />
+              </div>
+
+              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+                <label for="initialVelocity">Velocidad inicial (m/s)</label>
+                <input
+                  type="number"
+                  id="initialVelocity"
+                  step="1"
+                  min="1"
+                  max="100"
+                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+                />
+              </div>
+
+              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+                <label for="impactAngle">Ángulo de impacto (°)</label>
+                <input type="number" id="impactAngle" step="5" min="5" max="45" class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent">
+              </div>
+
+            <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+              <label for="titulo">Título del escenario</label>
+              <input
+                  type="text"
+                  id="titulo"
+                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+                  placeholder="(opcional)"
+              />
+            </div>
+
+          </div>
+
+            <!-- FIN GRID PARÁMETROS-->
+        </div>
+
+        <!-- El boton verifica que los campos estén completos. Si están bien, hace que el boton descarga deje de estar hidden-->
+        <button
+          class="bg-utn-light dark:bg-slate-950 border-2 border-utn-regular rounded-full m-4 px-4 py-1 dark:text-white text-utn-dark text-lg font-semibold cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+          id="verificar-dato"
+        >
+          Siguiente
+        </button>
+
+        <img
+          src="../../src/media/siguiente.png"
+          alt="Flechas indicando siguiente paso"
+          class="w-10 h-10 m-4"
+        />
+        <!-- IMPORTANTE: BOTON HIDDEN A MENOS QUE SIGUIENTE VERIFIQUE LOS DATOS INGRESADOS-->
+        <button
+          class="border-utn-regular border-2 rounded-full mt-4 px-4 py-1 dark:text-white text-utn-dark text-lg cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+          id="btn-descarga"
+          onclick="exportarJSON()"
+        >
+          Descargar escenario
+        </button>
+
+        <!-- Fin container de parámetros -->
+        <p class="dark:text-white mt-12 text-utn-dark">
+          Para más información sobre el método utilizado para errores
+          experimentales, lee nuestro apartado sobre
+          <a
+            href="../box-muller/index.html"
+            class="text-utn-regular font-semibold"
+            >método Box-Muller</a
+          ></p>
     </div>
+    <!-- Fin container generador de errores -->
 
     <!--Comienzo del footer-->
-    <footer class="bg-utn-light mt-20 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">
+    <footer class="bg-utn-light mt-12 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center sm:justify-between">
           <div class="flex justify-center text-utn-regular sm:justify-start">
@@ -270,8 +425,9 @@
         </div>
       </div>
     </footer>
+    <!--Fin del footer-->
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./errores.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
   </body>
