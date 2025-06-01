@@ -87,13 +87,13 @@ class PendulumSimulation {
             // Simplified formula: T = 2π√(L/g)
             return 2 * Math.PI * Math.sqrt(this.length / this.g);
         } else {
-            // Exact formula with angle correction: T = 2π√(L/g) * (1 + (1/16)θ² + ...)
-            const k = Math.sin(this.angle / 2);
-            return 2 * Math.PI * Math.sqrt(this.length / this.g) * 
-                  (1 + Math.pow(k, 2)/16 + 11*Math.pow(k, 4)/3072);
+
+            const k = Math.sin(this.angle/2);
+            const T0= 2 * Math.PI * Math.sqrt(this.length / this.g);
+            let T = T0 * (1 + (Math.pow(k, 2)/4) + ((9/64)*Math.pow(k, 4)) + ((225/2304)*Math.pow(k,6)) + ((1225/16384)*Math.pow(k,8)));
+            return  T;
         }
     }
-    
     // Start pendulum oscillation and timer
     startSimulation() {
         if (this.running) return;
