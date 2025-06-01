@@ -29,6 +29,8 @@ const EXTERIOR_MEDIUMS = {
   sugarSolution80: { name: "Solución de azúcar 80%", refractiveIndex: 1.49 },
 };
 
+const ADMIN_PASSWORD = "GIEDI610";
+
 // Estado de la simulación
 let simulation = {
   material: "glass",
@@ -204,6 +206,21 @@ function setupEventListeners() {
     setGridSpacing(10);
   });
 
+    // Botones de administración y gestión de datos
+  adminBtn.addEventListener('click', function() {
+    adminModal.className=adminModal.className.replace('hidden','block');
+    adminPassword.value = '';
+  });
+  
+  adminLoginBtn.addEventListener('click', function() {
+     if (adminPassword.value === ADMIN_PASSWORD) {
+      adminPanel.className=adminPanel.className.replace('hidden','block');
+      updateAdminPanel();
+     } else {
+        alert('Contraseña incorrecta');
+      }
+  });
+
   resetBtn.addEventListener("click", function () {
     resetSimulation();
   });
@@ -238,6 +255,7 @@ function setupEventListeners() {
       statsModal.style.display = "none";
     }
     if (e.target === adminModal) {
+      adminModal.className=adminModal.className.replace('block','hidden');
       adminModal.style.display = "none";
     }
   });

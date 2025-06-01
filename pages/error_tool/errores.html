@@ -27,7 +27,7 @@
   <body class="dark:bg-slate-950 bg-utn-light font-rubik">
     <!--Comienzo de navbar-->
     <nav
-      class="bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50 min-w-[350px]"
+      class="sticky top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50 min-w-[350px]"
     >
       <div
         class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto"
@@ -211,151 +211,58 @@
 
         <!-- Container con los parámetros -->
         <div
-          class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl"
+          class="hidden"
           id="parametros"
         >
         <!-- COMIENZO GRID PARÁMETROS-->
-            <h2 class="dark:text-white text-utn-dark text-2xl font-semibold m-4">
-              Configurá los parámetros del simulador
-            </h2>   
-
-            <div
-              class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl"
-            >
-              <div
-                class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center"
-              >
-                <p>Error porcentual</p>
-                <select
-                  id="ePorcentual"
-                  class="border-2 border-utn-regular rounded-lg px-2 py-1 mt-2 bg-transparent w-48"
-                >
-                  <option
-                    value="0.1"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 0.1%
-                  </option>
-                  <option
-                    value="0.5"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 0.5%
-                  </option>
-                  <option
-                    value="1"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 1%
-                  </option>
-                  <option
-                    value="2"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 2%
-                  </option>
-                </select>
-              </div>
-
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
-                <label for="projectileMass">Masa del proyectil (kg)</label>
-                <input
-                  type="number"
-                  id="projectileMass"
-                  step="0.1"
-                  min="0.1"
-                  max="10"
-                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                />
-              </div>
-
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
-                <label for="pendulumMass">Masa del cuerpo (kg)</label>
-                <input
-                  type="number"
-                  id="pendulumMass"
-                  step="0.1"
-                  min="0.1"
-                  max="100"
-                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                />
-              </div>
-
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
-                <label for="pendulumLength">Largo de la cuerda (m)</label>
-                <input
-                  type="number"
-                  id="pendulumLength"
-                  step="0.1"
-                  min="0.5"
-                  max="5"
-                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                />
-              </div>
-
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
-                <label for="initialVelocity">Velocidad inicial (m/s)</label>
-                <input
-                  type="number"
-                  id="initialVelocity"
-                  step="1"
-                  min="1"
-                  max="100"
-                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                />
-              </div>
-
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
-                <label for="impactAngle">Ángulo de impacto (°)</label>
-                <input type="number" id="impactAngle" step="5" min="5" max="45" class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent">
-              </div>
-
-            <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
-              <label for="titulo">Título del escenario</label>
-              <input
-                  type="text"
-                  id="titulo"
-                  class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                  placeholder="(opcional)"
-              />
-            </div>
-
+          <div class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
+            <!-- Contenido generado por jQuery cuando se selecciona un simulador-->
           </div>
-
-            <!-- FIN GRID PARÁMETROS-->
+        <!-- FIN GRID PARÁMETROS-->
         </div>
 
-        <!-- El boton verifica que los campos estén completos. Si están bien, hace que el boton descarga deje de estar hidden-->
-        <button
-          class="bg-utn-light dark:bg-slate-950 border-2 border-utn-regular rounded-full m-4 px-4 py-1 dark:text-white text-utn-dark text-lg font-semibold cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
-          id="verificar-dato"
-        >
-          Siguiente
-        </button>
+        <div class="hidden " id="verificar-data">
+          <div class="flex flex-col items-center justify-center">
+              <!-- El boton verifica que los campos estén completos. Si están bien, hace que el boton descarga deje de estar hidden-->
+              <button
+                class="bg-utn-light dark:bg-slate-950 border-2 border-utn-regular rounded-full m-4 px-4 py-1 dark:text-white text-utn-dark text-lg font-semibold cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+                id="verificar-dato"
+              >
+                Siguiente
+              </button>
+              
+              <img
+                src="../../src/media/siguiente.png"
+                alt="Flechas indicando siguiente paso"
+                class="w-10 h-10 m-4"
+              />
+          </div>
+        </div>
 
-        <img
-          src="../../src/media/siguiente.png"
-          alt="Flechas indicando siguiente paso"
-          class="w-10 h-10 m-4"
-        />
-        <!-- IMPORTANTE: BOTON HIDDEN A MENOS QUE SIGUIENTE VERIFIQUE LOS DATOS INGRESADOS-->
-        <button
-          class="border-utn-regular border-2 rounded-full mt-4 px-4 py-1 dark:text-white text-utn-dark text-lg cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
-          id="btn-descarga"
-          onclick="exportarJSON()"
-        >
-          Descargar escenario
-        </button>
 
-        <!-- Fin container de parámetros -->
-        <p class="dark:text-white mt-12 text-utn-dark">
-          Para más información sobre el método utilizado para errores
-          experimentales, lee nuestro apartado sobre
-          <a
-            href="../box-muller/index.html"
-            class="text-utn-regular font-semibold"
-            >método Box-Muller</a
-          ></p>
+        <div class="hidden" id="data-ok">
+          <div class="flex flex-col items-center justify-center">
+            <!-- IMPORTANTE: BOTON HIDDEN A MENOS QUE SIGUIENTE VERIFIQUE LOS DATOS INGRESADOS-->
+            <button
+              class="border-utn-regular border-2 rounded-full mt-4 px-4 py-1 dark:text-white text-utn-dark text-lg cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+              id="btn-descarga"
+              onclick="exportarJSON()"
+            >
+              Descargar escenario
+            </button>
+
+            <!-- Fin container de parámetros -->
+            <p class="dark:text-white mt-12 text-utn-dark">
+              Para más información sobre el método utilizado para errores
+              experimentales, lee nuestro apartado sobre
+              <a
+                href="../box-muller/index.html"
+                class="text-utn-regular font-semibold"
+                >método Box-Muller</a
+              ></p>
+          </div>
+        </div>
+
     </div>
     <!-- Fin container generador de errores -->
 

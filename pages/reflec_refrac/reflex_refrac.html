@@ -27,7 +27,7 @@
   <body class="dark:bg-slate-950 bg-utn-light font-rubik">
 
     <!--Comienzo de navbar-->
-    <nav class="bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50 min-w-[350px]">
+    <nav class="sticky top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50 min-w-[350px]">
       <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <a href="../../index.html" class="flex items-center">
           
@@ -137,7 +137,7 @@
       <p class="text-utn-dark text-center dark:text-slate-300">Luego, presiona "Agregar medición" por cada medición que obtengas. Necesitas al menos 5 mediciones.</p>
       <p class="text-utn-regular text-center p-0 mt-4">Para reiniciar la simulación a los valores por defecto, toca en "Reiniciar"</p>
           
-      <div class="flex flex-col lg:flex-row content-around gap-3 mt-12">
+      <div class="simulation-container flex flex-col lg:flex-row content-around gap-3 mt-12">
           <div class="simulation-view w-screen h-[500px]
           lg:w-[900px] lg:h-[700px]">
               <canvas id="simulation-canvas"></canvas>
@@ -222,10 +222,13 @@
                     hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular
                     dark:hover:bg-slate-950 dark:hover:text-utn-regular dark:hover:border-1 dark:hover:border-utn-regular
                     font-semibold px-3 py-1 rounded-2xl">Reiniciar simulación</button>
-                    <button id="reset-simulation" class="grid-button dark:bg-slate-950 dark:text-gray-400 text-lg border-1 border-gray-400 
-                    hover:bg-utn-regular text-gray-400 hover:text-white hover:border-none
+
+                    <button id="admin-button" class="grid-button dark:bg-slate-950 dark:text-gray-400 text-lg border-1 border-gray-400 
+                   hover:bg-utn-regular text-gray-400 hover:text-white hover:border-none
                     pl-3 pr-3 pt-1 pb-1 mt-2 rounded-2xl">Modo administrador</button>
                 </div>
+
+
             </div>
           </div>
       </div>
@@ -234,7 +237,6 @@
     <div class="data-section flex flex-col items-center border-2 border-utn-regular rounded-2xl p-4 md:mx-auto mx-4 mt-10 max-w-screen-xl">
       <h3 class="text-2xl font-semibold dark:text-white mb-4">Tabla de datos</h3>
     
-      <!-- Controles responsivos -->
       <div class="table-controls dark:text-white flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-4 w-full max-w-screen-xl md:mx-auto">
         <button id="add-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
           Agregar medición
@@ -269,7 +271,6 @@
       </div>
     </div>
 
-    <!--REVISAR: ESTADÍSTICAS QUE SE MUESTRAN SIN HABER CUMPLIDO REQUISITO. CAMBIAR HIDDEN CON JS-->
     <div id="stats-modal" class="modal hidden">
       <div class="modal-content dark:text-white">
         <span class="close-modal">&times;</span>
@@ -285,6 +286,42 @@
         </div>
       </div>
     </div>
+
+<div class="flex flex-col justify-start min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl">
+  <h1 class="flex text-3xl md:text-4xl font-bold mt-8 mb-4 text-slate-900 dark:text-white">
+    ¿Qué necesitas saber para este simulador?</h1>
+  <p class="text-utn-dark  dark:text-slate-300">
+    <span class="font-semibold">Rayo luminoso:</span> Trayectoria a lo largo de la cual se propaga la energía luminosa en un medio homogéneo.
+  </p>
+  <p class="text-utn-dark  dark:text-slate-300">
+    <span class="font-semibold">Ley de reciprocidad:</span> La trayectoria de un rayo no depende del punto del que parte. Siempre sigue el mismo recorrido.
+  </p>
+  <p class="text-utn-dark  dark:text-slate-300">
+    <span class="font-semibold">Refracción:</span> Fenómeno que experimenta un rayo luminoso al pasar de un medio a otro con distinto índice de refracción.
+  </p>
+
+  <p class="text-utn-dark  dark:text-slate-300">
+    <span class="font-semibold">Índice de refracción:</span> Relación entre la velocidad a la que viaja la luz en el vacío y la velocidad a la que viaja en el medio elegido.
+    <br>
+    Cuando el medio tiene mayor índice de refracción, se dice que es más "denso".
+    <br><br>
+    <span class="font-semibold text-utn-regular">Importante: El índice de refracción SIEMPRE es mayor o igual a 1. No existe medio en el cual la luz viaje más rápido que en el vacío.</span>
+  </p>
+  <br>
+  <p class="text-utn-dark  dark:text-slate-300">
+    <span class="font-semibold">Ángulo de incidencia:</span> Ángulo con el que impacta el rayo luminoso en la superficie respecto de una normal perpendicular a esta.
+  </p>
+  <p class="text-utn-dark  dark:text-slate-300">
+    <span class="font-semibold">Ángulo refractado:</span> Ángulo que sufre una desviación debido al cambio de medio en el recorrido del rayo luminoso. Puede obtenerse a través de la Ley de Snell.
+  </p>
+  <p class="text-utn-dark  dark:text-slate-300">
+    <span class="font-semibold">Ley de Snell:</span> Relaciona los senos de los ángulos incidente y refractado, que son constantes para dos medios dados, a través de la fórmula 
+    <span class="font-semibold text-utn-regular">n1.sen(&theta;1)=n2.sen(&theta;2)</span>
+    <br>
+    donde n1 es el índice de refracción del medio incidente, &theta;1 el ángulo de incidencia, n2 el índice de refracción del medio destino, y &theta;2 el ángulo refractado.
+  </p>
+
+</div>
 
     <!--Comienzo del footer-->
   <footer class="bg-utn-light mt-20 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">
