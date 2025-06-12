@@ -555,7 +555,7 @@ $(function () {
                 max="45"
                 placeholder="Por defecto: 0°" 
                 class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"/>
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 5° a 45°</p>
+                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0° a 89°</p>
               </div>
 
             <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -661,6 +661,7 @@ $(function () {
                   placeholder="Por defecto: 1 kg"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
+                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -674,9 +675,10 @@ $(function () {
                   placeholder="Por defecto: 0.1 kg"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
+                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
               </div>
 
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl hidden" id="masa_polea">
               <label for="pulley-mass">Masa de la polea (kg)</label>
                 <input
                   type="number"
@@ -687,11 +689,10 @@ $(function () {
                   placeholder="Por defecto: 0.5 kg"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-2">(Sólo para polea no despreciable)</p>
                 <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 1 kg</p>
               </div>
 
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl hidden" id="radio_polea">
               <label for="pulley-radius">Radio de la polea (cm)</label>
                 <input
                   type="number"
@@ -702,7 +703,6 @@ $(function () {
                   placeholder="Por defecto: 5 cm"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-2">(Sólo para polea no despreciable)</p>
                 <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 2 cm a 10 cm</p>
               </div>
 
@@ -941,6 +941,17 @@ $(function () {
     }
   });
 
+  /* REVISAR POR QUÉ NO FUNCIONA DESAPARECER SEGUN EL SELECT 
+
+  $("#pulley-type").on("click", function (){
+    if ($("#pulley-type option:checked").val() == "massive-pulley"){
+      $("#masa_polea").show();
+      $("#radio_polea").show();
+  }
+  });
+  */
+  
+
   // click en siguiente verifica los datos y habilita descarga
   $("#verificar-dato").on("click", function () {
     switch(simulador){
@@ -1017,13 +1028,15 @@ $(function () {
         }
 
         break;
+
+
       case 'pensimple':
         $masa= parseFloat($("#mass").val());
         $largo= parseFloat($("#length").val());
         $ciclos= parseFloat($("#cycles").val());
         $angulo= parseFloat($("#angle").val());
         $fuera_rango=false;
-        $text_adv=""
+        $text_adv="";
 
         if ((($masa<10) || ($masa>500)) && $masa.length!=0){
           $text_adv+="El rango válido para la masa es de 10g a 500g"
@@ -1066,17 +1079,139 @@ $(function () {
           $angulo=10;
         }
 
-
         if ($fuera_rango){
           alert($text_adv);
         }
+      
         break;
+
+
       case 'penbalistico':
-        datacheck_pbal();
+        $masa_proy = parseFloat($("#projectileMass").val());
+        $masa_cuerpo = parseFloat($("#pendulumMass").val());
+        $long_pend = parseFloat($("#pendulumLength").val());
+        $veloc_inic = parseFloat($("#initialVelocity").val());
+        $ang_impac = parseFloat($("#impactAngle").val());
+        $fuera_rango=false;
+        $text_adv="";
+
+        if ((($masa_proy<0.1) || ($masa_proy>10)) && $masa_proy.length!=0){
+          $text_adv+="El rango válido para la masa del proyectil es de 0.1kg a 10kg";
+          $fuera_rango=true;
+        }
+        else {
+          $masa_proy=0.5;
+        }
+
+        if ((($masa_cuerpo<0.1) || ($masa_cuerpo>10)) && $masa_cuerpo.length!=0){
+          if ($fuera_rango){
+            $text_adv+="\n";
+          }
+
+          $text_adv+="El rango válido para la masa del cuerpo es de 0.1kg a 10kg";
+          $fuera_rango=true;
+        }
+
+        else {
+          $masa_cuerpo=0.5;
+        }
+
+        if ((($long_pend<10) || ($long_pend>300)) && $long_pend.length!=0){
+          if ($fuera_rango){
+            $text_adv+="\n";
+          }
+
+          $text_adv+="El rango válido para la long. de cuerda es de 10cm a 300cm";
+          $fuera_rango=true;
+        }
+        else {
+          $long_pend=10;
+        }
+
+        if ((($veloc_inic<1) || ($veloc_inic>100)) && $veloc_inic.length!=0){
+          if ($fuera_rango){
+            $text_adv+="\n";
+          }
+
+          $text_adv+="El rango válido para la veloc. inicial es de 1m/s a 100m/s";
+          $fuera_rango=true;
+        }
+        else {
+          $veloc_inic=5;
+        }
+
+        if ((($ang_impac<0) || ($ang_impac>89)) && $ang_impac.length!=0){
+          if ($fuera_rango){
+            $text_adv+="\n";
+          }
+
+          $text_adv+="El rango válido para el ángulo de impacto es de 0° a 89°";
+          $fuera_rango=true;
+        }
+        else {
+          $ang_impac=0;
+        }
+
+        if($fuera_rango){
+          alert($text_adv);
+        }
+
         break;
+
+
       case 'artwood':
-        datacheck_artwood();
+        // revisar esta parte para que funcione antes de ingresar a esta funcion
+        if ($("#pulley-type option:checked").val() == "massive-pulley"){
+          $es_considerable = true;
+          $masa_polea = parseFloat($("#pulley-mass").val());
+          $radio_polea = parseFloat($("#pulley-radius").val());
+        }
+
+        else {
+          $es_considerable = false;
+        }
+
+        $dist_caida = parseFloat($("#fall-distance").val());
+        $masa1 = parseFloat($("#mass1-value").val());
+        $masa2 = parseFloat($("#mass2-value").val());
+        $fuera_rango=false;
+        $text_adv="";
+
+        if ((($dist_caida<10) || ($dist_caida>150)) && $dist_caida.length!=0){
+          $text_adv+="El rango válido para la distancia de caída es de 10cm a 150cm";
+          $fuera_rango=true;
+        }
+        else {
+          $dist_caida=100;
+        }
+
+        if ((($masa1<0.1) || ($masa1>10)) && $masa1.length!=0){
+          if ($fuera_rango){
+            $text_adv+="\n"
+          }
+
+          $text_adv+="El rango válido para la masa 1 es de 0.1kg a 10kg";
+          $fuera_rango=true;
+        }
+        else{
+          $masa1=1;
+        }
+
+        if((($masa2<0.1) || ($masa2>10)) && $masa2.length!=0){
+          if ($fuera_rango){
+            $text_adv+="\n"
+          }
+
+          $text_adv+="El rango válido para la masa 2 es de 0.1kg a 10kg";
+          $fuera_rango=true;
+        }
+        else {
+          $masa2=0.1;
+        }
+
         break;
+
+
       case 'venturi':
         datacheck_venturi();
         break;
@@ -1085,11 +1220,6 @@ $(function () {
         alert("Error de lectura \nFavor de reportar a giedifrsfutn@gmail.com");
     }
   });
-
-
-  //datacheck_pbal(){
-    // id projectileMass id pendulumMass id pendulumLength
-    // id initialVelocity id impactAngle
 
 
   //datacheck_artwood(){
