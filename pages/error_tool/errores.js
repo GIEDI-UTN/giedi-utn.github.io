@@ -932,6 +932,9 @@ $(function () {
   $("#verificar-dato").on("click", function () {
     switch (simulador) {
       case "reflec":
+        $error = parseFloat($("#ePorcentual").val());
+        $material = $("#material").val();
+        $medio_ext = $("#medioExterior").val();
         $espesor = parseFloat($("#espesor").val());
         $angulo = parseFloat($("#anguloIncidencia").val());
         $titulo = $("#titulo").val();
@@ -957,16 +960,19 @@ $(function () {
         }
 
         if ($titulo.length == 0) {
-          $titulo = null;
+          $titulo = "escenario";
         }
 
         if ($fuera_rango) {
           alert($text_adv);
+        } else {
+          const data = [$error, $material, $medio_ext, $espesor, $angulo];
+          exportarJSON(data, $titulo);
         }
-
         break;
 
       case "ascensor":
+        $error = parseFloat($("#ePorcentual").val());
         $masa = parseFloat($("#masa").val());
         $gravedad = parseFloat($("#gravedad").val());
         $acelerac = parseFloat($("#acelerac").val());
@@ -1003,16 +1009,19 @@ $(function () {
         }
 
         if ($titulo.length == 0) {
-          $titulo = null;
+          $titulo = "escenario";
         }
 
         if ($fuera_rango) {
           alert($text_adv);
+        } else {
+          const data = [$error, $masa, $gravedad, $acelerac];
+          exportarJSON(data, $titulo);
         }
-
         break;
 
       case "pensimple":
+        $error = parseFloat($("#ePorcentual").val());
         $masa = parseFloat($("#mass").val());
         $largo = parseFloat($("#length").val());
         $ciclos = parseFloat($("#cycles").val());
@@ -1060,16 +1069,20 @@ $(function () {
         }
 
         if ($titulo.length == 0) {
-          $titulo = null;
+          $titulo = "escenario";
         }
 
         if ($fuera_rango) {
           alert($text_adv);
+        } else {
+          const data = [$error, $masa, $largo, $ciclos, $angulo];
+          exportarJSON(data, $titulo);
         }
 
         break;
 
       case "penbalistico":
+        $error = parseFloat($("#ePorcentual").val());
         $masa_proy = parseFloat($("#projectileMass").val());
         $masa_cuerpo = parseFloat($("#pendulumMass").val());
         $long_pend = parseFloat($("#pendulumLength").val());
@@ -1142,11 +1155,22 @@ $(function () {
 
         if ($fuera_rango) {
           alert($text_adv);
+        } else {
+          const data = [
+            $error,
+            $masa_proy,
+            $masa_cuerpo,
+            $long_pend,
+            $veloc_inic,
+            $ang_impac,
+          ];
+          exportarJSON(data, $titulo);
         }
 
         break;
 
       case "artwood":
+        $error = parseFloat($("#ePorcentual").val());
         $dist_caida = parseFloat($("#fall-distance").val());
         $masa1 = parseFloat($("#mass1-value").val());
         $masa2 = parseFloat($("#mass2-value").val());
@@ -1198,7 +1222,8 @@ $(function () {
             $text_adv +=
               "El rango válido para la masa de la polea es de 0.1kg a 1kg";
             $fuera_rango = true;
-          } else if (isNaN($masa_polea)) {
+          } 
+          else if (isNaN($masa_polea)) {
             $masa_polea = 0.5;
           }
 
@@ -1210,25 +1235,35 @@ $(function () {
             $text_adv +=
               "El rango válido para el radio de la polea es de 2cm a 10cm";
             $fuera_rango = true;
-          } else if (isNaN($radio_polea)) {
+          }
+          else if (isNaN($radio_polea)) {
             $radio_polea = 5;
           }
-        } else {
-          $masa_polea = null;
-          $radio_polea = null;
         }
 
         if ($titulo.length == 0) {
-          $titulo = null;
+          $titulo = "escenario";
         }
 
         if ($fuera_rango) {
           alert($text_adv);
+        } else {
+          if ($tipo_polea == "massive-pulley"){
+            const data = [$error, $dist_caida, $masa1, $masa2, $masa_polea, $radio_polea];
+            exportarJSON(data, $titulo);
+          }
+          else {
+            const data = [$error, $dist_caida, $masa1, $masa2];
+            exportarJSON(data, $titulo);
+          }
+          
         }
         break;
 
       case "venturi":
+        $error = parseFloat($("#ePorcentual").val());
         $garganta = parseFloat($("#throat-diameter").val());
+        $diametro = ($("#inlet-diameter").val());
         $caudal = parseFloat($("#flow-rate").val());
         $presion = parseFloat($("#inlet-pressure").val());
         $temperatura = parseFloat($("#temperature").val());
@@ -1280,11 +1315,15 @@ $(function () {
         }
 
         if ($titulo.length == 0) {
-          $titulo = null;
+          $titulo = "escenario";
         }
 
         if ($fuera_rango) {
           alert($text_adv);
+        }
+        else {
+            const data = [$error, $garganta, $diametro, $caudal, $presion, $temperatura];
+            exportarJSON(data, $titulo);
         }
 
         break;
@@ -1296,21 +1335,11 @@ $(function () {
     }
   });
 
-
   // CIERRE JQUERY
 });
 // FIN JQUERY
 
-function exportarJSON(data) {
-  // parámetros a exportar con getid
-
-
-  //let titulo = document.getElementById("titulo").value;
-  let titulo = data[titulo];
-  if (titulo === null || titulo === "") {
-    titulo = "escenario";
-  }
-
+function exportarJSON(data, titulo) {
   const blob = new Blob([JSON.stringify(data, null, 2)], {
     type: "application/json",
   });
