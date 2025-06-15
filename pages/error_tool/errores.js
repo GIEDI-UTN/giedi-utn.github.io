@@ -1150,7 +1150,7 @@ $(function () {
         }
 
         if ($titulo.length == 0) {
-          $titulo = null;
+          $titulo = "escenario";
         }
 
         if ($fuera_rango) {
