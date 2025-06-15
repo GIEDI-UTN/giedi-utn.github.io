@@ -132,62 +132,64 @@
     <!--Fin de navbar-->
 
     <!-- Comienzo container generador de errores -->
-    <div class="flex flex-col items-center justify-center mt-12">
-      <h1 class="text-4xl font-bold dark:text-white text-utn-dark">
+    <div class="flex flex-col items-center justify-center text-center">
+      <div id="texto_inicio" class="m-8 max-w-screen-lg flex flex-col items-center justify-center text-center">
+        <h1 class="text-4xl font-bold dark:text-white text-slate-800">
         Generador de escenarios
-      </h1>
-      <p class="dark:text-white text-utn-dark">
-        Seleccioná el simulador para el que vas a generar el escenario. Luego,
-        configurá los parámetros y elegí el porcentaje de error a aplicar.
-      </p>
-      <p class="dark:text-white text-utn-dark mb-8">
-        El escenario se descarga en formato JSON y vas a poder subirlo a
-        cualquiera de los simuladores.
-      </p>
+        </h1>
+        <p class="dark:text-white text-utn-dark">
+          Seleccioná el simulador para el que vas a generar el escenario. Luego,
+          configurá los parámetros y elegí el porcentaje de error a aplicar.
+          El escenario se descarga en formato JSON y vas a poder subirlo a
+          cualquiera de los simuladores.
+        </p>
+        <img src="../../src/media/header.png" alt="Ilustración de pasos a realizar para carga de parámetros y descarga de archivo JSON" width="501px" height="167px">
+      </div>
+      
 
       <!-- Container de botones selección de simulador -->
       <div
-        class="border-2 border-utn-regular rounded-3xl flex flex-col items-center justify-center"
+        class=" flex flex-col items-center justify-center p-4 border-2 border-utn-regular rounded-4xl"
       >
-        <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
+        <h2 class="dark:text-white text-slate-800 text-2xl font-semibold">
           Selecciona el simulador
         </h2>
 
         <div
-          class="flex flex-row justify-center items-center dark:text-white text-utn-dark"
+          class="flex flex-col lg:flex-row justify-center items-center dark:text-white text-utn-dark"
         >
           <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+            class="dark:bg-slate-950 font-semibold  bg-utn-light border-utn-regular border-2 rounded-3xl 2xl:rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
             id="reflec"
           >
             Reflexión y refracción
           </button>
           <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+            class="dark:bg-slate-950 font-semibold bg-utn-light border-utn-regular border-2 rounded-3xl 2xl:rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
             id="ascensor"
           >
             Peso aparente
           </button>
           <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+            class="dark:bg-slate-950 font-semibold bg-utn-light border-utn-regular border-2 rounded-3xl 2xl:rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
             id="pensimple"
           >
             Péndulo simple
           </button>
           <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+            class="dark:bg-slate-950 font-semibold bg-utn-light border-utn-regular border-2 rounded-3xl 2xl:rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
             id="penbalistico"
           >
             Péndulo balístico
           </button>
           <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+            class="dark:bg-slate-950 font-semibold bg-utn-light border-utn-regular border-2 rounded-3xl 2xl:rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
             id="artwood"
           >
             Máquina de Artwood
           </button>
           <button
-            class="dark:bg-slate-950 bg-utn-light border-utn-regular border-2 rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
+            class="dark:bg-slate-950 font-semibold bg-utn-light border-utn-regular border-2 rounded-3xl 2xl:rounded-full m-4 px-4 py-1 cursor-pointer focus:bg-utn-regular focus:text-white dark:focus:text-slate-950"
             id="venturi"
           >
             Tubo de Venturi
@@ -197,7 +199,7 @@
       </div>
       <!-- Siguiente toma el valor del simulador seleccionado y modifica los parámetros de la caja de abajo para generar escenario. Caja - > display block -->
       <button
-        class="bg-utn-light dark:bg-slate-950 border-2 border-utn-regular rounded-full m-4 px-4 py-1 dark:text-white text-utn-dark text-lg font-semibold cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+        class="bg-utn-light dark:bg-slate-950 border-2 border-utn-regular rounded-full m-4 px-4 py-1 dark:text-white text-slate-800 text-lg font-semibold cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
         id="mostrar-param"
       >
         Siguiente
@@ -206,258 +208,22 @@
       <img
         src="../../src/media/siguiente.png"
         alt="Flechas indicando siguiente paso"
-        class="w-10 h-10 m-4"
+        class="w-12 h-12 m-4"
       />
+      <div id="op_artwood">
 
+      </div>
       <!-- Container con los parámetros -->
       <div id="parametros" class="hidden">
         <!-- COMIENZO GRID PARÁMETROS-->
-        <div
-          class="p-2 dark:text-white text-utn-dark place-items-center flex flex-col items-center w-full max-w-7xl"
-        >
-          <div
-            class="p-2 m-4 dark:text-white text-utn-dark border-2 border-utn-regular rounded-3xl w-full max-w-7xl mx-auto pl-52 pr-52"
-          >
-            <h2 class="text-2xl font-semibold mt-4 text-center">
-              Configurá los parámetros del simulador de reflexión y refracción
-            </h2>
-            <p class="text-md mb-4 text-center">
-              <strong class="text-amber-500">IMPORTANTE: </strong>
-              En caso de no introducir un valor de parámetro, tomará el valor
-              por defecto
-            </p>
-
-            <div
-              class="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 w-full justify-items-center"
-            >
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="ePorcentual"
-                  >Error porcentual</label
-                >
-                <select
-                  id="ePorcentual"
-                  class="border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent w-full"
-                >
-                  <option
-                    value="0.1"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 0.1%
-                  </option>
-                  <option
-                    value="0.5"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 0.5%
-                  </option>
-                  <option
-                    value="1"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 1%
-                  </option>
-                  <option
-                    value="2"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 2%
-                  </option>
-                </select>
-              </div>
-
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="material"
-                  >Material</label
-                >
-                <select
-                  id="material"
-                  class="border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent w-full"
-                >
-                  <option
-                    value="acrylic"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Acrílico
-                  </option>
-                  <option
-                    value="quartz"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Cuarzo
-                  </option>
-                  <option
-                    value="zirconium"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Circonio
-                  </option>
-                  <option
-                    value="diamond"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Diamante
-                  </option>
-                  <option
-                    value="ice"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Hielo
-                  </option>
-                  <option
-                    value="unknown"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Material Desconocido
-                  </option>
-                  <option
-                    value="glass"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Vidrio
-                  </option>
-                </select>
-              </div>
-
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="medioExterior"
-                  >Medio exterior</label
-                >
-                <select
-                  id="medioExterior"
-                  class="border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent"
-                >
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="acetaldehyde"
-                  >
-                    Acetaldeído
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="water"
-                  >
-                    Agua
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="air"
-                  >
-                    Aire
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="benzene"
-                  >
-                    Benceno
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="glycerin"
-                  >
-                    Glicerina
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="heptanol"
-                  >
-                    Heptanol (25°C)
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="methanol"
-                  >
-                    Metanol
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="sugarSolution30"
-                  >
-                    Solución de azúcar 30%
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="sugarSolution80"
-                  >
-                    Solución de azúcar 80%
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="vacuum"
-                  >
-                    Vacío
-                  </option>
-                </select>
-              </div>
-
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label for="espesor" class="mb-2 block text-center"
-                  >Espesor del material (mm)</label
-                >
-                <input
-                  type="number"
-                  id="espesor"
-                  step="1"
-                  min="5"
-                  max="20"
-                  placeholder="Por defecto: 10 mm"
-                  class="w-full border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                />
-                <p class="text-gray-500 text-sm mt-[5px]">
-                  Rango válido: De 5 mm a 20 mm
-                </p>
-              </div>
-
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="anguloIncidencia"
-                  >Ángulo de incidencia (°)</label
-                >
-                <input
-                  type="number"
-                  id="anguloIncidencia"
-                  step="1"
-                  min="1"
-                  max="89"
-                  placeholder="Por defecto: 30°"
-                  class="w-full border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                />
-                <p class="text-gray-500 text-sm mt-[5px]">
-                  Rango válido: De 1° a 89°
-                </p>
-              </div>
-
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="titulo"
-                  >Título del escenario</label
-                >
-                <input
-                  type="text"
-                  id="titulo"
-                  class="w-full border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                  placeholder="(opcional)"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        
         <!-- FIN GRID PARÁMETROS-->
       </div>
       <div class="hidden" id="verificar-data">
         <div class="flex flex-col items-center justify-center">
           <!-- El boton verifica que los campos estén completos. Si están bien, hace que el boton descarga deje de estar hidden-->
           <button
-            class="bg-utn-light dark:bg-slate-950 border-2 border-utn-regular rounded-full m-4 px-4 py-1 dark:text-white text-utn-dark text-lg font-semibold cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+            class="bg-utn-light dark:bg-slate-950 border-2 border-utn-regular rounded-full m-4 px-4 py-1 dark:text-white text-slate-800 text-lg font-semibold cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
             id="verificar-dato"
           >
             Siguiente
@@ -466,7 +232,7 @@
           <img
             src="../../src/media/siguiente.png"
             alt="Flechas indicando siguiente paso"
-            class="w-10 h-10 m-4"
+            class="w-12 h-12 m-4"
           />
         </div>
       </div>
@@ -475,7 +241,7 @@
         <div class="flex flex-col items-center justify-center">
           <!-- IMPORTANTE: BOTON HIDDEN A MENOS QUE SIGUIENTE VERIFIQUE LOS DATOS INGRESADOS-->
           <button
-            class="border-utn-regular border-2 rounded-full mt-4 px-4 py-1 dark:text-white text-utn-dark text-lg cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+            class="border-utn-regular border-2 rounded-full mt-4 px-4 py-1 dark:text-white text-slate-800 text-lg cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
             id="btn-descarga"
             onclick="exportarJSON()"
           >
@@ -496,6 +262,8 @@
       </div>
     </div>
     <!-- Fin container generador de errores -->
+
+
 
     <!--Comienzo del footer-->
     <footer class="bg-utn-light mt-12 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">

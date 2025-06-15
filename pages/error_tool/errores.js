@@ -5,254 +5,221 @@ $(function () {
 
   // parametrosHTML guarda el HTML de cada cajita de parámetros
   const parametrosHTML = {
-      reflec: `
-              <div
-          class="p-2 dark:text-white text-utn-dark place-items-center flex flex-col items-center w-full max-w-7xl"
-        >
-          <div
-            class="p-2 m-4 dark:text-white text-utn-dark border-2 border-utn-regular rounded-3xl w-full max-w-7xl mx-auto pl-52 pr-52"
+    reflec: `
+    <div class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
+      <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
+        Configurá los parámetros del simulador de reflexión y refracción
+      </h2>
+            <p class="dark:text-white text-utn-dark text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="text-md  text-amber-500">El generador de escenarios sólo soporta números decimales que usen puntos</p>   
+            <p class="text-gray-500 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>  
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl">
+      <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
+        <p>Error porcentual</p>
+        <select
+          id="ePorcentual"
+          class="border-2 border-utn-regular rounded-lg px-2 py-1 mt-2 bg-transparent min-w-52">
+          <option
+            value="0.1"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
           >
-            <h2 class="text-2xl font-semibold mt-4 text-center">
-              Configurá los parámetros del simulador de reflexión y refracción
-            </h2>
-            <p class="text-md mb-4 text-center">
-              <strong class="text-amber-500">IMPORTANTE: </strong>
-              En caso de no introducir un valor de parámetro, tomará el valor
-              por defecto
-            </p>
+            ± 0.1%
+          </option>
+          <option
+            value="0.5"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            ± 0.5%
+          </option>
+          <option
+            value="1"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            ± 1%
+          </option>
+          <option
+            value="2"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            ± 2%
+          </option>
+        </select>
+      </div>
 
-            <div
-              class="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 w-full justify-items-center"
-            >
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="ePorcentual"
-                  >Error porcentual</label
-                >
-                <select
-                  id="ePorcentual"
-                  class="border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent w-full"
-                >
-                  <option
-                    value="0.1"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 0.1%
-                  </option>
-                  <option
-                    value="0.5"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 0.5%
-                  </option>
-                  <option
-                    value="1"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 1%
-                  </option>
-                  <option
-                    value="2"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    ± 2%
-                  </option>
-                </select>
-              </div>
+      <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
+        <label class="mb-2 block text-center" for="material">Material</label>
+        <select
+          id="material"
+          class="border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent min-w-52"
+        >
+          <option
+            value="acrylic"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            Acrílico
+          </option>
+          <option
+            value="quartz"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            Cuarzo
+          </option>
+          <option
+            value="zirconium"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            Circonio
+          </option>
+          <option
+            value="diamond"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            Diamante
+          </option>
+          <option
+            value="ice"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            Hielo
+          </option>
+          <option
+            value="unknown"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            Material Desconocido
+          </option>
+          <option
+            value="glass"
+            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          >
+            Vidrio
+          </option>
+        </select>
+      </div>
 
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="material"
-                  >Material</label
-                >
-                <select
-                  id="material"
-                  class="border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent w-full"
-                >
-                  <option
-                    value="acrylic"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Acrílico
-                  </option>
-                  <option
-                    value="quartz"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Cuarzo
-                  </option>
-                  <option
-                    value="zirconium"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Circonio
-                  </option>
-                  <option
-                    value="diamond"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Diamante
-                  </option>
-                  <option
-                    value="ice"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Hielo
-                  </option>
-                  <option
-                    value="unknown"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Material Desconocido
-                  </option>
-                  <option
-                    value="glass"
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                  >
-                    Vidrio
-                  </option>
-                </select>
-              </div>
+    <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
+      <label class="mb-2 block text-center" for="medioExterior"
+        >Medio exterior</label
+      >
+      <select
+        id="medioExterior"
+        class="min-w-52 border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent"
+      >
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="acetaldehyde"
+        >
+          Acetaldeído
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="water"
+        >
+          Agua
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="air"
+        >
+          Aire
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="benzene"
+        >
+          Benceno
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="glycerin"
+        >
+          Glicerina
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="heptanol"
+        >
+          Heptanol (25°C)
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="methanol"
+        >
+          Metanol
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="sugarSolution30"
+        >
+          Solución de azúcar 30%
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="sugarSolution80"
+        >
+          Solución de azúcar 80%
+        </option>
+        <option
+          class="dark:bg-slate-950 text-utn-dark dark:text-white"
+          value="vacuum"
+        >
+          Vacío
+        </option>
+      </select>
+    </div>
 
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="medioExterior"
-                  >Medio exterior</label
-                >
-                <select
-                  id="medioExterior"
-                  class="border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent"
-                >
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="acetaldehyde"
-                  >
-                    Acetaldeído
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="water"
-                  >
-                    Agua
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="air"
-                  >
-                    Aire
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="benzene"
-                  >
-                    Benceno
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="glycerin"
-                  >
-                    Glicerina
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="heptanol"
-                  >
-                    Heptanol (25°C)
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="methanol"
-                  >
-                    Metanol
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="sugarSolution30"
-                  >
-                    Solución de azúcar 30%
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="sugarSolution80"
-                  >
-                    Solución de azúcar 80%
-                  </option>
-                  <option
-                    class="dark:bg-slate-950 text-utn-dark dark:text-white"
-                    value="vacuum"
-                  >
-                    Vacío
-                  </option>
-                </select>
-              </div>
+    <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
+      <label for="espesor" class="mb-2 block text-center"
+        >Espesor del material (mm)</label
+      >
+      <input
+        type="number"
+        id="espesor"
+        step="1"
+        min="5"
+        max="20"
+        placeholder="Por defecto: 10 mm"
+        class="min-w-52 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+      />
+      <p class="text-gray-500 text-sm mt-[5px]">
+        Rango válido: De 5 mm a 20 mm
+      </p>
+    </div>
 
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label for="espesor" class="mb-2 block text-center"
-                  >Espesor del material (mm)</label
-                >
-                <input
-                  type="number"
-                  id="espesor"
-                  step="1"
-                  min="5"
-                  max="20"
-                  placeholder="Por defecto: 10 mm"
-                  class="w-full border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                />
-                <p class="text-gray-500 text-sm mt-[5px]">
-                  Rango válido: De 5 mm a 20 mm
-                </p>
-              </div>
-
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="anguloIncidencia"
-                  >Ángulo de incidencia (°)</label
-                >
-                <input
-                  type="number"
-                  id="anguloIncidencia"
-                  step="1"
-                  min="1"
-                  max="89"
-                  placeholder="Por defecto: 30°"
-                  class="w-full border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                />
-                <p class="text-gray-500 text-sm mt-[5px]">
-                  Rango válido: De 1° a 89°
-                </p>
-              </div>
-
-              <div
-                class="bg-utn-light dark:bg-slate-950 rounded-xl p-4 w-full max-w-xs"
-              >
-                <label class="mb-2 block text-center" for="titulo"
-                  >Título del escenario</label
-                >
-                <input
-                  type="text"
-                  id="titulo"
-                  class="w-full border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                  placeholder="(opcional)"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      `,
-      ascensor: `
+    <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
+      <label class="mb-2 block text-center" for="anguloIncidencia"
+        >Ángulo de incidencia (°)</label
+      >
+      <input
+        type="number"
+        id="anguloIncidencia"
+        step="1"
+        min="1"
+        max="89"
+        placeholder="Por defecto: 30°"
+        class="min-w-52 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+      />
+      <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 1° a 89°</p>
+    </div>
+    <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
+      <label for="titulo">Título del escenario</label>
+      <input
+        type="text"
+        id="titulo"
+        class="min-w-52 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+        placeholder="(opcional)"
+      />
+    </div>
+  </div></div>
+  `,
+    ascensor: `
       <div class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
         <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
           Configurá los parámetros del simulador de peso aparente
         </h2>
-        <p class="dark:text-white text-utn-dark text-md mb-4"><strong class="text-amber-500">IMPORTANTE: </strong>En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>
-        <div
+            <p class="dark:text-white text-utn-dark text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="text-md  text-amber-500">El generador de escenarios sólo soporta números decimales que usen puntos</p>   
+            <p class="text-gray-500 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>          <div
           class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl"
         >
           <div
@@ -343,10 +310,12 @@ $(function () {
           </div>
         </div>
       `,
-      pensimple: `
+    pensimple: `
       <div class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
         <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">Configurá los parámetros del simulador de péndulo simple</h2>
-        <p class="dark:text-white text-utn-dark text-md mb-4"><strong class="text-amber-500">IMPORTANTE: </strong>En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>
+            <p class="dark:text-white text-utn-dark text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="text-md  text-amber-500">El generador de escenarios sólo soporta números decimales que usen puntos</p>   
+            <p class="text-gray-500 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>  
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl">
           <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
                 <p>Error porcentual</p>
@@ -446,12 +415,14 @@ $(function () {
             </div>
             </div>
       `,
-      penbalistico: `
+    penbalistico: `
       <div class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
             <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
               Configurá los parámetros del simulador de péndulo balístico
             </h2>
-            <p class="dark:text-white text-utn-dark text-md mb-4"><strong class="text-amber-500">IMPORTANTE: </strong>En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="dark:text-white text-utn-dark text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="text-md  text-amber-500">El generador de escenarios sólo soporta números decimales que usen puntos</p>   
+            <p class="text-gray-500 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>  
 
             <div
               class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl"
@@ -569,12 +540,15 @@ $(function () {
             </div>
           </div>
       `,
-      artwood: `
+    artwood: `
       <div class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
             <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
               Configurá los parámetros del simulador de máquina de Artwood
             </h2>
-            <p class="dark:text-white text-utn-dark text-md mb-4"><strong class="text-amber-500">IMPORTANTE: </strong>En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="dark:text-white text-utn-dark text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="text-md  text-amber-500">El generador de escenarios sólo soporta números decimales que usen puntos</p>   
+            <p class="text-gray-500 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>   
+
 
             <div
               class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl"
@@ -678,7 +652,23 @@ $(function () {
                 <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
               </div>
 
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl hidden" id="masa_polea">
+            <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
+              <label for="titulo">Título del escenario</label>
+              <input
+                  type="text"
+                  id="titulo"
+                  class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
+                  placeholder="(opcional)"
+              />
+            </div>
+
+            <div>
+
+              <p class="text-utn-dark dark:text-white text-sm mt-[5px]">En caso de haber seleccionado polea considerable, complete los campos a continuación. De lo contrario, déjelos en blanco. </p>
+
+            </div>
+            
+            <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl" id="masa_polea">
               <label for="pulley-mass">Masa de la polea (kg)</label>
                 <input
                   type="number"
@@ -690,9 +680,9 @@ $(function () {
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
                 <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 1 kg</p>
-              </div>
+            </div>
 
-              <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl hidden" id="radio_polea">
+            <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl" id="radio_polea">
               <label for="pulley-radius">Radio de la polea (cm)</label>
                 <input
                   type="number"
@@ -704,26 +694,19 @@ $(function () {
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
                 <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 2 cm a 10 cm</p>
-              </div>
-
-            <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
-              <label for="titulo">Título del escenario</label>
-              <input
-                  type="text"
-                  id="titulo"
-                  class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
-                  placeholder="(opcional)"
-              />
             </div>
+
+
           </div>
       `,
-      venturi: `
+    venturi: `
       <div class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
             <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
               Configurá los parámetros del simulador de tubo de Venturi
             </h2>
-            <p class="dark:text-white text-utn-dark text-md mb-4"><strong class="text-amber-500">IMPORTANTE: </strong>En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>  
-
+            <p class="dark:text-white text-utn-dark text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="text-md  text-amber-500">El generador de escenarios sólo soporta números decimales que usen puntos</p>   
+            <p class="text-gray-500 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>  
             <div
               class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl"
             >
@@ -923,12 +906,16 @@ $(function () {
               />
             </div>
           </div>
-      `
+      `,
   };
 
   // el botón seleccionado se guarda en simulador
-  $("#reflec, #ascensor, #pensimple, #penbalistico, #artwood, #venturi").on("click", function () {
-    simulador = this.id;  });
+  $("#reflec, #ascensor, #pensimple, #penbalistico, #artwood, #venturi").on(
+    "click",
+    function () {
+      simulador = this.id;
+    }
+  );
 
   // click en siguiente habilita mostrar la caja
   $("#mostrar-param").on("click", function () {
@@ -941,323 +928,398 @@ $(function () {
     }
   });
 
-  /* REVISAR POR QUÉ NO FUNCIONA DESAPARECER SEGUN EL SELECT 
-
-  $("#pulley-type").on("click", function (){
-    if ($("#pulley-type option:checked").val() == "massive-pulley"){
-      $("#masa_polea").show();
-      $("#radio_polea").show();
-  }
-  });
-  */
-  
-
   // click en siguiente verifica los datos y habilita descarga
   $("#verificar-dato").on("click", function () {
-    switch(simulador){
-      case 'reflec':
+    switch (simulador) {
+      case "reflec":
         $espesor = parseFloat($("#espesor").val());
         $angulo = parseFloat($("#anguloIncidencia").val());
-        $text_adv = ""
+        $titulo = $("#titulo").val();
+
+        $text_adv = "";
         $fuera_rango = false;
-          
-        if ((($espesor < 5) || ($espesor > 20)) && $espesor.length!=0){
-          $text_adv+="El rango válido de espesor es de 5mm hasta 20mm";
-          $fuera_rango=true;
-        }
-        else {
-          $espesor=10;
+
+        if ($espesor < 5 || $espesor > 20) {
+          $text_adv += "El rango válido de espesor es de 5mm hasta 20mm";
+          $fuera_rango = true;
+        } else if (isNaN($espesor)) {
+          $espesor = 10;
         }
 
-        if ((($angulo < 1) || ($angulo > 89)) && $angulo.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n"
+        if ($angulo < 1 || $angulo > 89) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
-          $text_adv+="El rango válido de ángulos es de 1° hasta 89°";
-          $fuera_rango=true;
-        }
-        else {
-          $angulo=30;
+          $text_adv += "El rango válido de ángulos es de 1° hasta 89°";
+          $fuera_rango = true;
+        } else if (isNaN($angulo)) {
+          $angulo = 30;
         }
 
-        if ($fuera_rango){
+        if ($titulo.length == 0) {
+          $titulo = null;
+        }
+
+        if ($fuera_rango) {
           alert($text_adv);
         }
 
         break;
 
-      case 'ascensor':
+      case "ascensor":
         $masa = parseFloat($("#masa").val());
         $gravedad = parseFloat($("#gravedad").val());
         $acelerac = parseFloat($("#acelerac").val());
-        $text_adv = ""
+        $titulo = $("#titulo").val();
+
+        $text_adv = "";
         $fuera_rango = false;
 
-        if ((($masa<1) || ($masa>150)) && $masa.length!=0){
-          $text_adv+="El rango válido de masa es de 1kg a 150kg";
-          $fuera_rango=true;
-        }
-        else {
-          $masa=75;
+        if ($masa < 1 || $masa > 150) {
+          $text_adv += "El rango válido de masa es de 1kg a 150kg";
+          $fuera_rango = true;
+        } else if (isNaN($masa)) {
+          $masa = 75;
         }
 
-        if ((($gravedad<-10) || ($gravedad>10)) && $gravedad.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n";
+        if ($gravedad < -10 || $gravedad > 10) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
 
-          $text_adv+="El rango válido de gravedad es de -10g a 10g";
-          $fuera_rango=true;
+          $text_adv += "El rango válido de gravedad es de -10g a 10g";
+          $fuera_rango = true;
+        } else if (isNaN($gravedad)) {
+          $gravedad = 1;
         }
 
-        else {
-          $gravedad=1;
-        }
-
-        if ((($acelerac<-10) || ($acelerac>10)) && $acelerac.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n";
+        if ($acelerac < -10 || $acelerac > 10) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
 
-          $text_adv+="El rango válido de aceleración es de -10g a 10g";
-          $fuera_rango=true;
+          $text_adv += "El rango válido de aceleración es de -10g a 10g";
+          $fuera_rango = true;
         }
 
-        if ($fuera_rango){
+        if ($titulo.length == 0) {
+          $titulo = null;
+        }
+
+        if ($fuera_rango) {
           alert($text_adv);
         }
 
         break;
 
+      case "pensimple":
+        $masa = parseFloat($("#mass").val());
+        $largo = parseFloat($("#length").val());
+        $ciclos = parseFloat($("#cycles").val());
+        $angulo = parseFloat($("#angle").val());
+        $titulo = $("#titulo").val();
 
-      case 'pensimple':
-        $masa= parseFloat($("#mass").val());
-        $largo= parseFloat($("#length").val());
-        $ciclos= parseFloat($("#cycles").val());
-        $angulo= parseFloat($("#angle").val());
-        $fuera_rango=false;
-        $text_adv="";
+        $fuera_rango = false;
+        $text_adv = "";
 
-        if ((($masa<10) || ($masa>500)) && $masa.length!=0){
-          $text_adv+="El rango válido para la masa es de 10g a 500g"
-          $fuera_rango=true;
+        if ($masa < 10 || $masa > 500) {
+          $text_adv += "El rango válido para la masa es de 10g a 500g";
+          $fuera_rango = true;
+        } else if (isNaN($masa)) {
+          $masa = 50;
         }
-        else {
-          $masa=50;
-        }
 
-        if ((($largo<10) || ($largo>300)) && $largo.length!=0){
-          if($fuera_rango){
-            $text_adv+="\n";
+        if ($largo < 10 || $largo > 300) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
-          $text_adv+="El rango válido para el largo es de 10cm a 300cm"
-          $fuera_rango=true;
-        }
-        else {
-          $largo=100;
+          $text_adv += "El rango válido para el largo es de 10cm a 300cm";
+          $fuera_rango = true;
+        } else if (isNaN($largo)) {
+          $largo = 100;
         }
 
-        if ((($ciclos<1) || ($ciclos>1000)) && $ciclos.length!=0){
-          if($fuera_rango){
-            $text_adv+="\n";
+        if ($ciclos < 1 || $ciclos > 1000) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
-          $text_adv+="El rango válido para los ciclos es de 1 a 1000 ciclos";
-          $fuera_rango=true;
-        }
-        else {
-          $ciclos=10;
+          $text_adv += "El rango válido para los ciclos es de 1 a 1000 ciclos";
+          $fuera_rango = true;
+        } else if (isNaN($ciclos)) {
+          $ciclos = 10;
         }
 
-        if ((($angulo<1) || ($angulo>89)) && $angulo.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n";
+        if ($angulo < 1 || $angulo > 89) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
-          $text_adv+="El rango válido para el ángulo es de 1° a 89°";
-          $fuera_rango=true;
-        }
-        else {
-          $angulo=10;
+          $text_adv += "El rango válido para el ángulo es de 1° a 89°";
+          $fuera_rango = true;
+        } else if (isNaN($angulo)) {
+          $angulo = 10;
         }
 
-        if ($fuera_rango){
+        if ($titulo.length == 0) {
+          $titulo = null;
+        }
+
+        if ($fuera_rango) {
           alert($text_adv);
         }
-      
+
         break;
 
-
-      case 'penbalistico':
+      case "penbalistico":
         $masa_proy = parseFloat($("#projectileMass").val());
         $masa_cuerpo = parseFloat($("#pendulumMass").val());
         $long_pend = parseFloat($("#pendulumLength").val());
         $veloc_inic = parseFloat($("#initialVelocity").val());
         $ang_impac = parseFloat($("#impactAngle").val());
-        $fuera_rango=false;
-        $text_adv="";
+        $titulo = $("#titulo").val();
 
-        if ((($masa_proy<0.1) || ($masa_proy>10)) && $masa_proy.length!=0){
-          $text_adv+="El rango válido para la masa del proyectil es de 0.1kg a 10kg";
-          $fuera_rango=true;
-        }
-        else {
-          $masa_proy=0.5;
+        $fuera_rango = false;
+        $text_adv = "";
+
+        if ($masa_proy < 0.1 || $masa_proy > 10) {
+          $text_adv +=
+            "El rango válido para la masa del proyectil es de 0.1kg a 10kg";
+          $fuera_rango = true;
+        } else if (isNaN($masa_proy)) {
+          $masa_proy = 0.5;
         }
 
-        if ((($masa_cuerpo<0.1) || ($masa_cuerpo>10)) && $masa_cuerpo.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n";
+        if ($masa_cuerpo < 0.1 || $masa_cuerpo > 10) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
 
-          $text_adv+="El rango válido para la masa del cuerpo es de 0.1kg a 10kg";
-          $fuera_rango=true;
+          $text_adv +=
+            "El rango válido para la masa del cuerpo es de 0.1kg a 10kg";
+          $fuera_rango = true;
+        } else if (isNaN($masa_cuerpo)) {
+          $masa_cuerpo = 0.5;
         }
 
-        else {
-          $masa_cuerpo=0.5;
-        }
-
-        if ((($long_pend<10) || ($long_pend>300)) && $long_pend.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n";
+        if ($long_pend < 10 || $long_pend > 300) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
 
-          $text_adv+="El rango válido para la long. de cuerda es de 10cm a 300cm";
-          $fuera_rango=true;
-        }
-        else {
-          $long_pend=10;
+          $text_adv +=
+            "El rango válido para la long. de cuerda es de 10cm a 300cm";
+          $fuera_rango = true;
+        } else if (isNaN($long_pend)) {
+          $long_pend = 10;
         }
 
-        if ((($veloc_inic<1) || ($veloc_inic>100)) && $veloc_inic.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n";
+        if ($veloc_inic < 1 || $veloc_inic > 100) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
 
-          $text_adv+="El rango válido para la veloc. inicial es de 1m/s a 100m/s";
-          $fuera_rango=true;
-        }
-        else {
-          $veloc_inic=5;
+          $text_adv +=
+            "El rango válido para la veloc. inicial es de 1m/s a 100m/s";
+          $fuera_rango = true;
+        } else if (isNaN($veloc_inic)) {
+          $veloc_inic = 5;
         }
 
-        if ((($ang_impac<0) || ($ang_impac>89)) && $ang_impac.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n";
+        if ($ang_impac < 0 || $ang_impac > 89) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
 
-          $text_adv+="El rango válido para el ángulo de impacto es de 0° a 89°";
-          $fuera_rango=true;
-        }
-        else {
-          $ang_impac=0;
+          $text_adv +=
+            "El rango válido para el ángulo de impacto es de 0° a 89°";
+          $fuera_rango = true;
+        } else if (isNaN($ang_impac)) {
+          $ang_impac = 0;
         }
 
-        if($fuera_rango){
+        if ($titulo.length == 0) {
+          $titulo = null;
+        }
+
+        if ($fuera_rango) {
           alert($text_adv);
         }
 
         break;
 
-
-      case 'artwood':
-        // revisar esta parte para que funcione antes de ingresar a esta funcion
-        if ($("#pulley-type option:checked").val() == "massive-pulley"){
-          $es_considerable = true;
-          $masa_polea = parseFloat($("#pulley-mass").val());
-          $radio_polea = parseFloat($("#pulley-radius").val());
-        }
-
-        else {
-          $es_considerable = false;
-        }
-
+      case "artwood":
         $dist_caida = parseFloat($("#fall-distance").val());
         $masa1 = parseFloat($("#mass1-value").val());
         $masa2 = parseFloat($("#mass2-value").val());
-        $fuera_rango=false;
-        $text_adv="";
+        $titulo = $("#titulo").val();
 
-        if ((($dist_caida<10) || ($dist_caida>150)) && $dist_caida.length!=0){
-          $text_adv+="El rango válido para la distancia de caída es de 10cm a 150cm";
-          $fuera_rango=true;
-        }
-        else {
-          $dist_caida=100;
+        $masa_polea = parseFloat($("#pulley-mass").val());
+        $radio_polea = parseFloat($("#pulley-radius").val());
+
+        $fuera_rango = false;
+        $text_adv = "";
+
+        if ($dist_caida < 10 || $dist_caida > 150) {
+          $text_adv +=
+            "El rango válido para la distancia de caída es de 10cm a 150cm";
+          $fuera_rango = true;
+        } else if (isNaN($dist_caida)) {
+          $dist_caida = 100;
         }
 
-        if ((($masa1<0.1) || ($masa1>10)) && $masa1.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n"
+        if ($masa1 < 0.1 || $masa1 > 10) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
 
-          $text_adv+="El rango válido para la masa 1 es de 0.1kg a 10kg";
-          $fuera_rango=true;
-        }
-        else{
-          $masa1=1;
+          $text_adv += "El rango válido para la masa 1 es de 0.1kg a 10kg";
+          $fuera_rango = true;
+        } else if (isNaN($dist_caida)) {
+          $masa1 = 1;
         }
 
-        if((($masa2<0.1) || ($masa2>10)) && $masa2.length!=0){
-          if ($fuera_rango){
-            $text_adv+="\n"
+        if ($masa2 < 0.1 || $masa2 > 10) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
           }
 
-          $text_adv+="El rango válido para la masa 2 es de 0.1kg a 10kg";
-          $fuera_rango=true;
-        }
-        else {
-          $masa2=0.1;
+          $text_adv += "El rango válido para la masa 2 es de 0.1kg a 10kg";
+          $fuera_rango = true;
+        } else if (isNaN($masa2)) {
+          $masa2 = 0.1;
         }
 
+        $tipo_polea = $("#pulley-type").val();
+        if ($tipo_polea == "massive-pulley") {
+          if ($masa_polea < 0.1 || $masa_polea > 1) {
+            if ($fuera_rango) {
+              $text_adv += "\n";
+            }
+
+            $text_adv +=
+              "El rango válido para la masa de la polea es de 0.1kg a 1kg";
+            $fuera_rango = true;
+          } else if (isNaN($masa_polea)) {
+            $masa_polea = 0.5;
+          }
+
+          if ($radio_polea < 2 || $radio_polea > 10) {
+            if ($fuera_rango) {
+              $text_adv += "\n";
+            }
+
+            $text_adv +=
+              "El rango válido para el radio de la polea es de 2cm a 10cm";
+            $fuera_rango = true;
+          } else if (isNaN($radio_polea)) {
+            $radio_polea = 5;
+          }
+        } else {
+          $masa_polea = null;
+          $radio_polea = null;
+        }
+
+        if ($titulo.length == 0) {
+          $titulo = null;
+        }
+
+        if ($fuera_rango) {
+          alert($text_adv);
+        }
         break;
 
+      case "venturi":
+        $garganta = parseFloat($("#throat-diameter").val());
+        $caudal = parseFloat($("#flow-rate").val());
+        $presion = parseFloat($("#inlet-pressure").val());
+        $temperatura = parseFloat($("#temperature").val());
+        $titulo = $("#titulo").val();
 
-      case 'venturi':
-        datacheck_venturi();
+        $fuera_rango = false;
+        $text_adv = "";
+
+        if ($garganta < 0.1 || $garganta > 10) {
+          $fuera_rango = true;
+          $text_adv +=
+            "El rango válido para el diámetro de garganta es de 0.1cm a 10cm";
+        } else if (isNaN($garganta)) {
+          $garganta = 0.5;
+        }
+
+        if ($caudal < 0 || $caudal > 20) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
+          }
+
+          $fuera_rango = true;
+          $text_adv += "El rango válido de caudal es de 0m³/h a 20m³/h";
+        } else if (isNaN($caudal)) {
+          $caudal = 5;
+        }
+
+        if ($presion < 0 || $presion > 1000) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
+          }
+
+          $fuera_rango = true;
+          $text_adv +=
+            "El rango válido de presión de entrada es de 0kPa a 1000kPa";
+        } else if (isNaN($presion)) {
+          $presion = 200;
+        }
+
+        if ($temperatura < 0 || $temperatura > 100) {
+          if ($fuera_rango) {
+            $text_adv += "\n";
+          }
+
+          $fuera_rango = true;
+          $text_adv += "El rango válido de temperatura es de 0°C a 100°C";
+        } else if (isNaN($temperatura)) {
+          $temperatura = 20;
+        }
+
+        if ($titulo.length == 0) {
+          $titulo = null;
+        }
+
+        if ($fuera_rango) {
+          alert($text_adv);
+        }
+
         break;
 
       default:
-        alert("Error de lectura \nFavor de reportar a giedifrsfutn@gmail.com");
+        console.log(
+          "Error de lectura \nFavor de reportar a giedifrsfutn@gmail.com"
+        );
     }
   });
-
-
-  //datacheck_artwood(){
-    // id fall-distance id mass1-value id mass2-value
-    // id pulley-mass id pulley-radius
-
-
-  //datacheck_venturi (){
-    // id throat-diameter id flow-rate
-    // id inlet-pressure id temperature
 
 
   // CIERRE JQUERY
 });
 // FIN JQUERY
 
-function exportarJSON() {
+function exportarJSON(data) {
   // parámetros a exportar con getid
-    const data = {
-      material: document.getElementById('material').value,
-      espesor: parseFloat(document.getElementById('espesor').value),
-      medioExterior: document.getElementById('medioExterior').value,
-      anguloIncidencia: parseFloat(document.getElementById('anguloIncidencia').value),
-      errorPorcentual: parseFloat(document.getElementById('ePorcentual').value)
-    };
 
-    let titulo = document.getElementById('titulo').value;
-    if (titulo===null || titulo==="") {
-      titulo = "escenario";
-    }
 
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = titulo + ".json";
-    a.click();
-
-    URL.revokeObjectURL(url);
+  //let titulo = document.getElementById("titulo").value;
+  let titulo = data[titulo];
+  if (titulo === null || titulo === "") {
+    titulo = "escenario";
   }
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = titulo + ".json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
