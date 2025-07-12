@@ -29,7 +29,7 @@ const EXTERIOR_MEDIUMS = {
   sugarSolution80: { name: "Solución de azúcar 80%", refractiveIndex: 1.49 },
 };
 
-const ADMIN_PASSWORD = "GIEDI610";
+
 
 // Estado de la simulación
 let simulation = {
@@ -71,20 +71,11 @@ const dataTable = document
 const grid1mmBtn = document.getElementById("grid-1mm");
 const grid5mmBtn = document.getElementById("grid-5mm");
 const grid10mmBtn = document.getElementById("grid-10mm");
-const adminBtn = document.getElementById("admin-button");
+
 const resetBtn = document.getElementById("reset-simulation");
 const addDataBtn = document.getElementById("add-data");
-const calculateStatsBtn = document.getElementById("calculate-stats");
 const exportDataBtn = document.getElementById("export-data");
 
-// Modales
-const statsModal = document.getElementById("stats-modal");
-const adminModal = document.getElementById("admin-modal");
-const closeModalBtns = document.querySelectorAll(".close-modal");
-const adminLoginBtn = document.getElementById("admin-login-btn");
-const adminPassword = document.getElementById("admin-password");
-const adminPanel = document.getElementById("admin-panel");
-const realValues = document.getElementById("real-values");
 
 // Inicializar la simulación
 function initSimulation() {
@@ -206,20 +197,6 @@ function setupEventListeners() {
     setGridSpacing(10);
   });
 
-    // Botones de administración y gestión de datos
-  adminBtn.addEventListener('click', function() {
-    adminModal.className=adminModal.className.replace('hidden','block');
-    adminPassword.value = '';
-  });
-  
-  adminLoginBtn.addEventListener('click', function() {
-     if (adminPassword.value === ADMIN_PASSWORD) {
-      adminPanel.className=adminPanel.className.replace('hidden','block');
-      updateAdminPanel();
-     } else {
-        alert('Contraseña incorrecta');
-      }
-  });
 
   resetBtn.addEventListener("click", function () {
     resetSimulation();
@@ -229,36 +206,11 @@ function setupEventListeners() {
     addMeasurement();
   });
 
-  calculateStatsBtn.addEventListener("click", function () {
-    if (simulation.measurements.length < 3) {
-      alert("Se necesitan al menos 3 mediciones para calcular estadísticas");
-      return;
-    }
-    showStatistics();
-  });
 
   exportDataBtn.addEventListener("click", function () {
     exportData();
   });
 
-  // Cerrar modales
-  closeModalBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      statsModal.style.display = "none";
-      adminModal.style.display = "none";
-    });
-  });
-
-  // Cerrar modales al hacer clic fuera
-  window.addEventListener("click", function (e) {
-    if (e.target === statsModal) {
-      statsModal.style.display = "none";
-    }
-    if (e.target === adminModal) {
-      adminModal.className=adminModal.className.replace('block','hidden');
-      adminModal.style.display = "none";
-    }
-  });
 }
 
 function setGridSpacing(spacing) {
@@ -791,6 +743,7 @@ function drawArrow(fromX, fromY, toX, toY) {
 
 function addMeasurement() {
   // Prompt the user to input the refraction angle
+
   const userRefractionAngle = prompt(
     "Ingrese el ángulo de refracción medido:",
     ""
@@ -863,382 +816,6 @@ function addMeasurement() {
   cellExpRI.textContent = measurement.experimentalRI;
 }
 
-function showStatistics() {
-  statsModal.style.display = "block";
-
-  // Obtener datos
-  const refractionAngles = simulation.measurements.map((m) =>
-    parseFloat(m.refractionAngle)
-  );
-  const experimentalRIs = simulation.measurements.map((m) =>
-    parseFloat(m.experimentalRI)
-  );
-  const incidenceAngles = simulation.measurements.map((m) =>
-    parseFloat(m.incidenceAngle)
-  );
-
-  // Histograma de ángulos de refracción
-  const histogramCtx = document
-    .getElementById("histogram-chart")
-    .getContext("2d");
-  if (window.histogramChart) window.histogramChart.destroy();
-
-  // Calculate better bin boundaries for histogram
-  const minAngle = Math.min(...refractionAngles);
-  const maxAngle = Math.max(...refractionAngles);
-  const range = maxAngle - minAngle;
-  const binWidth = range / 5 || 1; // Prevent division by zero
-
-  const histogramLabels = [];
-  const histogramData = Array(5).fill(0);
-
-  // Create proper bins
-  for (let i = 0; i < 5; i++) {
-    const binStart = minAngle + i * binWidth;
-    const binEnd = minAngle + (i + 1) * binWidth;
-    histogramLabels.push(`${binStart.toFixed(1)}°-${binEnd.toFixed(1)}°`);
-  }
-
-  // Count values in each bin
-  refractionAngles.forEach((angle) => {
-    if (angle < minAngle || angle > maxAngle) return;
-    const binIndex = Math.min(Math.floor((angle - minAngle) / binWidth), 4);
-    histogramData[binIndex]++;
-  });
-
-  window.histogramChart = new Chart(histogramCtx, {
-    type: "bar",
-    data: {
-      labels: histogramLabels,
-      datasets: [
-        {
-          label: "Distribución de Ángulos de Refracción",
-          data: histogramData,
-          backgroundColor: "rgba(75, 192, 192, 0.6)",
-          borderColor: "rgba(75, 192, 192, 1)",
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: "Frecuencia",
-          },
-        },
-        x: {
-          title: {
-            display: true,
-            text: "Ángulo de Refracción (grados)",
-          },
-        },
-      },
-    },
-  });
-
-  // Gráfico de dispersión con línea de tendencia
-  const scatterCtx = document.getElementById("scatter-chart").getContext("2d");
-  if (window.scatterChart) window.scatterChart.destroy();
-
-  // Prepare scatter data
-  const scatterData = incidenceAngles.map((angle, i) => ({
-    x: angle,
-    y: refractionAngles[i],
-  }));
-
-  // Calculate regression line (y = mx + b)
-  const n = incidenceAngles.length;
-  const sumX = incidenceAngles.reduce((acc, val) => acc + val, 0);
-  const sumY = refractionAngles.reduce((acc, val) => acc + val, 0);
-  const sumXY = incidenceAngles.reduce(
-    (acc, val, i) => acc + val * refractionAngles[i],
-    0
-  );
-  const sumXX = incidenceAngles.reduce((acc, val) => acc + val * val, 0);
-
-  const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX) || 0;
-  const intercept = (sumY - slope * sumX) / n || 0;
-
-  // Create regression line data points
-  const minX = Math.min(...incidenceAngles);
-  const maxX = Math.max(...incidenceAngles);
-  const regressionData = [
-    { x: minX, y: slope * minX + intercept },
-    { x: maxX, y: slope * maxX + intercept },
-  ];
-
-  window.scatterChart = new Chart(scatterCtx, {
-    type: "scatter",
-    data: {
-      datasets: [
-        {
-          label: "Ángulo de Incidencia vs Refracción",
-          data: scatterData,
-          backgroundColor: "rgba(54, 162, 235, 0.6)",
-          borderColor: "rgba(54, 162, 235, 1)",
-          pointRadius: 6,
-        },
-        {
-          label: "Línea de Tendencia",
-          data: regressionData,
-          type: "line",
-          fill: false,
-          borderColor: "rgba(255, 99, 132, 1)",
-          borderWidth: 2,
-          pointRadius: 0,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: "Ángulo de Incidencia (grados)",
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: "Ángulo de Refracción (grados)",
-          },
-        },
-      },
-    },
-  });
-
-  // Mejorar el gráfico de índice de refracción experimental
-  const boxplotCtx = document.getElementById("boxplot-chart").getContext("2d");
-  if (window.boxplotChart) window.boxplotChart.destroy();
-
-  // Calcular estadísticas para el diagrama de cajas
-  const sortedRIs = [...experimentalRIs].sort((a, b) => a - b);
-  const min = sortedRIs[0];
-  const max = sortedRIs[sortedRIs.length - 1];
-  const q1 = percentile(sortedRIs, 25);
-  const median = percentile(sortedRIs, 50);
-  const q3 = percentile(sortedRIs, 75);
-  const mean = sortedRIs.reduce((acc, val) => acc + val, 0) / sortedRIs.length;
-
-  // Calculate standard deviation
-  const variance =
-    sortedRIs.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) /
-    sortedRIs.length;
-  const stdDev = Math.sqrt(variance);
-
-  // Create better visualization for the index of refraction
-  window.boxplotChart = new Chart(boxplotCtx, {
-    type: "bar",
-    data: {
-      labels: ["Índice de Refracción Experimental"],
-      datasets: [
-        {
-          label: "Valor",
-          data: [mean],
-          backgroundColor: "rgba(54, 162, 235, 0.5)",
-          borderColor: "rgba(54, 162, 235, 1)",
-          borderWidth: 1,
-          barPercentage: 0.5,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return [
-                `Media: ${mean.toFixed(3)}`,
-                `Mediana: ${median.toFixed(3)}`,
-                `Desv. Estándar: ${stdDev.toFixed(3)}`,
-                `Q1: ${q1.toFixed(3)}`,
-                `Q3: ${q3.toFixed(3)}`,
-                `Mín: ${min.toFixed(3)}`,
-                `Máx: ${max.toFixed(3)}`,
-              ];
-            },
-          },
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: false,
-          min: Math.max(0, min - 0.2),
-          max: max + 0.2,
-          title: {
-            display: true,
-            text: "Valor del Índice",
-          },
-        },
-        x: {
-          title: {
-            display: true,
-            text: "Estadísticas",
-          },
-        },
-      },
-    },
-  });
-
-  // Add error bars and additional annotations
-  const errorPlugin = {
-    id: "errorBar",
-    afterDraw: (chart) => {
-      const ctx = chart.ctx;
-      ctx.save();
-
-      // Draw error bars
-      const meta = chart.getDatasetMeta(0);
-      const x = meta.data[0].x;
-      const y = meta.data[0].y;
-      const width = meta.data[0].width;
-
-      // Draw min-max line
-      ctx.beginPath();
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
-      ctx.lineWidth = 1;
-      ctx.moveTo(x, chart.scales.y.getPixelForValue(min));
-      ctx.lineTo(x, chart.scales.y.getPixelForValue(max));
-      ctx.stroke();
-
-      // Draw quartile box
-      ctx.beginPath();
-      ctx.fillStyle = "rgba(54, 162, 235, 0.3)";
-      ctx.strokeStyle = "rgba(54, 162, 235, 0.8)";
-      ctx.lineWidth = 1;
-      const q1Y = chart.scales.y.getPixelForValue(q1);
-      const q3Y = chart.scales.y.getPixelForValue(q3);
-      ctx.rect(x - width / 3, q1Y, (width * 2) / 3, q3Y - q1Y);
-      ctx.fill();
-      ctx.stroke();
-
-      // Draw median line
-      ctx.beginPath();
-      ctx.strokeStyle = "rgba(255, 99, 132, 1)";
-      ctx.lineWidth = 2;
-      const medianY = chart.scales.y.getPixelForValue(median);
-      ctx.moveTo(x - width / 3, medianY);
-      ctx.lineTo(x + width / 3, medianY);
-      ctx.stroke();
-
-      ctx.restore();
-    },
-  };
-
-  Chart.register(errorPlugin);
-}
-
-function updateAdminPanel() {
-  // Mostrar valores reales en el panel de administrador
-  let html = '<table class="admin-table">';
-  html +=
-    "<tr><th>Parámetro</th><th>Valor Real</th><th>Valor Mostrado</th></tr>";
-
-  html += `<tr>
-        <td>Espesor</td>
-        <td>${simulation.realThickness.toFixed(3)} mm</td>
-        <td>${simulation.thickness} mm</td>
-    </tr>`;
-
-  html += `<tr>
-        <td>Ángulo de Incidencia</td>
-        <td>${simulation.realIncidenceAngle.toFixed(3)}°</td>
-        <td>${simulation.incidenceAngle}°</td>
-    </tr>`;
-
-  html += `<tr>
-        <td>Material</td>
-        <td>${simulation.currentMaterial.name}</td>
-        <td>${
-          simulation.material === "unknown"
-            ? "Desconocido"
-            : simulation.currentMaterial.name
-        }</td>
-    </tr>`;
-
-  html += `<tr>
-        <td>Índice de Refracción (material)</td>
-        <td>${simulation.currentMaterial.refractiveIndex.toFixed(4)}</td>
-        <td>${
-          simulation.material === "unknown"
-            ? "?"
-            : simulation.currentMaterial.refractiveIndex.toFixed(2)
-        }</td>
-    </tr>`;
-
-  html += `<tr>
-        <td>Medio Exterior</td>
-        <td>${simulation.currentExteriorMedium.name}</td>
-        <td>${simulation.currentExteriorMedium.name}</td>
-    </tr>`;
-
-  html += `<tr>
-        <td>Índice de Refracción (exterior)</td>
-        <td>${simulation.currentExteriorMedium.refractiveIndex.toFixed(4)}</td>
-        <td>${simulation.currentExteriorMedium.refractiveIndex.toFixed(4)}</td>
-    </tr>`;
-
-  // Añadir información de errores si están activados
-  if (simulation.applyErrors) {
-    const thicknessError = (
-      ((simulation.realThickness - simulation.thickness) /
-        simulation.thickness) *
-      100
-    ).toFixed(3);
-    const angleError = (
-      ((simulation.realIncidenceAngle - simulation.incidenceAngle) /
-        simulation.incidenceAngle) *
-      100
-    ).toFixed(3);
-
-    html += `<tr>
-            <td>Error en Espesor</td>
-            <td colspan="2">${thicknessError}%</td>
-        </tr>`;
-
-    html += `<tr>
-            <td>Error en Ángulo</td>
-            <td colspan="2">${angleError}%</td>
-        </tr>`;
-  }
-
-  html += "</table>";
-
-  // Lista de todas las mediciones
-  if (simulation.measurements.length > 0) {
-    html += "<h3>Historial de Mediciones</h3>";
-    html += '<table class="admin-table">';
-    html +=
-      "<tr><th>N°</th><th>Material Real</th><th>IR Real</th><th>IR Experimental</th><th>Error (%)</th></tr>";
-
-    simulation.measurements.forEach((m, i) => {
-      const realRI = simulation.currentMaterial.refractiveIndex;
-      const expRI = parseFloat(m.experimentalRI);
-      const errorRI = (((expRI - realRI) / realRI) * 100).toFixed(2);
-
-      html += `<tr>
-                <td>${i + 1}</td>
-                <td>${simulation.currentMaterial.name}</td>
-                <td>${realRI.toFixed(4)}</td>
-                <td>${expRI.toFixed(4)}</td>
-                <td>${errorRI}%</td>
-            </tr>`;
-    });
-
-    html += "</table>";
-  }
-
-  realValues.innerHTML = html;
-}
 
 function exportData() {
   if (simulation.measurements.length === 0) {

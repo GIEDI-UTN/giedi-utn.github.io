@@ -222,10 +222,6 @@
                     hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular
                     dark:hover:bg-slate-950 dark:hover:text-utn-regular dark:hover:border-1 dark:hover:border-utn-regular
                     font-semibold px-3 py-1 rounded-2xl">Reiniciar simulación</button>
-
-                    <button id="admin-button" class="grid-button dark:bg-slate-950 dark:text-gray-400 text-lg border-1 border-gray-400 
-                   hover:bg-utn-regular text-gray-400 hover:text-white hover:border-none
-                    pl-3 pr-3 pt-1 pb-1 mt-2 rounded-2xl">Modo administrador</button>
                 </div>
 
 
@@ -233,16 +229,15 @@
           </div>
       </div>
     </div>
+    <!--FIN DE INTERFACE SIMULADOR-->
 
+    <!--COMIENZO DE TABLA DE DATOS-->
     <div class="data-section flex flex-col items-center border-2 border-utn-regular rounded-2xl p-4 md:mx-auto mx-4 mt-10 max-w-screen-xl">
       <h3 class="text-2xl font-semibold dark:text-white mb-4">Tabla de datos</h3>
     
       <div class="table-controls dark:text-white flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-4 w-full max-w-screen-xl md:mx-auto">
         <button id="add-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
           Agregar medición
-        </button>
-        <button id="calculate-stats" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
-          Estadísticas
         </button>
         <button id="export-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
           Exportar datos
@@ -270,60 +265,47 @@
         </div>
       </div>
     </div>
+    <!--FIN DE TABLA DE DATOS-->
 
-    <div id="stats-modal" class="modal hidden">
-      <div class="modal-content dark:text-white">
-        <span class="close-modal">&times;</span>
-        <h2>Análisis Estadístico</h2>
-        <div class="chart-container">
-            <canvas id="histogram-chart"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="scatter-chart"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="boxplot-chart"></canvas>
-        </div>
-      </div>
-    </div>
+  <!--COMIENZO MINI WIKI-->
+  <div class="flex flex-col justify-start min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl">
+    <h1 class="flex text-3xl md:text-4xl font-bold mt-8 mb-4 text-slate-900 dark:text-white">
+      ¿Qué necesitas saber para este simulador?</h1>
+    <p class="text-utn-dark  dark:text-slate-300">
+      <span class="font-semibold">Rayo luminoso:</span> Trayectoria a lo largo de la cual se propaga la energía luminosa en un medio homogéneo.
+    </p>
+    <p class="text-utn-dark  dark:text-slate-300">
+      <span class="font-semibold">Ley de reciprocidad:</span> La trayectoria de un rayo no depende del punto del que parte. Siempre sigue el mismo recorrido.
+    </p>
+    <p class="text-utn-dark  dark:text-slate-300">
+      <span class="font-semibold">Refracción:</span> Fenómeno que experimenta un rayo luminoso al pasar de un medio a otro con distinto índice de refracción.
+    </p>
 
-<div class="flex flex-col justify-start min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl">
-  <h1 class="flex text-3xl md:text-4xl font-bold mt-8 mb-4 text-slate-900 dark:text-white">
-    ¿Qué necesitas saber para este simulador?</h1>
-  <p class="text-utn-dark  dark:text-slate-300">
-    <span class="font-semibold">Rayo luminoso:</span> Trayectoria a lo largo de la cual se propaga la energía luminosa en un medio homogéneo.
-  </p>
-  <p class="text-utn-dark  dark:text-slate-300">
-    <span class="font-semibold">Ley de reciprocidad:</span> La trayectoria de un rayo no depende del punto del que parte. Siempre sigue el mismo recorrido.
-  </p>
-  <p class="text-utn-dark  dark:text-slate-300">
-    <span class="font-semibold">Refracción:</span> Fenómeno que experimenta un rayo luminoso al pasar de un medio a otro con distinto índice de refracción.
-  </p>
-
-  <p class="text-utn-dark  dark:text-slate-300">
-    <span class="font-semibold">Índice de refracción:</span> Relación entre la velocidad a la que viaja la luz en el vacío y la velocidad a la que viaja en el medio elegido.
+    <p class="text-utn-dark  dark:text-slate-300">
+      <span class="font-semibold">Índice de refracción:</span> Relación entre la velocidad a la que viaja la luz en el vacío y la velocidad a la que viaja en el medio elegido.
+      <br>
+      Cuando el medio tiene mayor índice de refracción, se dice que es más "denso".
+      <br><br>
+      <span class="font-semibold text-utn-regular">Importante: El índice de refracción SIEMPRE es mayor o igual a 1. No existe medio en el cual la luz viaje más rápido que en el vacío.</span>
+    </p>
     <br>
-    Cuando el medio tiene mayor índice de refracción, se dice que es más "denso".
-    <br><br>
-    <span class="font-semibold text-utn-regular">Importante: El índice de refracción SIEMPRE es mayor o igual a 1. No existe medio en el cual la luz viaje más rápido que en el vacío.</span>
-  </p>
-  <br>
-  <p class="text-utn-dark  dark:text-slate-300">
-    <span class="font-semibold">Ángulo de incidencia:</span> Ángulo con el que impacta el rayo luminoso en la superficie respecto de una normal perpendicular a esta.
-  </p>
-  <p class="text-utn-dark  dark:text-slate-300">
-    <span class="font-semibold">Ángulo refractado:</span> Ángulo que sufre una desviación debido al cambio de medio en el recorrido del rayo luminoso. Puede obtenerse a través de la Ley de Snell.
-  </p>
-  <p class="text-utn-dark  dark:text-slate-300">
-    <span class="font-semibold">Ley de Snell:</span> Relaciona los senos de los ángulos incidente y refractado, que son constantes para dos medios dados, a través de la fórmula 
-    <span class="font-semibold text-utn-regular">n1.sen(&theta;1)=n2.sen(&theta;2)</span>
-    <br>
-    donde n1 es el índice de refracción del medio incidente, &theta;1 el ángulo de incidencia, n2 el índice de refracción del medio destino, y &theta;2 el ángulo refractado.
-  </p>
+    <p class="text-utn-dark  dark:text-slate-300">
+      <span class="font-semibold">Ángulo de incidencia:</span> Ángulo con el que impacta el rayo luminoso en la superficie respecto de una normal perpendicular a esta.
+    </p>
+    <p class="text-utn-dark  dark:text-slate-300">
+      <span class="font-semibold">Ángulo refractado:</span> Ángulo que sufre una desviación debido al cambio de medio en el recorrido del rayo luminoso. Puede obtenerse a través de la Ley de Snell.
+    </p>
+    <p class="text-utn-dark  dark:text-slate-300">
+      <span class="font-semibold">Ley de Snell:</span> Relaciona los senos de los ángulos incidente y refractado, que son constantes para dos medios dados, a través de la fórmula 
+      <span class="font-semibold text-utn-regular">n1.sen(&theta;1)=n2.sen(&theta;2)</span>
+      <br>
+      donde n1 es el índice de refracción del medio incidente, &theta;1 el ángulo de incidencia, n2 el índice de refracción del medio destino, y &theta;2 el ángulo refractado.
+    </p>
 
-</div>
+  </div>
+  <!--FIN MINI WIKI-->
 
-    <!--Comienzo del footer-->
+  <!--INICIO FOOTER-->
   <footer class="bg-utn-light mt-20 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center sm:justify-between">
@@ -385,10 +367,11 @@
         </div>
       </div>
   </footer>
+  <!--FIN FOOTER-->
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./reflec_refrac.js"></script>
+  <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./reflec_refrac.js"></script>
-    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
   </body>
 </html>
