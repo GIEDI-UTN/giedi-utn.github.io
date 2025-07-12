@@ -26,7 +26,7 @@
 
   <body class="dark:bg-slate-950 bg-utn-light font-rubik">
 
-    <!--Comienzo de navbar-->
+    <!--COMIENZO NAVBAR-->
     <nav class="sticky top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50 min-w-[350px]">
       <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <a href="../../index.html" class="flex items-center">
@@ -127,7 +127,7 @@
         </div>
       </div>
     </nav>
-    <!--Fin de navbar-->
+    <!--FIN NAVBAR-->
 
     <!--COMIENZO DE INTERFACE SIMULADOR-->
     <div class="flex flex-col items-center justify-center min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl">
@@ -218,10 +218,14 @@
             
             <div class="simulation-options">
                 <div class="button-group mt-8 flex flex-col justify-center">
-                    <button id="reset-simulation" class="grid-button dark:bg-utn-regular dark:text-slate-950 text-2xl 
+                    <button id="reset-simulation" class="dark:bg-utn-regular dark:text-slate-950 text-2xl 
                     hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular
                     dark:hover:bg-slate-950 dark:hover:text-utn-regular dark:hover:border-1 dark:hover:border-utn-regular
                     font-semibold px-3 py-1 rounded-2xl">Reiniciar simulación</button>
+                    <button id="cargar-escenario"
+                    class="dark:bg-slate-950 dark:text-utn-regular 
+                    bg-utn-light text-slate-950 text-xl px-3 py-1 rounded-2xl">
+                    Cargar escenario</button>
                 </div>
 
 
@@ -239,6 +243,7 @@
         <button id="add-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
           Agregar medición
         </button>
+
         <button id="export-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
           Exportar datos
         </button>
@@ -267,8 +272,8 @@
     </div>
     <!--FIN DE TABLA DE DATOS-->
 
-  <!--COMIENZO MINI WIKI-->
-  <div class="flex flex-col justify-start min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl">
+    <!--COMIENZO MINI WIKI-->
+    <div class="flex flex-col justify-start min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl">
     <h1 class="flex text-3xl md:text-4xl font-bold mt-8 mb-4 text-slate-900 dark:text-white">
       ¿Qué necesitas saber para este simulador?</h1>
     <p class="text-utn-dark  dark:text-slate-300">
@@ -302,11 +307,11 @@
       donde n1 es el índice de refracción del medio incidente, &theta;1 el ángulo de incidencia, n2 el índice de refracción del medio destino, y &theta;2 el ángulo refractado.
     </p>
 
-  </div>
-  <!--FIN MINI WIKI-->
+    </div>
+    <!--FIN MINI WIKI-->
 
-  <!--INICIO FOOTER-->
-  <footer class="bg-utn-light mt-20 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">
+    <!--COMIENZO FOOTER-->
+    <footer class="bg-utn-light mt-20 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center sm:justify-between">
           <div class="flex justify-center text-utn-regular sm:justify-start">
@@ -366,8 +371,8 @@
           </div>
         </div>
       </div>
-  </footer>
-  <!--FIN FOOTER-->
+    </footer>
+    <!--FIN FOOTER-->
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="./reflec_refrac.js"></script>
