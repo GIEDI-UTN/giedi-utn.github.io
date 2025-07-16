@@ -51,6 +51,7 @@ let simulation = {
 const canvas = document.getElementById("simulation-canvas");
 const ctx = canvas.getContext("2d");
 let animationFrameId = null;
+let hayEscenario = false;
 
 // Referencias de elementos DOM
 const thicknessSlider = document.getElementById("thickness");
@@ -762,6 +763,14 @@ function addMeasurement() {
   const incidenceAngleRad = (simulation.calculatedAngles.incidence * Math.PI) / 180;
   const refractionAngleRad = (refractionAngle * Math.PI) / 180;
   const experimentalRI = (simulation.currentExteriorMedium.refractiveIndex * Math.sin(incidenceAngleRad)) / Math.sin(refractionAngleRad);
+  
+  let IR_error;
+  if (hayEscenario) {
+    IR_error = boxmuller(experimentalRI, simulation.error).toFixed(3);
+  }
+  else {
+    IR_error = boxmuller(experimentalRI, 0.1).toFixed(3);
+  }
 
   const measurement = {
     number: simulation.measurements.length + 1,
@@ -771,7 +780,7 @@ function addMeasurement() {
     refractiveIndex: simulation.material === "unknown" ? "?": simulation.currentMaterial.refractiveIndex.toFixed(2),
     incidenceAngle: simulation.calculatedAngles.incidence.toFixed(2),
     refractionAngle: refractionAngle.toFixed(2),
-    experimentalRI: boxmuller(experimentalRI, simulation.error).toFixed(3),
+    experimentalRI: IR_error,
   };
 
   simulation.measurements.push(measurement);
@@ -827,6 +836,7 @@ function importarJSON(event) {
   }
 
 function setearEscenario(data) {
+  hayEscenario = true;
   // Cargar los valores del escenario como array en cada variable de la simulación actual
   simulation.error = parseFloat(data[1]);
   simulation.material = data[2];
