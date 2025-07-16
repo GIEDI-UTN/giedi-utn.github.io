@@ -415,7 +415,6 @@ function drawMaterialPlate(originX, originY, scale) {
   const plateWidth = 100 * scale; // Ancho fijo de 10 cm
   const plateThickness = simulation.realThickness * scale; // Convertir mm a escala
   const plateLeft = originX - plateWidth / 2;
-  const plateRight = originX + plateWidth / 2;
   const plateTop = originY; // La placa comienza en Y=0
 
   
@@ -436,20 +435,19 @@ function drawMaterialPlate(originX, originY, scale) {
     ctx.strokeStyle = "rgba(70, 130, 180, 0.3)"; // Azul más oscuro
     ctx.lineWidth = 2;
   }
+  
   ctx.beginPath();
   ctx.rect(plateLeft, plateTop, plateWidth, plateThickness);
   ctx.fill();
   ctx.stroke();
 
   // Etiqueta con el material
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     ctx.fillStyle = "rgba(70, 130, 180, 1)";
   } else {
     ctx.fillStyle = "#020617";
   }
+  
   ctx.font = "17px Arial";
   ctx.textAlign = "center";
 
@@ -708,50 +706,72 @@ function drawArrow(fromX, fromY, toX, toY) {
   ctx.fill();
 }
 
-function addMeasurement() {
-  // Prompt the user to input the refraction angle
+// Variables a usar en algoritmo de Box-Muller
+let resto;
+let sobra = false;
 
+function boxmuller(real, cant_error) {
+  // pasar de porcentaje a decimal
+  cant_error = real * (cant_error / 100);
+
+  if (sobra) {
+    sobra = false;
+    return resto * cant_error + real;
+  }
+
+  // valores aleatorios entre [0, 1). u1 con let para poder modificarlo si es 0
+  let u1 = Math.random();
+  const u2 = Math.random();
+
+  if (u1 === 0) {
+    u1 = Number.MIN_VALUE;
+  }
+
+  const R = Math.sqrt(-2.0 * Math.log(u1));
+  const theta = 2.0 * Math.PI * u2;
+
+  const z0 = R * Math.cos(theta);
+  const z1 = R * Math.sin(theta);
+
+  // guardo z1 para poder usarlo en la siguiente iteración sin que ejecute el bloque completo
+  sobra = true;
+  resto = z1;
+
+  return z0 * cant_error + real;
+}
+
+function addMeasurement() {
   const userRefractionAngle = prompt(
-    "Ingrese el ángulo de refracción medido:",
+    "Ingrese el ángulo de refracción medido usando '.' para decimales",
     ""
   );
+  if (userRefractionAngle === null || userRefractionAngle === "") {
+    return;
+  }
 
-  // Validate input - if canceled or not a number, return
-  if (userRefractionAngle === null || isNaN(parseFloat(userRefractionAngle)) || userRefractionAngle <=0 || userRefractionAngle > 90) {
+  if ((userRefractionAngle <=0 || userRefractionAngle > 90) || (isNaN(userRefractionAngle))) {
     alert(
       "Por favor, ingrese un valor numérico válido para el ángulo de refracción."
     );
     return;
   }
 
-
-  // Parse the user input value
   const refractionAngle = parseFloat(userRefractionAngle);
 
   // Calcular el índice de refracción experimental usando la ley de Snell
-  const incidenceAngleRad =
-    (simulation.calculatedAngles.incidence * Math.PI) / 180;
+  const incidenceAngleRad = (simulation.calculatedAngles.incidence * Math.PI) / 180;
   const refractionAngleRad = (refractionAngle * Math.PI) / 180;
-  const experimentalRI =
-    (simulation.currentExteriorMedium.refractiveIndex *
-      Math.sin(incidenceAngleRad)) /
-    Math.sin(refractionAngleRad);
+  const experimentalRI = (simulation.currentExteriorMedium.refractiveIndex * Math.sin(incidenceAngleRad)) / Math.sin(refractionAngleRad);
 
   const measurement = {
     number: simulation.measurements.length + 1,
     thickness: simulation.thickness,
-    material:
-      simulation.material === "unknown"
-        ? "Desconocido"
-        : simulation.currentMaterial.name,
+    material: simulation.material === "unknown" ? "Desconocido" : simulation.currentMaterial.name,
     exteriorMedium: simulation.currentExteriorMedium.name,
-    refractiveIndex:
-      simulation.material === "unknown"
-        ? "?"
-        : simulation.currentMaterial.refractiveIndex.toFixed(2),
-    incidenceAngle: simulation.calculatedAngles.incidence.toFixed(1),
-    refractionAngle: refractionAngle.toFixed(1),
-    experimentalRI: experimentalRI.toFixed(3),
+    refractiveIndex: simulation.material === "unknown" ? "?": simulation.currentMaterial.refractiveIndex.toFixed(2),
+    incidenceAngle: simulation.calculatedAngles.incidence.toFixed(2),
+    refractionAngle: refractionAngle.toFixed(2),
+    experimentalRI: boxmuller(experimentalRI, simulation.error).toFixed(3),
   };
 
   simulation.measurements.push(measurement);

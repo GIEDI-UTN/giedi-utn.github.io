@@ -207,9 +207,9 @@
                         <label class="text-lg font-semibold dark:text-white">Separación</label>
 
                         <div class="button-group flex flex-row space-x-3 mt-2">
-                            <button id="grid-1mm" class="grid-button bg-utn-dark text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">1 mm</button>
-                            <button id="grid-5mm" class="grid-button  bg-utn-dark text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">5 mm</button>
-                            <button id="grid-10mm" class="grid-button  bg-utn-dark text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">10 mm</button>
+                            <button id="grid-1mm" class="grid-button dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">1 mm</button>
+                            <button id="grid-5mm" class="grid-button  dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">5 mm</button>
+                            <button id="grid-10mm" class="grid-button  dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">10 mm</button>
                         </div>
                     </div>
                 </div>
@@ -248,11 +248,11 @@
       <h3 class="text-2xl font-semibold dark:text-white mb-4">Tabla de datos</h3>
     
       <div class="table-controls dark:text-white flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-4 w-full max-w-screen-xl md:mx-auto">
-        <button id="add-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
+        <button id="add-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
           Agregar medición
         </button>
 
-        <button id="export-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 text-slate-700 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
+        <button id="export-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
           Exportar datos
         </button>
       </div>
@@ -282,7 +282,7 @@
 
     <!--COMIENZO MINI WIKI-->
     <div class="flex flex-col justify-start min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl p-4">
-    <h1 class="flex text-3xl md:text-4xl font-bold mt-8 mb-4 text-slate-900 dark:text-white">
+    <h1 class="flex text-3xl md:text-4xl font-bold mt-8 mb-4 text-slate-900 dark:text-white justify-center">
       ¿Qué necesitas saber para este simulador?</h1>
     <p class="text-utn-dark  dark:text-slate-300">
       <span class="font-semibold">Rayo luminoso:</span> Trayectoria a lo largo de la cual se propaga la energía luminosa en un medio homogéneo.
@@ -300,6 +300,7 @@
       Cuando el medio tiene mayor índice de refracción, se dice que es más "denso".
       <br><br>
       <span class="font-semibold text-utn-regular">Importante: El índice de refracción SIEMPRE es mayor o igual a 1. No existe medio en el cual la luz viaje más rápido que en el vacío.</span>
+      <br><br>
     </p>
     <br>
     <p class="text-utn-dark  dark:text-slate-300">
