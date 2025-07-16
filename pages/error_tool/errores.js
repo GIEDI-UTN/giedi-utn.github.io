@@ -966,7 +966,8 @@ $(function () {
         if ($fuera_rango) {
           alert($text_adv);
         } else {
-          const data = [$error, $material, $medio_ext, $espesor, $angulo];
+          $id = "reflexion";
+          const data = [$id, $error, $material, $medio_ext, $espesor, $angulo];
           exportarJSON(data, $titulo);
         }
         break;
@@ -1015,7 +1016,8 @@ $(function () {
         if ($fuera_rango) {
           alert($text_adv);
         } else {
-          const data = [$error, $masa, $gravedad, $acelerac];
+          $id = "ascensor";
+          const data = [$id, $masa, $gravedad, $acelerac];
           exportarJSON(data, $titulo);
         }
         break;
@@ -1075,7 +1077,8 @@ $(function () {
         if ($fuera_rango) {
           alert($text_adv);
         } else {
-          const data = [$error, $masa, $largo, $ciclos, $angulo];
+          $id = "pen-simple";
+          const data = [$id, $error, $masa, $largo, $ciclos, $angulo];
           exportarJSON(data, $titulo);
         }
 
@@ -1156,7 +1159,9 @@ $(function () {
         if ($fuera_rango) {
           alert($text_adv);
         } else {
+          $id = "pen-balistico";
           const data = [
+            $id,
             $error,
             $masa_proy,
             $masa_cuerpo,
@@ -1248,13 +1253,14 @@ $(function () {
         if ($fuera_rango) {
           alert($text_adv);
         } else {
-          if ($tipo_polea == "massive-pulley"){
-            const data = [$error, $dist_caida, $masa1, $masa2, $masa_polea, $radio_polea];
-            exportarJSON(data, $titulo);
-          }
-          else {
-            const data = [$error, $dist_caida, $masa1, $masa2];
-            exportarJSON(data, $titulo);
+            $id="artwood";
+            if ($tipo_polea == "massive-pulley"){
+              const data = [$id, $error, $dist_caida, $masa1, $masa2, $masa_polea, $radio_polea];
+              exportarJSON(data, $titulo);
+            }
+            else {
+              const data = [$id, $error, $dist_caida, $masa1, $masa2];
+              exportarJSON(data, $titulo);
           }
           
         }
@@ -1322,7 +1328,8 @@ $(function () {
           alert($text_adv);
         }
         else {
-            const data = [$error, $garganta, $diametro, $caudal, $presion, $temperatura];
+          $id = "venturi";
+            const data = [$id,$error, $garganta, $diametro, $caudal, $presion, $temperatura];
             exportarJSON(data, $titulo);
         }
 
