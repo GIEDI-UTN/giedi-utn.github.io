@@ -16,6 +16,7 @@ const MATERIALS = {
   water: { name: "Agua", refractiveIndex: 1.33 },
 };
 
+// Lista de medios exteriores y sus índices de refracción
 const EXTERIOR_MEDIUMS = {
   vacuum: { name: "Vacío", refractiveIndex: 1.0 },
   air: { name: "Aire", refractiveIndex: 1.0003 },
@@ -29,14 +30,12 @@ const EXTERIOR_MEDIUMS = {
   sugarSolution80: { name: "Solución de azúcar 80%", refractiveIndex: 1.49 },
 };
 
-
-
 // Estado de la simulación
 let simulation = {
+  error: 0,
   material: "glass",
   exteriorMedium: "air",
   thickness: 5,
-  wavelength: 650,
   incidenceAngle: 30,
   gridSpacing: 1,
   gridOffset: { x: 0, y: 0 },
@@ -56,8 +55,6 @@ let animationFrameId = null;
 // Referencias de elementos DOM
 const thicknessSlider = document.getElementById("thickness");
 const thicknessValue = document.getElementById("thickness-value");
-const wavelengthSlider = document.getElementById("wavelength");
-const wavelengthValue = document.getElementById("wavelength-value");
 const angleSlider = document.getElementById("angle");
 const angleValue = document.getElementById("angle-value");
 const materialSelect = document.getElementById("material");
@@ -87,9 +84,6 @@ function initSimulation() {
   updateCurrentMaterial();
   updateCurrentExteriorMedium();
 
-  // Aplicar errores iniciales
-  applySimulationErrors();
-
   // Iniciar el bucle de renderizado
   startRenderLoop();
 
@@ -104,7 +98,7 @@ function resizeCanvas() {
 }
 
 function updateCurrentMaterial() {
-  //Si se selecciona desconocido, generar semilla rand para elegir del array
+  // Si se selecciona desconocido, generar semilla rand para elegir del array
   if (simulation.material === "unknown") {
     // Excluir "unknown" de las opciones
     const materialKeys = Object.keys(MATERIALS).filter(
@@ -125,22 +119,6 @@ function updateCurrentExteriorMedium() {
     EXTERIOR_MEDIUMS[simulation.exteriorMedium];
 }
 
-//Errores puestos por defecto
-function applySimulationErrors() {
-  const generateError = (value) => {
-    const stdDev = value * 0.009; // 0.9% de error típico
-    let u = 0,
-      v = 0;
-    while (u === 0) u = Math.random();
-    while (v === 0) v = Math.random();
-    const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-    return value * (1 + (z * stdDev) / value);
-  };
-
-  simulation.realThickness = generateError(simulation.thickness);
-  simulation.realIncidenceAngle = generateError(simulation.incidenceAngle);
-}
-
 function startRenderLoop() {
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
@@ -159,19 +137,13 @@ function setupEventListeners() {
   thicknessSlider.addEventListener("input", function () {
     simulation.thickness = parseInt(this.value);
     thicknessValue.textContent = `${simulation.thickness} mm`;
-    applySimulationErrors();
-  });
-
-  wavelengthSlider.addEventListener("input", function () {
-    simulation.wavelength = parseInt(this.value);
-    wavelengthValue.textContent = `${simulation.wavelength} nm`;
-    // El color del láser cambiará en la función de dibujo
+    simulation.realThickness = parseInt(this.value);
   });
 
   angleSlider.addEventListener("input", function () {
     simulation.incidenceAngle = parseInt(this.value);
     angleValue.textContent = `${simulation.incidenceAngle}°`;
-    applySimulationErrors();
+    simulation.realIncidenceAngle = parseInt(this.value);
   });
 
   materialSelect.addEventListener("change", function () {
@@ -231,7 +203,6 @@ function resetSimulation() {
     material: "glass",
     exteriorMedium: "air",
     thickness: 5,
-    wavelength: 650,
     incidenceAngle: 30,
     gridSpacing: 1,
     gridOffset: { x: 0, y: 0 },
@@ -247,9 +218,6 @@ function resetSimulation() {
   thicknessSlider.value = simulation.thickness;
   thicknessValue.textContent = `${simulation.thickness} mm`;
 
-  wavelengthSlider.value = simulation.wavelength;
-  wavelengthValue.textContent = `${simulation.wavelength} nm`;
-
   angleSlider.value = simulation.incidenceAngle;
   angleValue.textContent = `${simulation.incidenceAngle}°`;
 
@@ -260,6 +228,9 @@ function resetSimulation() {
 
   // Limpiar tabla
   dataTable.innerHTML = "";
+  const exitoEsc = document.getElementById('exito-esc');
+  exitoEsc.innerHTML = "";
+
 }
 
 function drawSimulation() {
@@ -449,19 +420,15 @@ function drawMaterialPlate(originX, originY, scale) {
 
   
   // Dibujar la placa. Cambia de color según material. Gris circonio, rosa cuarzo, azul el resto
-  if (simulation.currentMaterial == MATERIALS.zirconium){
-    ctx.fillStyle = "rgba(243, 243, 243, 0.8)"; // Azul claro semitransparente
-    ctx.strokeStyle = "rgba(243, 243, 243, 0.8)"; // Azul más oscuro
+  if ((simulation.currentMaterial == MATERIALS.zirconium) || (simulation.currentMaterial == MATERIALS.diamond)){
+    ctx.fillStyle = "rgba(243, 243, 243, 0.5)"; // Azul claro semitransparente
+    ctx.strokeStyle = "rgba(243, 243, 243, 0.5)"; // Azul más oscuro
     ctx.lineWidth = 2;
   }
-  else if (simulation.currentMaterial == MATERIALS.diamond) {
-    ctx.fillStyle = "rgba(243, 243, 243, 0.8)"; // Azul claro semitransparente
-    ctx.strokeStyle = "rgba(243, 243, 243, 0.8)"; // Azul más oscuro
-    ctx.lineWidth = 2;
-  }
+
   else if (simulation.currentMaterial == MATERIALS.quartz) {
-    ctx.fillStyle = "rgba(130, 112, 116, 0.5)"; // Azul claro semitransparente
-    ctx.strokeStyle = "rgba(130, 112, 116, 0.5)"; // Azul más oscuro
+    ctx.fillStyle = "rgba(130, 112, 116, 0.8)"; // Azul claro semitransparente
+    ctx.strokeStyle = "rgba(130, 112, 116, 0.8)"; // Azul más oscuro
     ctx.lineWidth = 2;
   }
     else {
@@ -479,7 +446,7 @@ function drawMaterialPlate(originX, originY, scale) {
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
   ) {
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "rgba(70, 130, 180, 1)";
   } else {
     ctx.fillStyle = "#020617";
   }
@@ -508,7 +475,7 @@ function drawMaterialPlate(originX, originY, scale) {
   );
 
   //Etiqueta con el material de la placa
-  ctx.fillStyle = "rgba(70, 130, 180, 1)";
+  ctx.fillStyle = "white";
   ctx.fillText(materialName, originX - 160, plateTop + 45);
 }
 
@@ -521,7 +488,7 @@ function drawLaser(originX, originY, scale) {
   const angleRad = ((90 - simulation.realIncidenceAngle) * Math.PI) / 180;
 
   // Color del láser según la longitud de onda
-  const laserColor = wavelengthToColor(simulation.wavelength);
+  const laserColor = 'rgb(0, 162, 255)';
 
   // Dibujar rayo incidente
   const incidentLength = 150 * scale;
@@ -816,6 +783,60 @@ function addMeasurement() {
   cellExpRI.textContent = measurement.experimentalRI;
 }
 
+function importarJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (data[0]!="reflexion"){
+          alert("El escenario subido no corresponde a este simulador.")
+        }
+        else{
+          setearEscenario(data);
+        }
+
+      } catch (err) {
+        alert("Error al leer el archivo JSON");
+      }
+    };
+
+    reader.readAsText(file);
+  }
+
+function setearEscenario(data) {
+  // Cargar los valores del escenario como array en cada variable de la simulación actual
+  simulation.error = parseFloat(data[1]);
+  simulation.material = data[2];
+  simulation.exteriorMedium = data[3];
+  simulation.thickness = parseFloat(data[4]);
+  simulation.realIncidenceAngle = parseInt(data[5]);
+
+  // Cambiar los valores visuales de los selectores en el contenedor con los recibidos
+  thicknessSlider.value = simulation.thickness;
+  thicknessValue.textContent = `${simulation.thickness} mm`;
+  angleSlider.value = simulation.realIncidenceAngle;
+  angleValue.textContent = `${simulation.realIncidenceAngle}°`;
+  materialSelect.value = simulation.material;
+  exteriorSelect.value = simulation.exteriorMedium;
+
+  updateCurrentMaterial();
+  updateCurrentExteriorMedium();
+  inhabInput();
+}
+
+function inhabInput() {
+  thicknessSlider.disabled = true;
+  angleSlider.disabled = true;
+  materialSelect.disabled = true;
+  exteriorSelect.disabled = true;
+
+  const exitoEsc = document.getElementById('exito-esc');
+  exitoEsc.className = 'text-center text-green-400 italic mt-4';
+  exitoEsc.textContent = 'Escenario cargado con éxito.';
+}
 
 function exportData() {
   if (simulation.measurements.length === 0) {
@@ -858,33 +879,6 @@ function exportData() {
   URL.revokeObjectURL(url);
 }
 
-// Funciones auxiliares
-
-function wavelengthToColor(wavelength) {
-  let r, g, b;
-    r = 0;
-    g = 0.5;
-    b = 1;
-
-  // Intensidad
-  let factor;
-  if (wavelength >= 380 && wavelength < 420) {
-    factor = 0.3 + (0.7 * (wavelength - 380)) / (420 - 380);
-  } else if (wavelength >= 420 && wavelength < 700) {
-    factor = 1.0;
-  } else if (wavelength >= 700 && wavelength <= 750) {
-    factor = 0.3 + (0.7 * (750 - wavelength)) / (750 - 700);
-  } else {
-    factor = 0.3;
-  }
-
-  r = Math.floor(255 * Math.pow(r * factor, 0.8));
-  g = Math.floor(255 * Math.pow(g * factor, 0.8));
-  b = Math.floor(255 * Math.pow(b * factor, 0.8));
-
-  return `rgb(${r}, ${g}, ${b})`;
-}
-
 function adjustColorIntensity(rgbColor, factor) {
   // Extraer valores RGB
   const rgb = rgbColor.match(/\d+/g).map(Number);
@@ -893,20 +887,6 @@ function adjustColorIntensity(rgbColor, factor) {
   const adjustedRgb = rgb.map((value) => Math.floor(value * factor));
 
   return `rgb(${adjustedRgb[0]}, ${adjustedRgb[1]}, ${adjustedRgb[2]})`;
-}
-
-function percentile(data, p) {
-  const sortedData = [...data].sort((a, b) => a - b);
-  if (sortedData.length === 0) return 0;
-
-  const index = ((sortedData.length - 1) * p) / 100;
-  const lower = Math.floor(index);
-  const upper = Math.ceil(index);
-
-  if (lower === upper) return sortedData[lower];
-
-  const weight = index - lower;
-  return sortedData[lower] * (1 - weight) + sortedData[upper] * weight;
 }
 
 // Iniciar la simulación cuando la página esté cargada

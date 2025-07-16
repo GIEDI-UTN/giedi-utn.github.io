@@ -10,6 +10,7 @@
     --color-amber-400: oklch(82.8% 0.189 84.429);
     --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-amber-600: oklch(66.6% 0.179 58.318);
+    --color-green-400: oklch(79.2% 0.209 151.711);
     --color-blue-100: oklch(93.2% 0.032 255.585);
     --color-slate-300: oklch(86.9% 0.022 252.894);
     --color-slate-700: oklch(37.2% 0.044 257.287);
@@ -435,9 +436,6 @@
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
-  .cursor-none {
-    cursor: none;
-  }
   .cursor-pointer {
     cursor: pointer;
   }
@@ -565,9 +563,6 @@
   }
   .border-gray-200 {
     border-color: var(--color-gray-200);
-  }
-  .border-gray-500 {
-    border-color: var(--color-gray-500);
   }
   .border-utn-dark {
     border-color: var(--color-utn-dark);
@@ -744,6 +739,9 @@
   .text-gray-800 {
     color: var(--color-gray-800);
   }
+  .text-green-400 {
+    color: var(--color-green-400);
+  }
   .text-slate-700 {
     color: var(--color-slate-700);
   }
@@ -771,11 +769,11 @@
   .uppercase {
     text-transform: uppercase;
   }
+  .italic {
+    font-style: italic;
+  }
   .underline {
     text-decoration-line: underline;
-  }
-  .accent-gray-500 {
-    accent-color: var(--color-gray-500);
   }
   .accent-utn-regular {
     accent-color: var(--color-utn-regular);
@@ -808,10 +806,6 @@
   .duration-80 {
     --tw-duration: 80ms;
     transition-duration: 80ms;
-  }
-  .select-none {
-    -webkit-user-select: none;
-    user-select: none;
   }
   .group-hover\:text-white {
     &:is(:where(.group):hover *) {
@@ -1324,11 +1318,6 @@
       border-color: var(--color-gray-700);
     }
   }
-  .dark\:bg-gray-500 {
-    @media (prefers-color-scheme: dark) {
-      background-color: var(--color-gray-500);
-    }
-  }
   .dark\:bg-gray-800 {
     @media (prefers-color-scheme: dark) {
       background-color: var(--color-gray-800);
@@ -1362,11 +1351,6 @@
   .dark\:text-gray-400 {
     @media (prefers-color-scheme: dark) {
       color: var(--color-gray-400);
-    }
-  }
-  .dark\:text-gray-500 {
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-gray-500);
     }
   }
   .dark\:text-slate-300 {
