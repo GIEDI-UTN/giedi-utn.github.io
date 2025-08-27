@@ -27,7 +27,8 @@ Sin embargo, esto implicaba una personalización del porcentaje para cada simula
 **Algoritmo de Box-Muller**
 
 El algoritmo de [Box-Muller](https://es.wikipedia.org/wiki/M%C3%A9todo_de_Box-Muller) es una transformación matemática que permite transformar dos números aleatorios de distribución uniforme (como los generados por math.random) y los transforma en dos números aleatorios de distribución normal.
-![Imagen mostrando anillos distribuidos uniformemente y luego dispersos](anillos-bm.png)
+
+![alt text](image-7.png)
 
 Anillos distribuidos uniformemente con respecto al origen (u1, u2). Ingresan a la transformación. El producto son los mismos anillos que se distancian cada vez más entre sí conforme se van alejando del origen.
 
@@ -41,7 +42,7 @@ Basta con llamar a la función, entregarle el valor original y obtener de salida
 
 u1 y u2 son dos valores reales con distribución uniforme. Como los produce la función random, son números pseudo aleatorios de distribución uniforme entre (0,1].
 
-$R = sqrt(-2.ln(u1))$
+$R = \sqrt{-2.ln(u1)}$
 $θ = 2.π.u2$
 
 Valores con distribución normal z1 y z2:
@@ -78,6 +79,14 @@ return z0 * destd + real;
 }
 ```
 
+La función recibe el valor exacto y el error porcentual. La variable _sobra_ almacena un valor booleano que indica si ya hubo un calculo previo.
+
+Si es verdadera, ingresa al if, toma valor opuesto (falso) y devuelve el valor almacenado sin ejecutar la función.
+
+Si no hubo un cálculo previo, se generan dos números pseudoaleatorios con math.random. Si el primer númer u1 es igual a 0, se redondea al número más pequeño que puede expresar Javascript con _MIN_VALUE_.
+
+Luego, se efectúan los cálculos propios de la transformación, donde z0 y z1 son los valores devueltos. Como solo necesito un número, almaceno z1 en una variable global _resto_ y hago que _sobra_ tome valor "_true_" para evitar una ejecución completa de la función. El número restante, z0, se devuelve multiplicado por _destd_ y sumado al valor exacto almacenado en _real_.
+
 ## REFERENCIAS
 
 [The Box Muller method for simulating normal variables](https://hpaulkeeler.com/the-box-muller-method-for-simulating-normal-variables/)
@@ -85,8 +94,7 @@ return z0 * destd + real;
 [Box-Muller transformation](https://mathworld.wolfram.com/Box-MullerTransformation.html)
 [La transformación de Box Muller](https://intsight.com/index.php/2020/03/17/la-transformacion-de-box-muller/)
 [Box-Muller transform (Wikipedia)](https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform)
-[Simulación de variables aleatorias
-Con distribución normal](https://repositorio.uptc.edu.co/server/api/core/bitstreams/f7e1c134-2db9-41cf-92bc-91036cd72ae7/content)
+[Simulación de variables aleatorias con distribución normal](https://repositorio.uptc.edu.co/server/api/core/bitstreams/f7e1c134-2db9-41cf-92bc-91036cd72ae7/content)
 
 ---
 

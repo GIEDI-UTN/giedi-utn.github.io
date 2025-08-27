@@ -1227,8 +1227,7 @@ $(function () {
             $text_adv +=
               "El rango válido para la masa de la polea es de 0.1kg a 1kg";
             $fuera_rango = true;
-          } 
-          else if (isNaN($masa_polea)) {
+          } else if (isNaN($masa_polea)) {
             $masa_polea = 0.5;
           }
 
@@ -1240,8 +1239,7 @@ $(function () {
             $text_adv +=
               "El rango válido para el radio de la polea es de 2cm a 10cm";
             $fuera_rango = true;
-          }
-          else if (isNaN($radio_polea)) {
+          } else if (isNaN($radio_polea)) {
             $radio_polea = 5;
           }
         }
@@ -1253,23 +1251,29 @@ $(function () {
         if ($fuera_rango) {
           alert($text_adv);
         } else {
-            $id="artwood";
-            if ($tipo_polea == "massive-pulley"){
-              const data = [$id, $error, $dist_caida, $masa1, $masa2, $masa_polea, $radio_polea];
-              exportarJSON(data, $titulo);
-            }
-            else {
-              const data = [$id, $error, $dist_caida, $masa1, $masa2];
-              exportarJSON(data, $titulo);
+          $id = "artwood";
+          if ($tipo_polea == "massive-pulley") {
+            const data = [
+              $id,
+              $error,
+              $dist_caida,
+              $masa1,
+              $masa2,
+              $masa_polea,
+              $radio_polea,
+            ];
+            exportarJSON(data, $titulo);
+          } else {
+            const data = [$id, $error, $dist_caida, $masa1, $masa2];
+            exportarJSON(data, $titulo);
           }
-          
         }
         break;
 
       case "venturi":
         $error = parseFloat($("#ePorcentual").val());
         $garganta = parseFloat($("#throat-diameter").val());
-        $diametro = ($("#inlet-diameter").val());
+        $diametro = $("#inlet-diameter").val();
         $caudal = parseFloat($("#flow-rate").val());
         $presion = parseFloat($("#inlet-pressure").val());
         $temperatura = parseFloat($("#temperature").val());
@@ -1326,11 +1330,18 @@ $(function () {
 
         if ($fuera_rango) {
           alert($text_adv);
-        }
-        else {
+        } else {
           $id = "venturi";
-            const data = [$id,$error, $garganta, $diametro, $caudal, $presion, $temperatura];
-            exportarJSON(data, $titulo);
+          const data = [
+            $id,
+            $error,
+            $garganta,
+            $diametro,
+            $caudal,
+            $presion,
+            $temperatura,
+          ];
+          exportarJSON(data, $titulo);
         }
 
         break;
