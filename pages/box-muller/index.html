@@ -11,15 +11,18 @@
       Transformada de Box-Muller para mediciones físicas en entornos simulados
     </h1>
     <div class="main">
-        <img src="./media/cartesian_rand_transform.png" alt="Ilustración de método Box-Muller">
+      <img
+        src="./media/cartesian_rand_transform.png"
+        alt="Ilustración de método Box-Muller"
+      />
       <div class="texto">
-            <p>
-              La transformada de Box-Muller genera números aleatorios con
-              distribución normal (z0, z1) a partir de números aleatorios (u1,
-              u2) que pertenecen al rango (0,1) con distribución uniforme.
-              El algoritmo genera dos números u1, u2 con Math.random() y los
-              transforma en z0, z1 con:
-            </p>
+        <p>
+          La transformada de Box-Muller genera números aleatorios con
+          distribución normal (z0, z1) a partir de números aleatorios (u1, u2)
+          que pertenecen al rango (0,1) con distribución uniforme. El algoritmo
+          genera dos números u1, u2 con Math.random() y los transforma en z0, z1
+          con:
+        </p>
         <ul class="formulas">
           <li><code>R = sqrt(-2.ln(u1))</code></li>
           <li><code>&theta; = 2.&pi;.u2</code></li>
@@ -31,10 +34,15 @@
       <div class="muestra">
         <h1>Ejemplo</h1>
         <label for="datoreal">Dato real:</label>
-        <input type="number" name="dato" id="datoreal" placeholder="Ej: 12.3"/>
+        <input type="number" name="dato" id="datoreal" placeholder="Ej: 12.3" />
 
         <label for="muestras">Cantidad de muestras:</label>
-        <input type="number" name="nromuestras" id="muestras" placeholder="Ej: 100"/>
+        <input
+          type="number"
+          name="nromuestras"
+          id="muestras"
+          placeholder="Ej: 100"
+        />
 
         <div class="error">
           <p>Seleccione desviación estándar porcentual:</p>
@@ -46,25 +54,21 @@
           <input type="radio" name="eporcentual" id="0.5%" value="0.5" />
 
           <label for="1%">± 1%</label>
-          <input type="radio" name="eporcentual" id="1%" value="1"/>
+          <input type="radio" name="eporcentual" id="1%" value="1" />
 
           <label for="2%">± 2%</label>
-          <input type="radio" name="eporcentual" id="2%" value="2"/>
+          <input type="radio" name="eporcentual" id="2%" value="2" />
         </div>
 
         <button id="verrta">Ver resultados</button>
 
-        <canvas id="grafico" width="600px" height="300px"></canvas>
-        <div id="resultado" class="rest">
-
-        </div>
-
+        <canvas id="grafico" width="300px" height="100px"></canvas>
+        <div id="resultado" class="rest"></div>
       </div>
     </div>
 
     <script src="./box-muller.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   </body>
 </html>

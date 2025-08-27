@@ -22,23 +22,23 @@ h1 {
 }
 
 img {
-    width: 40%;
-    height: 100%;
-    margin:20px;
+  width: 40%;
+  height: 100%;
+  margin: 20px;
 }
 
 .texto {
   width: 62%;
   height: 100%;
   text-align: left;
-  margin:10px;
+  margin: 10px;
 }
 
 .formulas {
   color: rgb(112, 230, 179);
   text-align: center;
   font-size: 1rem;
-  margin:20px;
+  margin: 20px;
 }
 
 ul,
@@ -53,48 +53,48 @@ li {
 }
 
 .muestra h1 {
-    margin:20px;
+  margin: 20px;
 }
 
 .muestra input {
-    margin-top:5px;
-    padding: 4px;
-    background-color: rgb(11, 11, 11);
-    color: white;
-    border: 1px solid white;
-    border-radius: 5px;
+  margin-top: 5px;
+  padding: 4px;
+  background-color: rgb(11, 11, 11);
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 .error {
-    text-align:center;
-    margin:10px;
-    padding: 5px;
+  text-align: center;
+  margin: 10px;
+  padding: 5px;
 }
 
 .error input {
-    margin-top: 10px;
-    margin-right: 20px;
+  margin-top: 10px;
+  margin-right: 20px;
 }
 
 label {
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 button {
-    cursor: pointer;
-    background-color: rgb(11,11,11);
-    border-radius: 20px;
-    border: solid 2px;
-    border-color: rgb(112, 230, 179);
-    color:white;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-left: 12px;
-    padding-right: 12px;
-    margin-bottom: 20px;
+  cursor: pointer;
+  background-color: rgb(11, 11, 11);
+  border-radius: 20px;
+  border: solid 2px;
+  border-color: rgb(112, 230, 179);
+  color: white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-bottom: 20px;
 }
 
-h2 p{
-    margin:20px;
+h2 p {
+  margin: 20px;
 }
 
 .rest {
@@ -103,12 +103,14 @@ h2 p{
   align-items: center;
 }
 
-table tr{
+table tr {
   border: 1px solid white;
 }
 
 canvas {
-  width: 60%;
-  height: 60%;
-  margin: 20px
+  max-width: 900px;
+  max-height: 1200px;
+  width: 40%;
+  height: 20%;
+  margin: 20px;
 }
