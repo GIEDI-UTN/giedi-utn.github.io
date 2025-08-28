@@ -133,7 +133,8 @@ Finalmente, se llama a la función boxmuller que recibe de parámetro el índice
 [revokeObjectURL - MDN dev](https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL_static)
 [fileReader - MDN dev](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
 
-**Entrega parcial Junio:**
+## Entrega parcial Junio:
+
 Herramienta de creación de escenarios finalizada, con archivos generados JSON que se incorporan con éxito a los simuladores.
 
 ![alt text](image.png)
