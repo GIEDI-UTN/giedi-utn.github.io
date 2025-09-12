@@ -34,7 +34,7 @@ A diferencia de los simuladores tradicionales que devuelven resultados exactos, 
 
 
 ### Licencia
-Consulta el archivo [LICENSE](LICENSE) para más detalles.  
+Consulta el archivo [LICENSE](../LICENSE) para más detalles.  
 
 ---
 
@@ -47,3 +47,4 @@ Grupo de Investigación en Enseñanza de la Ingeniería (GIEDI)
 **Suárez Belletti Gael G.**  
 Universidad Tecnológica Nacional – Facultad Regional Santa Fe  
 _(Desarrollo, testing, documentación)_  
+
