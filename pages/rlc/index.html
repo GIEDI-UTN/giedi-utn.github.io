@@ -228,6 +228,7 @@
             </div>
             <div class="dominance-indicator col-span-3 text-center text-xl" id="dominanceIndicator">
               <p id="dominanceText">Estado del circuito: Capacitivo. XC > XL. El voltaje atrasa a la corriente por 87.1°</p>
+              <div id="resonanceMessage" class="message"></div>
             </div>
             
             <!-- Fin inside container calculados--> 
@@ -273,9 +274,9 @@
               <span id="timeScale-value" class="dark:text-white text-slate-950 text-center">100</span>
             </div>
             <div id="botones" class="flex flex-col justify-center items-center col-span-2 mt-8">
-              <button id="set-resonancia" class="dark:bg-utn-regular mt-4  dark:text-slate-950 text-xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border-1 border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer">
+              <button id="resonanceBtn" class="dark:bg-utn-regular mt-4  dark:text-slate-950 text-xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border-1 border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer">
               Configurar resonancia</button>
-              <button class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer ">
+              <button id="osci_on" class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer ">
               Encender osciloscopio</button>
             </div>
             
