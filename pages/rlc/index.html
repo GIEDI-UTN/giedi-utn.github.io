@@ -124,7 +124,7 @@
       <div class="flex flex-row justify-center m-4" id="contenedor-1">
 
         <!-- Inicio panel datos calculados -->
-        <div class="values-grid grid grid-cols-4 auto-rows-max text-white gap-2 w-4/5 p-4 m-4 border-1 border-utn-regular rounded-3xl" id="datos-calculados">
+        <div class="values-grid grid grid-cols-3 auto-rows-max text-white gap-2 w-3/5 p-4 m-4 border-1 border-utn-regular rounded-3xl" id="datos-calculados">
 
           <!-- Información que se oculta al clickear configurar resonancia-->
           <div id="info" class="hidden">
@@ -136,9 +136,9 @@
               <p class="dark:text-white text-slate-950">4. Para cambiar los valores, deberá clickear nuevamente en "Configurar resonancia" con los valores deseados.</p>
             </div>
           </div>
-          
+
+          <!-- Imagen circuito RLC -->
           <div class="content-center">
-            <!-- Circuito RLC + Parametros calculados -->
             <img
               src="../../src/media/RLC_light.png"
               class="h-7 ml-4 flex dark:hidden justify-center"
@@ -169,11 +169,11 @@
           </div>
 
           <div class="value-item flex flex-col justify-center items-center">
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+              <div class="value-item border-2 border-green-400 rounded-2xl p-2 min-w-s w-60 text-center m-4">
                 <span class="label">XL:</span>
                 <span id="xl-value">10 Ω</span>
               </div>
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center">
+              <div class="value-item border-2 border-blue-400 rounded-2xl p-2 min-w-s w-60 text-center">
                 <span class="label">XC:</span>
                 <span id="xc-value">1000 Ω</span>
               </div>
@@ -184,18 +184,19 @@
           </div>
 
           <div class="value-item flex flex-col justify-center items-center">
-            <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
-              <span class="label">VR:</span>
-              <span id="vr-value">0.53 V</span>
-            </div>
-            <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center">
+            <div class="value-item border-2 border-green-400 rounded-2xl p-2 min-w-s w-60 text-center m-4">
               <span class="label">VL:</span>
               <span id="vl-value">0.11 V</span>
             </div>
-            <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+            <div class="value-item border-2 border-blue-400 rounded-2xl p-2 min-w-s w-60 text-center">
                 <span class="label">VC:</span>
                 <span id="vc-value">10.6 V</span>
             </div>
+            <div class="value-item border-2 border-red-400 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+              <span class="label">VR:</span>
+              <span id="vr-value">0.53 V</span>
+            </div>
+            
           </div>
 
           <div class="value-item flex flex-col justify-center items-center">
@@ -223,13 +224,17 @@
               <span id="irms-value">0.011 A</span>
             </div>
           </div>
+          <div class="dominance-indicator col-span-3 text-center text-xl" id="dominanceIndicator">
+            <p id="dominanceText">Estado del circuito: Capacitivo. XC > XL. El voltaje atrasa a la corriente por 87.1°</p>
+          </div>
+          
           <!-- Fin inside container calculados--> 
         </div>
         <!-- Fin panel datos calculados -->
       
         <!-- Inicio panel selectores -->
-        <div class="flex flex-col w-1/5 m-4 p-4 border-1 border-utn-regular rounded-2xl items-center" id="datos-modificables">
-         <h2 class="dark:text-white text-slate-950 text-xl font-bold text-center">Parámetros de resonancia</h2>
+        <div class="grid grid-cols-2 auto-rows-max gap-2 w-2/5 m-4 p-4 border-1 border-utn-regular rounded-2xl items-center" id="datos-modificables">
+         <h2 class="dark:text-white text-slate-950 text-2xl font-bold text-center col-span-2">Parámetros de resonancia</h2>
           <div class="control-group mt-4 flex flex-col items-center justify-center">
             <label for="resistance" class="dark:text-white text-slate-950">Resistencia (R) [Ω]:</label>
             <input type="range" id="resistance" min="1" max="100" value="50" step="1">
@@ -265,15 +270,15 @@
             <input type="range" id="timeScale" min="10" max="600" value="100" step="10">
             <span id="timeScale-value" class="dark:text-white text-slate-950 text-center">100</span>
           </div>
-
-          <button id="set-resonancia" class="dark:bg-utn-regular dark:text-slate-950 text-xl mt-8 hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border-1 border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer">
-          Configurar resonancia</button>
-          <button class="text-utn-regular text-xl mt-2  border-1 border-utn-regular px-8 py-1 rounded-full cursor-pointer">
-            Encender osciloscopio</button>
+          <div id="botones" class="flex flex-col justify-center items-center col-span-2 mt-8">
+            <button id="set-resonancia" class="dark:bg-utn-regular mt-4  dark:text-slate-950 text-xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border-1 border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer">
+             Configurar resonancia</button>
+            <button class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer">
+             Encender osciloscopio</button>
+          </div>
+          
         </div>
         <!-- Fin panel selectores -->
-
-        
 
       </div>
     </div>
@@ -340,7 +345,8 @@
         </div>
       </div>
     </footer>
-
+    
+    <script src="script.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
   </body>
 </html>
