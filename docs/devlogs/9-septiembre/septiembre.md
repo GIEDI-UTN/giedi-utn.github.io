@@ -1,7 +1,7 @@
 # Bitácora de Desarrollo - Simuladores físicos experimentales
 
 **Autor:** Suárez B. Gael G.  
-**Fecha:** `08/2025`  
+**Fecha:** `09/2025`  
 **Versión:** `1.0.0`  
 **Repositorio:** [giedi-utn en GitHub](https://github.com/GIEDI-UTN/giedi-utn.github.io)
 
@@ -9,21 +9,21 @@
 
 ## Objetivo
 
-_Implementar el simulador de RLC sin errores._
+_Finalizar el simulador RLC. Insertar con éxito Google Analytics._
 
 ---
 
 ## Actividades realizadas
 
-### 1. Maquetado
+### 1. Google Analytics
+Se creó una cuenta de Google específica para el simulador de GIEDI, donde se recopilaran los datos obtenidos de la página. Esta cuenta también puede ser útil para recibir reportes de bugs por parte de los usuarios. Se eligió Google Analytics en lugar de Google Tag Manager por la simplicidad de uso y de las métricas requeridas para la página.   
 
-![alt text](image.png)
 
 ## REFERENCIAS
 
 ---
 
-## Entrega parcial Agosto:
+## Entrega parcial Septiembre:
 
 Por completar
 
