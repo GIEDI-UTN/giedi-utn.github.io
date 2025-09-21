@@ -130,39 +130,39 @@
     <div class="flex flex-col justify-center items-center">
       <!-- Comienzo main: Paneles superiores valores calc y parametros-->
       <div class="flex flex-col justify-center" id="main">
-        <h1 class="dark:text-white text-slate-950 text-5xl font-bold text-center mt-8">Simulador de circuito RLC</h1>
+        
+        <h1 class="dark:text-white text-slate-950 text-5xl font-bold text-center mt-4">Simulador de circuito RLC</h1>
         <p class="dark:text-white text-slate-950 text-center mt-2">Modifica las variables para aplicar la resonancia del circuito. Luego, podrás sacar conclusiones a partir de las variables calculadas.</p>
         
-        <div class="flex flex-row justify-center mt-8 mr-12 ml-12" id="contenedor-1">
+        <div id="info" class="text-center flex flex-row items-center justify-center">
+          <!-- Imagen circuito RLC -->
+          <div class="content-center justify-center items-center flex flex-col mt-8" id="circuito">
+            <img
+              src="../../src/media/RLC_light.png"
+              class="h-md w-md ml-4 flex dark:hidden justify-center"
+              alt="Circuito RLC estándar"
+            />
+            <img
+              src="../../src/media/RLC_dark.png"
+              class="h-sm w-sm hidden justify-self-center dark:flex mr-8"
+              alt="Circuito RLC estándar"
+            />
+          </div>
+          
+          <div class="flex-col ml-4 max-w-xl">
+            <p class="dark:text-white text-slate-950 text-3xl font-bold">Instrucciones:</p>
+            <br>
+            <p class="dark:text-white text-slate-950 text-xl">1. Modifique los parámetros deseados y haga click en "Configurar resonancia"</p>
+            <p class="dark:text-white text-slate-950 text-xl">2. Para cambiar los valores, deberá clickear nuevamente en "Configurar resonancia" con los valores deseados.</p>
+            <p class="dark:text-white text-slate-950 text-xl">3. Haga click en "Encender osciloscopio" para visualizar el diagrama fasorial.</p>
 
+          </div>
+        </div>
+        
+        <div class="flex flex-row justify-center mt-8 mr-12 ml-12" id="contenedor-1">
           <!-- Inicio panel datos calculados -->
           <div class="values-grid grid grid-cols-3 auto-rows-max text-slate-950 dark:text-white gap-2 w-3/5 p-4 m-4 border-2 border-utn-regular rounded-3xl" id="datos-calculados">
 
-            <!-- Información que se oculta al clickear configurar resonancia-->
-            <div id="info" class="hidden">
-              <h1 class="dark:text-white text-slate-950 text-5xl font-bold m-4">Instrucciones: </h1>
-              <div class="flex-col ml-4">
-                <p class="dark:text-white text-slate-950">1. Modifique los parámetros deseados y haga click en "Configurar resonancia"</p>
-                <p class="dark:text-white text-slate-950">2. Si alguno de los valores excede la capacidad del simulador, será informado.</p>
-                <p class="dark:text-white text-slate-950">3. Haga click en "Encender osciloscopio" para visualizar el diagrama fasorial.</p>
-                <p class="dark:text-white text-slate-950">4. Para cambiar los valores, deberá clickear nuevamente en "Configurar resonancia" con los valores deseados.</p>
-              </div>
-            </div>
-
-            <!-- Imagen circuito RLC -->
-            <div class="content-center">
-              <img
-                src="../../src/media/RLC_light.png"
-                class="h-md w-md ml-4 flex dark:hidden justify-center"
-                alt="Circuito RLC estándar"
-              />
-              <img
-                src="../../src/media/RLC_dark.png"
-                class="h-md w-md hidden justify-self-center dark:flex"
-                alt="Circuito RLC estándar"
-              />
-            </div>
-            
             <div class="value-item flex flex-col justify-center items-center p-4">
               <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
                 <span class="label">Frecuencia (f):</span>
@@ -246,23 +246,23 @@
           <!-- Fin panel datos calculados -->
         
           <!-- Inicio panel selectores -->
-          <div class="grid grid-cols-2 auto-rows-max gap-2 w-2/5 m-4 p-4 border-2 border-utn-regular rounded-2xl items-center" id="datos-modificables">
+          <div class="grid grid-cols-2 auto-rows-max gap-2 m-4 p-4 border-2 border-utn-regular rounded-2xl items-center" id="datos-modificables">
           <h2 class="dark:text-white text-slate-950 text-2xl font-bold text-center col-span-2">Parámetros de resonancia</h2>
             <div class="control-group mt-4 flex flex-col items-center justify-center">
               <label for="resistance" class="dark:text-white text-slate-950">Resistencia (R) [Ω]:</label>
-              <input type="range" id="resistance" min="1" max="100" value="50" step="1">
-              <span id="resistance-value" class="dark:text-white text-slate-950 text-center">50</span>
+              <input type="range" id="resistance" min="1" max="100" value="10" step="0.5">
+              <span id="resistance-value" class="dark:text-white text-slate-950 text-center">10</span>
             </div>
                   
             <div class="control-group mt-4 flex flex-col items-center justify-center">
               <label for="inductance" class="dark:text-white text-slate-950">Inductancia (L) [mH]:</label>
-              <input type="range" id="inductance" min="1" max="1000" value="100" step="1">
-              <span id="inductance-value" class="dark:text-white text-slate-950 text-center">100</span>
+              <input type="range" id="inductance" min="10" max="1000" value="100" step="10">
+              <span id="inductance-value" class="dark:text-white text-slate-950 text-center">10</span>
             </div>
                   
             <div class="control-group mt-4 flex flex-col items-center justify-center">
               <label for="capacitance" class="dark:text-white text-slate-950">Capacitancia (C) [µF]:</label>
-              <input type="range" id="capacitance" min="1" max="1000" value="10" step="1">
+              <input type="range" id="capacitance" min="2" max="1000" value="10" step="4">
               <span id="capacitance-value" class="dark:text-white text-slate-950 text-center">10</span>
             </div>
                   
@@ -292,16 +292,20 @@
             
           </div>
           <!-- Fin panel selectores -->
-
         </div>
+
       </div>
       <!-- Fin main-->
 
-      <!-- Comienzo de osciloscopio-->
-      <div class="graphs-panel text-white text-center items-center justify-center mt-4 border-2 border-utn-regular rounded-4xl p-4">
-        <h2 class="dark:text-white text-slate-950 text-2xl font-bold text-center">Osciloscopio</h2>
-        <div class="graph-container">
-          <canvas id="waveforms" width="800" height="400"></canvas>
+      <div class="flex flex-row justify-center mt-8 mr-12 ml-12" id="contenedor-1">
+        <!-- Comienzo de osciloscopio-->
+        <div class="graphs-panel text-white text-center items-center justify-center mt-4 border-2 border-utn-regular rounded-4xl p-4" id="caja_osci">
+          <h2 class="dark:text-white text-slate-950 text-2xl font-bold text-center">Osciloscopio</h2>
+          <!--Inicio canvas-->
+          <div class="graph-container">
+            <canvas id="waveforms" width="800" height="400"></canvas>
+          </div>
+          <!--Fin canvas-->
         </div>
       </div>
       <!--Fin de osciloscopio-->
@@ -371,6 +375,7 @@
       </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
   </body>

@@ -413,6 +413,7 @@ class RLCSimulator {
         ctx.fillText('Amplitud', 0, 0);
         ctx.restore();
     }
+    
 }
 
 // Inicializar el simulador cuando se carga la página
@@ -420,3 +421,19 @@ document.addEventListener('DOMContentLoaded', () => {
     new RLCSimulator();
 });
 
+// COMIENZO JQUERY
+$(function () {
+    $("#caja_osci").hide();
+    $("#datos-calculados").hide();
+    
+
+    $("#resonanceBtn").on("click", function (){
+        $("#datos-calculados").show();
+        $("#datos-modificables").addClass('w-2/5');
+    });
+
+    $("#osci_on").on("click", function () {
+        $("#caja_osci").show(); 
+    });
+});
+// FIN JQUERY
