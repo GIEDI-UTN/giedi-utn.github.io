@@ -2,13 +2,18 @@
 <html lang="es">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XLJH6E9S1H"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XLJH6E9S1H"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-XLJH6E9S1H');
+      gtag("config", "G-XLJH6E9S1H");
     </script>
 
     <!--Metadata-->
@@ -31,15 +36,17 @@
       href="../../src/media/icon-page-giedi.png"
       type="image/x-icon"
     />
-    <title> GIEDI - Simulador RLC </title>
+    <title>GIEDI - Simulador RLC</title>
   </head>
   <body class="bg-utn-light dark:bg-slate-950 font-rubik">
-    
     <!--Comienzo de navbar-->
-    <nav class="sticky top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50">
-      <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
+    <nav
+      class="sticky top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50"
+    >
+      <div
+        class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto"
+      >
         <a href="./index.html" class="flex items-center">
-          
           <img
             src="../../src/media/GIEDI-LOGO-LIGHT.png"
             class="h-7 ml-4 sm:h-9 block dark:hidden"
@@ -62,7 +69,6 @@
             <span></span>
           </div>
 
-          
           <!--Toggle hamburguesa-->
           <button
             data-collapse-toggle="mobile-menu-2"
@@ -130,13 +136,25 @@
     <div class="flex flex-col justify-center items-center">
       <!-- Comienzo main: Paneles superiores valores calc y parametros-->
       <div class="flex flex-col justify-center" id="main">
-        
-        <h1 class="dark:text-white text-slate-950 text-5xl font-bold text-center mt-4">Simulador de circuito RLC</h1>
-        <p class="dark:text-white text-slate-950 text-center mt-2">Modifica las variables para aplicar la resonancia del circuito. Luego, podrás sacar conclusiones a partir de las variables calculadas.</p>
-        
-        <div id="info" class="text-center flex flex-row items-center justify-center">
+        <h1
+          class="dark:text-white text-slate-950 text-5xl font-bold text-center mt-4"
+        >
+          Simulador de circuito RLC
+        </h1>
+        <p class="dark:text-white text-slate-950 text-center mt-2">
+          Modifica las variables para aplicar la resonancia del circuito. Luego,
+          podrás sacar conclusiones a partir de las variables calculadas.
+        </p>
+
+        <div
+          id="info"
+          class="text-center flex flex-row items-center justify-center"
+        >
           <!-- Imagen circuito RLC -->
-          <div class="content-center justify-center items-center flex flex-col mt-8" id="circuito">
+          <div
+            class="content-center justify-center items-center flex flex-col mt-8"
+            id="circuito"
+          >
             <img
               src="../../src/media/RLC_light.png"
               class="h-md w-md ml-4 flex dark:hidden justify-center"
@@ -148,159 +166,325 @@
               alt="Circuito RLC estándar"
             />
           </div>
-          
-          <div class="flex-col ml-4 max-w-xl">
-            <p class="dark:text-white text-slate-950 text-3xl font-bold">Instrucciones:</p>
-            <br>
-            <p class="dark:text-white text-slate-950 text-xl">1. Modifique los parámetros deseados y haga click en "Configurar resonancia"</p>
-            <p class="dark:text-white text-slate-950 text-xl">2. Para cambiar los valores, deberá clickear nuevamente en "Configurar resonancia" con los valores deseados.</p>
-            <p class="dark:text-white text-slate-950 text-xl">3. Haga click en "Encender osciloscopio" para visualizar el diagrama fasorial.</p>
 
+          <div class="flex-col ml-4 max-w-xl">
+            <p class="dark:text-white text-slate-950 text-3xl font-bold">
+              Instrucciones:
+            </p>
+            <br />
+            <p class="dark:text-white text-slate-950 text-xl">
+              1. Modifique los parámetros deseados y haga click en "Configurar
+              resonancia"
+            </p>
+            <p class="dark:text-white text-slate-950 text-xl">
+              2. Para cambiar los valores, deberá clickear nuevamente en
+              "Configurar resonancia" con los valores deseados.
+            </p>
+            <p class="dark:text-white text-slate-950 text-xl">
+              3. Haga click en "Encender osciloscopio" para visualizar el
+              diagrama fasorial.
+            </p>
           </div>
         </div>
-        
-        <div class="flex flex-row justify-center mt-8 mr-12 ml-12" id="contenedor-1">
-          <!-- Inicio panel datos calculados -->
-          <div class="values-grid grid grid-cols-3 auto-rows-max text-slate-950 dark:text-white gap-2 w-3/5 p-4 m-4 border-2 border-utn-regular rounded-3xl" id="datos-calculados">
 
-            <div class="value-item flex flex-col justify-center items-center p-4">
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+        <div
+          class="flex flex-row justify-center mt-8 mr-12 ml-12"
+          id="contenedor-1"
+        >
+          <!-- Inicio panel datos calculados -->
+          <div
+            class="values-grid grid grid-cols-3 auto-rows-max text-slate-950 dark:text-white gap-2 w-3/5 p-4 m-4 border-2 border-utn-regular rounded-3xl"
+            id="datos-calculados"
+          >
+            <div
+              class="value-item flex flex-col justify-center items-center p-4"
+            >
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
                 <span class="label">Frecuencia (f):</span>
                 <span id="freq-value">15.92 Hz</span>
               </div>
 
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center"
+              >
                 <span class="label">Período (T):</span>
                 <span id="period-value">0.063 s</span>
               </div>
 
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
                 <span class="label">Ángulo de Fase (φ):</span>
                 <span id="phase-value">-87.1°</span>
               </div>
             </div>
 
             <div class="value-item flex flex-col justify-center items-center">
-                <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
-                  <span class="label">XL:</span>
-                  <span id="xl-value">10 Ω</span>
-                </div>
-                <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center">
-                  <span class="label">XC:</span>
-                  <span id="xc-value">1000 Ω</span>
-                </div>
-                <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
-                  <span class="label">Impedancia (Z):</span>
-                  <span id="z-value">990.1 Ω</span>
-                </div>
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
+                <span class="label">XL:</span>
+                <span id="xl-value">10 Ω</span>
+              </div>
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center"
+              >
+                <span class="label">XC:</span>
+                <span id="xc-value">1000 Ω</span>
+              </div>
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
+                <span class="label">Impedancia (Z):</span>
+                <span id="z-value">990.1 Ω</span>
+              </div>
             </div>
 
             <div class="value-item flex flex-col justify-center items-center">
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
                 <span class="label">VL:</span>
                 <span id="vl-value">0.11 V</span>
               </div>
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center">
-                  <span class="label">VC:</span>
-                  <span id="vc-value">10.6 V</span>
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center"
+              >
+                <span class="label">VC:</span>
+                <span id="vc-value">10.6 V</span>
               </div>
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
                 <span class="label">VR:</span>
                 <span id="vr-value">0.53 V</span>
               </div>
-              
             </div>
 
             <div class="value-item flex flex-col justify-center items-center">
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
                 <span class="label">Pot. Aparente (S):</span>
                 <span id="s-value">0.165 VA</span>
               </div>
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center"
+              >
                 <span class="label">Pot. Activa (P):</span>
                 <span id="p-value">0.008 W</span>
               </div>
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
                 <span class="label">Pot. Reactiva (Q):</span>
                 <span id="q-value">-0.164 VAR</span>
               </div>
             </div>
 
             <div class="value-item flex flex-col justify-center items-center">
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
                 <span class="label">i pico:</span>
                 <span id="ipeak-value">0.015 A</span>
               </div>
-              <div class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center"
+              >
                 <span class="label">i RMS:</span>
                 <span id="irms-value">0.011 A</span>
               </div>
             </div>
-            <div class="dominance-indicator col-span-3 text-center text-xl" id="dominanceIndicator">
-              <p id="dominanceText">Estado del circuito: Capacitivo. XC > XL. El voltaje atrasa a la corriente por 87.1°</p>
+            <div
+              class="dominance-indicator text-slate-950 dark:text-white col-span-3 text-center text-xl"
+              id="dominanceIndicator"
+            >
+              <p id="dominanceText">
+                Estado del circuito: Capacitivo. XC > XL. El voltaje atrasa a la
+                corriente por 87.1°
+              </p>
               <div id="resonanceMessage" class="message"></div>
             </div>
-            
-            <!-- Fin inside container calculados--> 
+
+            <!-- Fin inside container calculados-->
           </div>
           <!-- Fin panel datos calculados -->
-        
+
           <!-- Inicio panel selectores -->
-          <div class="grid grid-cols-2 auto-rows-max gap-2 m-4 p-4 border-2 border-utn-regular rounded-2xl items-center" id="datos-modificables">
-          <h2 class="dark:text-white text-slate-950 text-2xl font-bold text-center col-span-2">Parámetros de resonancia</h2>
-            <div class="control-group mt-4 flex flex-col items-center justify-center">
-              <label for="resistance" class="dark:text-white text-slate-950">Resistencia (R) [Ω]:</label>
-              <input type="range" id="resistance" min="1" max="100" value="10" step="0.5">
-              <span id="resistance-value" class="dark:text-white text-slate-950 text-center">10</span>
+          <div
+            class="grid grid-cols-2 auto-rows-max gap-2 m-4 p-4 border-2 border-utn-regular rounded-2xl items-center"
+            id="datos-modificables"
+          >
+            <h2
+              class="dark:text-white text-slate-950 text-2xl font-bold text-center col-span-2"
+            >
+              Parámetros de resonancia
+            </h2>
+            <div
+              class="control-group mt-4 flex flex-col items-center justify-center"
+            >
+              <label for="resistance" class="dark:text-white text-slate-950"
+                >Resistencia (R) [Ω]:</label
+              >
+              <input
+                type="range"
+                id="resistance"
+                min="1"
+                max="100"
+                value="10"
+                step="0.5"
+              />
+              <span
+                id="resistance-value"
+                class="dark:text-white text-slate-950 text-center"
+                >10</span
+              >
             </div>
-                  
-            <div class="control-group mt-4 flex flex-col items-center justify-center">
-              <label for="inductance" class="dark:text-white text-slate-950">Inductancia (L) [mH]:</label>
-              <input type="range" id="inductance" min="10" max="1000" value="100" step="10">
-              <span id="inductance-value" class="dark:text-white text-slate-950 text-center">10</span>
+
+            <div
+              class="control-group mt-4 flex flex-col items-center justify-center"
+            >
+              <label for="inductance" class="dark:text-white text-slate-950"
+                >Inductancia (L) [mH]:</label
+              >
+              <input
+                type="range"
+                id="inductance"
+                min="10"
+                max="1000"
+                value="100"
+                step="10"
+              />
+              <span
+                id="inductance-value"
+                class="dark:text-white text-slate-950 text-center"
+                >10</span
+              >
             </div>
-                  
-            <div class="control-group mt-4 flex flex-col items-center justify-center">
-              <label for="capacitance" class="dark:text-white text-slate-950">Capacitancia (C) [µF]:</label>
-              <input type="range" id="capacitance" min="2" max="1000" value="10" step="4">
-              <span id="capacitance-value" class="dark:text-white text-slate-950 text-center">10</span>
+
+            <div
+              class="control-group mt-4 flex flex-col items-center justify-center"
+            >
+              <label for="capacitance" class="dark:text-white text-slate-950"
+                >Capacitancia (C) [µF]:</label
+              >
+              <input
+                type="range"
+                id="capacitance"
+                min="2"
+                max="1000"
+                value="10"
+                step="4"
+              />
+              <span
+                id="capacitance-value"
+                class="dark:text-white text-slate-950 text-center"
+                >10</span
+              >
             </div>
-                  
-            <div class="control-group mt-4 flex flex-col items-center justify-center">
-              <label for="frequency" class="dark:text-white text-slate-950">Frecuencia angular (ω) [rad/s]:</label>
-              <input type="range" id="frequency" min="0" max="200" value="100" step="0.1">
-              <span id="frequency-value" class="dark:text-white text-slate-950 text-center">100</span>
+
+            <div
+              class="control-group mt-4 flex flex-col items-center justify-center"
+            >
+              <label for="frequency" class="dark:text-white text-slate-950"
+                >Frecuencia angular (ω) [rad/s]:</label
+              >
+              <input
+                type="range"
+                id="frequency"
+                min="0"
+                max="200"
+                value="100"
+                step="0.1"
+              />
+              <span
+                id="frequency-value"
+                class="dark:text-white text-slate-950 text-center"
+                >100</span
+              >
             </div>
-                  
-            <div class="control-group mt-4 flex flex-col items-center justify-center">
-              <label for="voltage" class="dark:text-white text-slate-950">Amplitud FEM (V₀) [V]:</label>
-              <input type="range" id="voltage" min="0" max="30" value="15" step="0.1">
-              <span id="voltage-value" class="dark:text-white text-slate-950 text-center">15</span>
+
+            <div
+              class="control-group mt-4 flex flex-col items-center justify-center"
+            >
+              <label for="voltage" class="dark:text-white text-slate-950"
+                >Amplitud FEM (V₀) [V]:</label
+              >
+              <input
+                type="range"
+                id="voltage"
+                min="0"
+                max="30"
+                value="15"
+                step="0.1"
+              />
+              <span
+                id="voltage-value"
+                class="dark:text-white text-slate-950 text-center"
+                >15</span
+              >
             </div>
-                  
-            <div class="control-group mt-4  flex flex-col items-center justify-center">
-              <label for="timeScale" class="dark:text-white text-slate-950">Escala de tiempo [ms]:</label>
-              <input type="range" id="timeScale" min="10" max="600" value="100" step="10">
-              <span id="timeScale-value" class="dark:text-white text-slate-950 text-center">100</span>
+
+            <div
+              class="control-group mt-4 flex flex-col items-center justify-center"
+            >
+              <label for="timeScale" class="dark:text-white text-slate-950"
+                >Escala de tiempo [ms]:</label
+              >
+              <input
+                type="range"
+                id="timeScale"
+                min="10"
+                max="600"
+                value="100"
+                step="10"
+              />
+              <span
+                id="timeScale-value"
+                class="dark:text-white text-slate-950 text-center"
+                >100</span
+              >
             </div>
-            <div id="botones" class="flex flex-col justify-center items-center col-span-2 mt-8">
-              <button id="resonanceBtn" class="dark:bg-utn-regular mt-4  dark:text-slate-950 text-xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border-1 border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer">
-              Configurar resonancia</button>
-              <button id="osci_on" class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer ">
-              Encender osciloscopio</button>
+            <div
+              id="botones"
+              class="flex flex-col justify-center items-center col-span-2 mt-8"
+            >
+              <button
+                id="resonanceBtn"
+                class="dark:bg-utn-regular mt-4 dark:text-slate-950 text-xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border-1 border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer"
+              >
+                Configurar resonancia
+              </button>
+              <button
+                id="osci_on"
+                class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer"
+              >
+                Encender osciloscopio
+              </button>
             </div>
-            
           </div>
           <!-- Fin panel selectores -->
         </div>
-
       </div>
       <!-- Fin main-->
 
-      <div class="flex flex-row justify-center mt-8 mr-12 ml-12" id="contenedor-1">
+      <div
+        class="flex flex-row justify-center mt-8 mr-12 ml-12"
+        id="contenedor-1"
+      >
         <!-- Comienzo de osciloscopio-->
-        <div class="graphs-panel text-white text-center items-center justify-center mt-4 border-2 border-utn-regular rounded-4xl p-4" id="caja_osci">
-          <h2 class="dark:text-white text-slate-950 text-2xl font-bold text-center">Osciloscopio</h2>
+        <div
+          class="graphs-panel text-white text-center items-center justify-center mt-4 border-2 border-utn-regular rounded-4xl p-4"
+          id="caja_osci"
+        >
+          <h2
+            class="dark:text-white text-slate-950 text-2xl font-bold text-center"
+          >
+            Osciloscopio
+          </h2>
           <!--Inicio canvas-->
           <div class="graph-container">
             <canvas id="waveforms" width="800" height="400"></canvas>
@@ -341,7 +525,10 @@
             </p>
 
             <div class="flex flex-row justify-center space-x-4 mt-2">
-              <a href="https://www.instagram.com/giediutnsantafe/" alt="Instagram de GIEDI">
+              <a
+                href="https://www.instagram.com/giediutnsantafe/"
+                alt="Instagram de GIEDI"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -355,7 +542,8 @@
                 </svg>
               </a>
               <a
-                href="https://www.frsf.utn.edu.ar/investigacion-y-vinculacion/investigacion-y-vinculacion/centros-y-grupos/giedi" alt="Información sobre GIEDI"
+                href="https://www.frsf.utn.edu.ar/investigacion-y-vinculacion/investigacion-y-vinculacion/centros-y-grupos/giedi"
+                alt="Información sobre GIEDI"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

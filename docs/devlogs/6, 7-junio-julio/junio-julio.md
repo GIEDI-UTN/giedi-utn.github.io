@@ -126,12 +126,12 @@ Finalmente, se llama a la función boxmuller que recibe de parámetro el índice
 
 ## Referencias
 
-[Download JSON from browser - Colin Stubbs](github.com/colin-stubbs/js-download-json-from-browser/blob/master/example.html)
-[JSON stringify - MDN dev](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
-[Blob - MDN dev](https://developer.mozilla.org/es/docs/Web/API/Blob)
-[createObjectURL - MDN dev](https://developer.mozilla.org/es/docs/Web/API/URL/createObjectURL_static)
-[revokeObjectURL - MDN dev](https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL_static)
-[fileReader - MDN dev](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
+- [Download JSON from browser - Colin Stubbs](github.com/colin-stubbs/js-download-json-from-browser/blob/master/example.html)
+- [JSON stringify - MDN dev](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+- [Blob - MDN dev](https://developer.mozilla.org/es/docs/Web/API/Blob)
+- [createObjectURL - MDN dev](https://developer.mozilla.org/es/docs/Web/API/URL/createObjectURL_static)
+- [revokeObjectURL - MDN dev](https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL_static)
+- [fileReader - MDN dev](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
 
 ## Entrega parcial Junio:
 
