@@ -62,8 +62,9 @@
             <span></span>
           </div>
 
-          <!--Menú de accesibilidad-->
-          <a
+          <div class="hidden"> 
+            <!--Menú de accesibilidad-->
+            <a
             href="#"
             class="border-2 border-utn-dark rounded-full px-3 py-2 lg:px-3 lg:py-2 lg:rounded-full lg:mr-0"
             alt="Accesibilidad"
@@ -74,6 +75,8 @@
               class="w-5 h-5 lg:w-5 lg:h-5"
             />
           </a>
+          </div>
+          
 
           <!--Toggle hamburguesa-->
           <button
@@ -147,6 +150,77 @@
         xl:grid-cols-3 xl:gap-8">
 
           <!--Comienzo de tarjetas simulación -->
+          <!--TARJETA 0: RLC-->
+          <div class="rounded-xl bg-utn-light dark:bg-slate-950 ">
+            <article class="rounded-3xl p-4 ring-2 ring-utn-dark sm:p-6 lg:p-8
+            dark:bg-slate-950 dark:text-white h-full">
+              <div class="flex items-start sm:gap-8">
+                <div
+                  class="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-3 sm:border-utn-dark"
+                  aria-hidden="true"
+                >
+                  <div class="flex items-center gap-1">
+                    <img src="./src/media/RLC_icon.png" alt="Circuito RLC de corriente alterna">
+                  </div>
+                </div>
+            
+                <div>
+                  <strong
+                    class="rounded-lg bg-utn-regular/50 px-3 py-1 text-[10px] font-semibold text-white"
+                  >
+                    FÍSICA 2
+                  </strong>
+            
+                  <h3 class="mt-3 text-lg font-bold sm:text-xl">
+                    Circuito RLC en corriente alterna
+                  </h3>
+            
+                  <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">
+                  Podrás modificar parámetros iniciales y obtener otros valores calculados, como potencias o valores de tensión. </p>
+                  <p class="mt-1 text-sm text-gray-700 dark:text-gray-300"> Además, cuenta con un osciloscopio para observar el comportamiento de cada onda. Interactúa con el selector de canales para observar el comportamiento individual.
+                  </p>
+            
+                  <div class="mt-4 sm:flex sm:items-center sm:gap-2">
+                    <div class="flex items-center gap-1 text-gray-500">
+                    <p class="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
+                      Creado por
+                      <span class="underline hover:text-utn-regular">Rodrigo Agosta</span>
+                    </p>
+                  </div>
+                </div>
+
+                <!--botón para ir a la simulación-->
+                  <div id="boton" class="mt-5">
+                      <a
+                      class="group flex items-center justify-between gap-3 rounded-2xl border-2 border-current px-3 py-1.5
+                      text-utn-regular transition-colors hover:bg-utn-regular focus:ring-3 focus:outline-hidden font-bold"
+                      href="./pages/reflec_refrac/reflex_refrac.html"
+                      >
+                      <span class="transition-colors dark:group-hover:text-slate-950 group-hover:text-white text-lg"> Ir a la simulación </span>
+
+                      <span class="shrink-0 border-2 rounded-full border-utn-regular dark:bg-slate-950 bg-utn-light p-1">
+                        <svg
+                          class="size-5 rtl:rotate-180"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                          />
+                        </svg>
+                      </span>
+                      </a>
+                  </div>
+
+              </div>
+            </article>
+            
+          </div>
           <!--TARJETA 1: OPTICA-->
           <div class="rounded-xl bg-utn-light dark:bg-slate-950">
             <article class="rounded-3xl p-4 ring-2 ring-utn-dark sm:p-6 lg:p-8
@@ -319,10 +393,11 @@
                   Un péndulo físico consta de un cuerpo rígido que puede oscilar en torno a un eje fijo que lo atraviesa. En este simulador, el péndulo consta de un cuerpo esférico y una cuerda ideal. </p>
                   <p class="mt-1 text-sm text-gray-700 dark:text-gray-300"> Utiliza los deslizadores para modificar la masa del cuerpo, el largo de la cuerda y el ángulo desde el que se lanza.
                   </p>
+                  <br>
             
-                  <div class="mt-4 sm:flex sm:items-center sm:gap-2">
+                  <div class="mt-8 sm:flex sm:items-center sm:gap-2">
                     <div class="flex items-center gap-1 text-gray-500">
-                    <p class="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
+                    <p class=" text-xs font-medium text-gray-500 sm:mt-0">
                       Creado por
                       <span class="underline hover:text-utn-regular">Rodrigo Agosta</span>
                     </p>
