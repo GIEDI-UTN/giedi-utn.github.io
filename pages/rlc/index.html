@@ -167,22 +167,19 @@
             />
           </div>
 
-          <div class="flex-col ml-4 max-w-xl">
+          <div class="flex-col ml-2 max-w-xl">
             <p class="dark:text-white text-slate-950 text-3xl font-bold">
               Instrucciones:
             </p>
-            <br />
-            <p class="dark:text-white text-slate-950 text-xl">
-              1. Modifique los parámetros deseados y haga click en "Configurar
-              resonancia"
-            </p>
-            <p class="dark:text-white text-slate-950 text-xl">
-              2. Para cambiar los valores, deberá clickear nuevamente en
-              "Configurar resonancia" con los valores deseados.
-            </p>
-            <p class="dark:text-white text-slate-950 text-xl">
-              3. Haga click en "Encender osciloscopio" para visualizar el
-              diagrama fasorial.
+
+            <p class="dark:text-white text-slate-950 text-lg mt-2">
+              Introduzca los parámetros deseados y haga click en
+              <strong class="text-utn-regular">"Configurar resonancia"</strong>.
+              Para cambiar los valores, deberá clickear nuevamente en
+              "Configurar resonancia" con los nuevos valores. <br /><br />
+              Haga click en
+              <strong class="text-utn-regular">"Encender osciloscopio"</strong>
+              para visualizar el diagrama fasorial.
             </p>
           </div>
         </div>
@@ -318,11 +315,18 @@
             class="grid grid-cols-2 auto-rows-max gap-4 m-4 p-8 border-2 border-utn-regular w-2xl rounded-2xl items-center"
             id="datos-modificables"
           >
-            <h2
-              class="dark:text-white text-slate-950 text-2xl font-bold text-center col-span-2"
-            >
-              Parámetros de resonancia
-            </h2>
+            <div class="col-span-2">
+              <h2
+                class="dark:text-white text-slate-950 text-2xl font-bold text-center"
+              >
+                Parámetros de resonancia
+              </h2>
+              <p class="text-gray-400 text-center">
+                Los valores decimales deben introducirse separados por un punto
+                ('.')
+              </p>
+            </div>
+
             <div
               class="control-group mt-4 flex flex-col items-center justify-center"
             >
@@ -465,19 +469,84 @@
       >
         <!-- Comienzo de osciloscopio-->
         <div
-          class="graphs-panel text-white text-center items-center justify-center mt-4 border-2 border-utn-regular rounded-4xl p-4"
+          class="graphs-panel flex flex-row text-white text-center items-start justify-center mt-4 border-2 border-utn-regular rounded-4xl p-4"
           id="caja_osci"
         >
-          <h2
-            class="dark:text-white text-slate-950 text-2xl font-bold text-center"
-          >
-            Osciloscopio
-          </h2>
           <!--Inicio canvas-->
-          <div class="graph-container">
+          <div
+            class="graph-container border-1 border-utn-regular rounded-2xl p-4 mt-4"
+          >
             <canvas id="waveforms" width="800" height="400"></canvas>
           </div>
           <!--Fin canvas-->
+
+          <div
+            class="border-1 h-[200px] mt-4 ml-4 p-4 border-utn-regular rounded-2xl flex flex-col"
+          >
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                name="chanel1"
+                id="chanel1"
+                class="sr-only peer"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-utn-regular rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-utn-regular"
+              ></div>
+              <span
+                class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >CHANNEL 1</span
+              >
+            </label>
+
+            <label class="inline-flex items-center cursor-pointer mt-4">
+              <input
+                type="checkbox"
+                name="chanel2"
+                id="chanel2"
+                class="sr-only peer"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-500"
+              ></div>
+              <span
+                class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >CHANNEL 2</span
+              >
+            </label>
+
+            <label class="inline-flex items-center cursor-pointer mt-4">
+              <input
+                type="checkbox"
+                name="chanel3"
+                id="chanel3"
+                class="sr-only peer"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-500"
+              ></div>
+              <span
+                class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >CHANNEL 3</span
+              >
+            </label>
+
+            <label class="inline-flex items-center cursor-pointer mt-4">
+              <input
+                type="checkbox"
+                name="chanel4"
+                id="chanel4"
+                class="sr-only peer"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-500"
+              ></div>
+              <span
+                class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >CHANNEL 4</span
+              >
+            </label>
+          </div>
         </div>
       </div>
       <!--Fin de osciloscopio-->
