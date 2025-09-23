@@ -114,7 +114,7 @@ class RLCSimulator {
     const XC = omega === 0 ? Infinity : 1 / (omega * C);
 
     // Impedancia
-    const Z = Math.sqrt(R * R - Math.pow(XL - XC, 2));
+    const Z = Math.sqrt(R * R + Math.pow(XL - XC, 2));
 
     // Ángulo de fase
     const phi = Math.atan((XL - XC) / R);
@@ -164,21 +164,21 @@ class RLCSimulator {
     const values = this.calculateValues();
 
     // Actualizar valores mostrados
-    this.valueElements.freq.textContent = values.f.toFixed(2) + " Hz";
-    this.valueElements.period.textContent = values.T.toFixed(2) + " s";
-    this.valueElements.xl.textContent = values.XL.toFixed(1) + " Ω";
-    this.valueElements.xc.textContent = values.XC.toFixed(1) + " Ω";
-    this.valueElements.z.textContent = values.Z.toFixed(1) + " Ω";
+    this.valueElements.freq.textContent = values.f.toFixed(3) + " Hz";
+    this.valueElements.period.textContent = values.T.toFixed(3) + " s";
+    this.valueElements.xl.textContent = values.XL.toFixed(3) + " Ω";
+    this.valueElements.xc.textContent = values.XC.toFixed(3) + " Ω";
+    this.valueElements.z.textContent = values.Z.toFixed(3) + " Ω";
     this.valueElements.phase.textContent =
       ((values.phi * 180) / Math.PI).toFixed(1) + "°";
-    this.valueElements.ipeak.textContent = values.Ipeak.toFixed(2) + " A";
-    this.valueElements.irms.textContent = values.Irms.toFixed(2) + " A";
-    this.valueElements.vr.textContent = values.VR.toFixed(2) + " V";
-    this.valueElements.vl.textContent = values.VL.toFixed(2) + " V";
-    this.valueElements.vc.textContent = values.VC.toFixed(2) + " V";
-    this.valueElements.s.textContent = values.S.toFixed(2) + " VA";
-    this.valueElements.p.textContent = values.P.toFixed(2) + " W";
-    this.valueElements.q.textContent = values.Q.toFixed(2) + " VAR";
+    this.valueElements.ipeak.textContent = values.Ipeak.toFixed(3) + " A";
+    this.valueElements.irms.textContent = values.Irms.toFixed(3) + " A";
+    this.valueElements.vr.textContent = values.VR.toFixed(3) + " V";
+    this.valueElements.vl.textContent = values.VL.toFixed(3) + " V";
+    this.valueElements.vc.textContent = values.VC.toFixed(3) + " V";
+    this.valueElements.s.textContent = values.S.toFixed(3) + " VA";
+    this.valueElements.p.textContent = values.P.toFixed(3) + " W";
+    this.valueElements.q.textContent = values.Q.toFixed(3) + " VAR";
 
     // Actualizar indicador de dominancia
     this.updateDominanceIndicator(values);
