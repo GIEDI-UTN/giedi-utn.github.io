@@ -19,12 +19,12 @@ class RLCSimulator {
     this.resonanceMessage = document.getElementById("resonanceMessage");
 
     // Valores mostrados
-    this.resistanceValue = document.getElementById("resistance-value");
-    this.inductanceValue = document.getElementById("inductance-value");
-    this.capacitanceValue = document.getElementById("capacitance-value");
-    this.frequencyValue = document.getElementById("frequency-value");
-    this.voltageValue = document.getElementById("voltage-value");
-    this.timeScaleValue = document.getElementById("timeScale-value");
+    this.resistanceValue = this.resistanceSlider.value;
+    this.inductanceValue = this.inductanceSlider.value;
+    this.capacitanceValue = this.capacitanceSlider.value;
+    this.frequencyValue = this.frequencySlider.value;
+    this.voltageValue = this.voltageSlider.value;
+    this.timeScaleValue = this.timeScaleSlider.value;
 
     // Canvas
     this.waveformsCanvas = document.getElementById("waveforms");
@@ -96,12 +96,12 @@ class RLCSimulator {
   }
 
   getCircuitValues() {
-    const R = parseFloat(this.resistanceSlider.value);
-    const L = parseFloat(this.inductanceSlider.value) / 1000; // mH to H
-    const C = parseFloat(this.capacitanceSlider.value) / 1000000; // µF to F
-    const omega = parseFloat(this.frequencySlider.value);
-    const V0 = parseFloat(this.voltageSlider.value);
-    const timeScale = parseFloat(this.timeScaleSlider.value) / 1000; // ms to s
+    const R = parseFloat(this.resistanceValue);
+    const L = parseFloat(this.inductanceValue) / 1000; // mH to H
+    const C = parseFloat(this.capacitanceValue) / 1000000; // µF to F
+    const omega = parseFloat(this.frequencyValue);
+    const V0 = parseFloat(this.voltageValue);
+    const timeScale = parseFloat(this.timeScaleValue) / 1000; // ms to s
 
     return { R, L, C, omega, V0, timeScale };
   }
@@ -114,18 +114,18 @@ class RLCSimulator {
     const XC = omega === 0 ? Infinity : 1 / (omega * C);
 
     // Impedancia
-    const Z = Math.sqrt(R * R + (XL - XC) * (XL - XC));
+    const Z = Math.sqrt(R * R - Math.pow(XL - XC, 2));
 
     // Ángulo de fase
-    const phi = Math.atan2(XL - XC, R);
+    const phi = Math.atan((XL - XC) / R);
 
     // Frecuencia y período
     const f = omega / (2 * Math.PI);
     const T = f === 0 ? Infinity : 1 / f;
 
     // Corrientes
-    const Ipeak = Z === 0 ? 0 : V0 / Z;
-    const Irms = Ipeak / Math.sqrt(2);
+    const Irms = Z === 0 ? 0 : V0 / Z;
+    const Ipeak = Irms * Math.sqrt(2);
 
     // Voltajes RMS
     const VR = Irms * R;
@@ -133,9 +133,9 @@ class RLCSimulator {
     const VC = Irms * XC;
 
     // Potencias
-    const S = (V0 * Irms) / Math.sqrt(2); // Potencia aparente
-    const P = S * Math.cos(phi); // Potencia activa
-    const Q = S * Math.sin(phi); // Potencia reactiva
+    const P = Irms * Irms * R; // Potencia activa
+    const Q = Irms * (VL - VC); // Potencia reactiva
+    const S = Irms * V0; // Potencia aparente
 
     return {
       R,
@@ -210,18 +210,11 @@ class RLCSimulator {
     const { L, C } = this.getCircuitValues();
     const omega0 = 1 / Math.sqrt(L * C);
 
-    if (omega0 > 200) {
-      this.resonanceMessage.innerHTML = "No es posible configurar el sistema.";
-      this.resonanceMessage.className = "message error";
-    } else {
-      this.frequencySlider.value = omega0.toFixed(1);
-      this.frequencyValue.textContent = omega0.toFixed(1);
-      this.resonanceMessage.innerHTML = `Frecuencia de resonancia: ${omega0.toFixed(
-        1
-      )} rad/s`;
-      this.resonanceMessage.className = "message success";
-      this.update();
-    }
+    this.resonanceMessage.innerHTML = `Frecuencia de resonancia: ${omega0.toFixed(
+      1
+    )} rad/s`;
+    this.resonanceMessage.className = "message success";
+    this.update();
   }
 
   drawTriangles(values) {
@@ -460,14 +453,20 @@ document.addEventListener("DOMContentLoaded", () => {
 $(function () {
   $("#caja_osci").hide();
   $("#datos-calculados").hide();
+  let resonancia_seteada = false;
 
   $("#resonanceBtn").on("click", function () {
     $("#datos-calculados").show();
     $("#datos-modificables").addClass("w-2/5");
+    resonancia_seteada = true;
   });
 
   $("#osci_on").on("click", function () {
-    $("#caja_osci").show();
+    if (resonancia_seteada) {
+      $("#caja_osci").show();
+    } else {
+      alert("Por favor, configure una resonancia primero");
+    }
   });
 });
 // FIN JQUERY

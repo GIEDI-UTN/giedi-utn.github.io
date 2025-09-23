@@ -315,7 +315,7 @@
 
           <!-- Inicio panel selectores -->
           <div
-            class="grid grid-cols-2 auto-rows-max gap-2 m-4 p-4 border-2 border-utn-regular rounded-2xl items-center"
+            class="grid grid-cols-2 auto-rows-max gap-4 m-4 p-8 border-2 border-utn-regular w-2xl rounded-2xl items-center"
             id="datos-modificables"
           >
             <h2
@@ -326,127 +326,115 @@
             <div
               class="control-group mt-4 flex flex-col items-center justify-center"
             >
-              <label for="resistance" class="dark:text-white text-slate-950"
+              <label
+                for="resistance"
+                class="dark:text-white text-lg text-slate-950"
                 >Resistencia (R) [Ω]:</label
               >
               <input
-                type="range"
+                type="number"
                 id="resistance"
                 min="1"
-                max="100"
-                value="10"
-                step="0.5"
+                max="10"
+                value="5"
+                step="0.1"
+                class="rounded-full border-1 border-white dark:text-white w-full text-center"
               />
-              <span
-                id="resistance-value"
-                class="dark:text-white text-slate-950 text-center"
-                >10</span
-              >
             </div>
 
             <div
               class="control-group mt-4 flex flex-col items-center justify-center"
             >
-              <label for="inductance" class="dark:text-white text-slate-950"
+              <label
+                for="inductance"
+                class="dark:text-white text-slate-950 text-lg"
                 >Inductancia (L) [mH]:</label
               >
               <input
-                type="range"
+                type="number"
                 id="inductance"
                 min="10"
-                max="1000"
+                max="200"
                 value="100"
-                step="10"
+                step="1"
+                class="rounded-full border-1 border-white dark:text-white w-full text-center"
               />
-              <span
-                id="inductance-value"
-                class="dark:text-white text-slate-950 text-center"
-                >10</span
-              >
             </div>
 
             <div
               class="control-group mt-4 flex flex-col items-center justify-center"
             >
-              <label for="capacitance" class="dark:text-white text-slate-950"
+              <label
+                for="capacitance"
+                class="dark:text-white text-slate-950 text-lg"
                 >Capacitancia (C) [µF]:</label
               >
               <input
-                type="range"
+                type="number"
                 id="capacitance"
-                min="2"
-                max="1000"
+                min="1"
+                max="700"
                 value="10"
-                step="4"
+                step="1"
+                class="rounded-full border-1 border-white dark:text-white w-full text-center"
               />
-              <span
-                id="capacitance-value"
-                class="dark:text-white text-slate-950 text-center"
-                >10</span
-              >
             </div>
 
             <div
               class="control-group mt-4 flex flex-col items-center justify-center"
             >
-              <label for="frequency" class="dark:text-white text-slate-950"
+              <label
+                for="frequency"
+                class="dark:text-white text-slate-950 text-lg"
                 >Frecuencia angular (ω) [rad/s]:</label
               >
               <input
-                type="range"
+                type="number"
                 id="frequency"
                 min="0"
-                max="200"
+                max="300"
                 value="100"
                 step="0.1"
+                class="rounded-full border-1 border-white dark:text-white w-full text-center"
               />
-              <span
-                id="frequency-value"
-                class="dark:text-white text-slate-950 text-center"
-                >100</span
-              >
             </div>
 
             <div
               class="control-group mt-4 flex flex-col items-center justify-center"
             >
-              <label for="voltage" class="dark:text-white text-slate-950"
+              <label
+                for="voltage"
+                class="dark:text-white text-slate-950 text-lg"
                 >Amplitud FEM (V₀) [V]:</label
               >
               <input
-                type="range"
+                type="number"
                 id="voltage"
                 min="0"
                 max="30"
                 value="15"
-                step="0.1"
+                step="1"
+                class="rounded-full border-1 border-white dark:text-white w-full text-center"
               />
-              <span
-                id="voltage-value"
-                class="dark:text-white text-slate-950 text-center"
-                >15</span
-              >
             </div>
 
             <div
               class="control-group mt-4 flex flex-col items-center justify-center"
             >
-              <label for="timeScale" class="dark:text-white text-slate-950"
+              <label
+                for="timeScale"
+                class="dark:text-white text-slate-950 text-lg"
                 >Escala de tiempo [ms]:</label
               >
               <input
-                type="range"
+                type="number"
                 id="timeScale"
                 min="10"
                 max="600"
                 value="100"
                 step="10"
+                class="decoration-none rounded-full border-1 border-white dark:text-white w-full text-center"
               />
-              <span
-                id="timeScale-value"
-                class="dark:text-white text-slate-950 text-center"
-                >100</span
-              >
             </div>
             <div
               id="botones"
