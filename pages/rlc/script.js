@@ -17,6 +17,7 @@ class RLCSimulator {
     this.timeScaleSlider = document.getElementById("timeScale");
     this.resonanceBtn = document.getElementById("resonanceBtn");
     this.resonanceMessage = document.getElementById("resonanceMessage");
+    this.bus_resonancia = document.getElementById("resonancia_si");
 
     // Valores mostrados
     this.resistanceValue = this.resistanceSlider.value;
@@ -49,6 +50,9 @@ class RLCSimulator {
       vr: document.getElementById("vr-value"),
       vl: document.getElementById("vl-value"),
       vc: document.getElementById("vc-value"),
+      vpr: document.getElementById("vpr-value"),
+      vpl: document.getElementById("vpl-value"),
+      vpc: document.getElementById("vpc-value"),
       s: document.getElementById("s-value"),
       p: document.getElementById("p-value"),
       q: document.getElementById("q-value"),
@@ -91,7 +95,11 @@ class RLCSimulator {
 
     // Botón de resonancia
     this.resonanceBtn.addEventListener("click", () => {
-      this.setResonance();
+      this.update();
+    });
+
+    this.bus_resonancia.addEventListener("click", () => {
+      this.busca_resonancia();
     });
   }
 
@@ -132,11 +140,15 @@ class RLCSimulator {
     const VL = Irms * XL;
     const VC = Irms * XC;
 
+    // Voltajes pico
+    const Vpr = Ipeak * R;
+    const Vpl = Ipeak * XL;
+    const Vpc = Ipeak * XC;
+
     // Potencias
     const P = Irms * Irms * R; // Potencia activa
-    const Q = Irms * (VL - VC); // Potencia reactiva
     const S = Irms * V0; // Potencia aparente
-
+    const Q = S * Math.sin(phi); // Potencia reactiva
     return {
       R,
       L,
@@ -154,6 +166,9 @@ class RLCSimulator {
       VR,
       VL,
       VC,
+      Vpr,
+      Vpl,
+      Vpc,
       S,
       P,
       Q,
@@ -176,6 +191,9 @@ class RLCSimulator {
     this.valueElements.vr.textContent = values.VR.toFixed(3) + " V";
     this.valueElements.vl.textContent = values.VL.toFixed(3) + " V";
     this.valueElements.vc.textContent = values.VC.toFixed(3) + " V";
+    this.valueElements.vpr.textContent = values.Vpr.toFixed(3) + " V";
+    this.valueElements.vpl.textContent = values.Vpl.toFixed(3) + " V";
+    this.valueElements.vpc.textContent = values.Vpc.toFixed(3) + " V";
     this.valueElements.s.textContent = values.S.toFixed(3) + " VA";
     this.valueElements.p.textContent = values.P.toFixed(3) + " W";
     this.valueElements.q.textContent = values.Q.toFixed(3) + " VAR";
@@ -206,15 +224,21 @@ class RLCSimulator {
     this.dominanceText.innerHTML = text;
   }
 
-  setResonance() {
+  busca_resonancia() {
     const { L, C } = this.getCircuitValues();
     const omega0 = 1 / Math.sqrt(L * C);
 
-    this.resonanceMessage.innerHTML = `Frecuencia de resonancia: ${omega0.toFixed(
+    const l1 = L * 1000;
+    const c1 = C * 1000000;
+    const f1 = omega0 / (2 * Math.PI);
+
+    this.resonanceMessage.innerHTML = `Para encontrar la resonancia, XL=XC. Donde L = ${l1.toFixed(
+      2
+    )} mH y C = ${c1.toFixed(
+      2
+    )} µF.  <br> Frecuencia de resonancia: ${omega0.toFixed(
       1
-    )} rad/s`;
-    this.resonanceMessage.className = "message success";
-    this.update();
+    )} rad/s <br>  Luego, f = ${f1.toFixed(1)} Hz`;
   }
 
   drawTriangles(values) {

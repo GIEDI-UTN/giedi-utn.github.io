@@ -7,7 +7,6 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-amber-400: oklch(82.8% 0.189 84.429);
     --color-amber-500: oklch(76.9% 0.188 70.08);
@@ -352,9 +351,6 @@
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
   }
-  .mb-8 {
-    margin-bottom: calc(var(--spacing) * 8);
-  }
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
@@ -392,9 +388,6 @@
     width: calc(var(--spacing) * 5);
     height: calc(var(--spacing) * 5);
   }
-  .h-2 {
-    height: calc(var(--spacing) * 2);
-  }
   .h-4 {
     height: calc(var(--spacing) * 4);
   }
@@ -416,29 +409,11 @@
   .h-24 {
     height: calc(var(--spacing) * 24);
   }
-  .h-800 {
-    height: calc(var(--spacing) * 800);
-  }
-  .h-\[150px\] {
-    height: 150px;
-  }
   .h-\[200px\] {
     height: 200px;
   }
-  .h-\[300px\] {
-    height: 300px;
-  }
-  .h-\[400px\] {
-    height: 400px;
-  }
-  .h-\[408px\] {
-    height: 408px;
-  }
   .h-\[500px\] {
     height: 500px;
-  }
-  .h-\[800px\] {
-    height: 800px;
   }
   .h-full {
     height: 100%;
@@ -458,9 +433,6 @@
   .w-3\/5 {
     width: calc(3/5 * 100%);
   }
-  .w-4 {
-    width: calc(var(--spacing) * 4);
-  }
   .w-5 {
     width: calc(var(--spacing) * 5);
   }
@@ -472,9 +444,6 @@
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
-  }
-  .w-24 {
-    width: calc(var(--spacing) * 24);
   }
   .w-25 {
     width: calc(var(--spacing) * 25);
@@ -497,9 +466,6 @@
   .w-full {
     width: 100%;
   }
-  .w-lg {
-    width: var(--container-lg);
-  }
   .w-md {
     width: var(--container-md);
   }
@@ -508,9 +474,6 @@
   }
   .w-sm {
     width: var(--container-sm);
-  }
-  .w-xl {
-    width: var(--container-xl);
   }
   .max-w-5xl {
     max-width: var(--container-5xl);
@@ -655,9 +618,6 @@
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
-  .rounded-sm {
-    border-radius: var(--radius-sm);
-  }
   .rounded-xl {
     border-radius: var(--radius-xl);
   }
@@ -697,9 +657,6 @@
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
-  .border-gray-300 {
-    border-color: var(--color-gray-300);
-  }
   .border-utn-dark {
     border-color: var(--color-utn-dark);
   }
@@ -715,14 +672,8 @@
   .border-white {
     border-color: var(--color-white);
   }
-  .bg-gray-100 {
-    background-color: var(--color-gray-100);
-  }
   .bg-gray-200 {
     background-color: var(--color-gray-200);
-  }
-  .bg-gray-500 {
-    background-color: var(--color-gray-500);
   }
   .bg-slate-400 {
     background-color: var(--color-slate-400);
@@ -894,9 +845,6 @@
   .text-black {
     color: var(--color-black);
   }
-  .text-gray-300 {
-    color: var(--color-gray-300);
-  }
   .text-gray-400 {
     color: var(--color-gray-400);
   }
@@ -914,9 +862,6 @@
   }
   .text-green-400 {
     color: var(--color-green-400);
-  }
-  .text-green-600 {
-    color: var(--color-green-600);
   }
   .text-slate-800 {
     color: var(--color-slate-800);
@@ -947,12 +892,6 @@
   }
   .underline {
     text-decoration-line: underline;
-  }
-  .decoration-utn-regular {
-    text-decoration-color: var(--color-utn-regular);
-  }
-  .decoration-0 {
-    text-decoration-thickness: 0px;
   }
   .accent-utn-regular {
     accent-color: var(--color-utn-regular);
@@ -998,11 +937,6 @@
       background-color: var(--color-amber-500);
     }
   }
-  .peer-checked\:bg-blue-600 {
-    &:is(:where(.peer):checked ~ *) {
-      background-color: var(--color-blue-600);
-    }
-  }
   .peer-checked\:bg-green-500 {
     &:is(:where(.peer):checked ~ *) {
       background-color: var(--color-green-500);
@@ -1029,11 +963,6 @@
       --tw-ring-color: var(--color-amber-500);
     }
   }
-  .peer-focus\:ring-blue-300 {
-    &:is(:where(.peer):focus ~ *) {
-      --tw-ring-color: var(--color-blue-300);
-    }
-  }
   .peer-focus\:ring-green-500 {
     &:is(:where(.peer):focus ~ *) {
       --tw-ring-color: var(--color-green-500);
@@ -1047,11 +976,6 @@
   .peer-focus\:ring-utn-regular {
     &:is(:where(.peer):focus ~ *) {
       --tw-ring-color: var(--color-utn-regular);
-    }
-  }
-  .peer-focus\:ring-offset-amber-500 {
-    &:is(:where(.peer):focus ~ *) {
-      --tw-ring-offset-color: var(--color-amber-500);
     }
   }
   .peer-focus\:outline-none {
@@ -1247,19 +1171,9 @@
       --tw-ring-color: var(--color-gray-200);
     }
   }
-  .focus\:ring-green-500 {
-    &:focus {
-      --tw-ring-color: var(--color-green-500);
-    }
-  }
   .focus\:ring-utn-dark {
     &:focus {
       --tw-ring-color: var(--color-utn-dark);
-    }
-  }
-  .focus\:ring-utn-regular {
-    &:focus {
-      --tw-ring-color: var(--color-utn-regular);
     }
   }
   .focus\:outline-hidden {
@@ -1502,6 +1416,21 @@
       width: calc(var(--spacing) * 5);
     }
   }
+  .lg\:w-20 {
+    @media (width >= 64rem) {
+      width: calc(var(--spacing) * 20);
+    }
+  }
+  .lg\:w-40 {
+    @media (width >= 64rem) {
+      width: calc(var(--spacing) * 40);
+    }
+  }
+  .lg\:w-48 {
+    @media (width >= 64rem) {
+      width: calc(var(--spacing) * 48);
+    }
+  }
   .lg\:w-\[900px\] {
     @media (width >= 64rem) {
       width: 900px;
@@ -1726,6 +1655,11 @@
       color: var(--color-gray-400);
     }
   }
+  .dark\:text-gray-500 {
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-gray-500);
+    }
+  }
   .dark\:text-slate-300 {
     @media (prefers-color-scheme: dark) {
       color: var(--color-slate-300);
@@ -1746,31 +1680,12 @@
       color: var(--color-white);
     }
   }
-  .dark\:ring-offset-gray-800 {
-    @media (prefers-color-scheme: dark) {
-      --tw-ring-offset-color: var(--color-gray-800);
-    }
-  }
   .dark\:group-hover\:text-slate-950 {
     @media (prefers-color-scheme: dark) {
       &:is(:where(.group):hover *) {
         @media (hover: hover) {
           color: var(--color-slate-950);
         }
-      }
-    }
-  }
-  .dark\:peer-checked\:bg-blue-600 {
-    @media (prefers-color-scheme: dark) {
-      &:is(:where(.peer):checked ~ *) {
-        background-color: var(--color-blue-600);
-      }
-    }
-  }
-  .dark\:peer-focus\:ring-blue-800 {
-    @media (prefers-color-scheme: dark) {
-      &:is(:where(.peer):focus ~ *) {
-        --tw-ring-color: var(--color-blue-800);
       }
     }
   }
@@ -1848,13 +1763,6 @@
     @media (prefers-color-scheme: dark) {
       &:focus {
         --tw-ring-color: var(--color-gray-600);
-      }
-    }
-  }
-  .dark\:focus\:ring-green-600 {
-    @media (prefers-color-scheme: dark) {
-      &:focus {
-        --tw-ring-color: var(--color-green-600);
       }
     }
   }

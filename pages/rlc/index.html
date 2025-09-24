@@ -148,7 +148,7 @@
 
         <div
           id="info"
-          class="text-center flex flex-row items-center justify-center"
+          class="text-center flex flex-col lg:flex-row items-center justify-center"
         >
           <!-- Imagen circuito RLC -->
           <div
@@ -243,27 +243,6 @@
               <div
                 class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
-                <span class="label">VL:</span>
-                <span id="vl-value">0.11 V</span>
-              </div>
-              <div
-                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center"
-              >
-                <span class="label">VC:</span>
-                <span id="vc-value">10.6 V</span>
-              </div>
-              <div
-                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
-              >
-                <span class="label">VR:</span>
-                <span id="vr-value">0.53 V</span>
-              </div>
-            </div>
-
-            <div class="value-item flex flex-col justify-center items-center">
-              <div
-                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
-              >
                 <span class="label">Pot. Aparente (S):</span>
                 <span id="s-value">0.165 VA</span>
               </div>
@@ -285,6 +264,48 @@
               <div
                 class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
+                <span class="label">VL:</span>
+                <span id="vl-value">0.11 V</span>
+              </div>
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center"
+              >
+                <span class="label">VC:</span>
+                <span id="vc-value">10.6 V</span>
+              </div>
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
+                <span class="label">VR:</span>
+                <span id="vr-value">0.53 V</span>
+              </div>
+            </div>
+
+            <div class="value-item flex flex-col justify-center items-center">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
+                <span class="label">VpL:</span>
+                <span id="vpl-value">0.11 V</span>
+              </div>
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center"
+              >
+                <span class="label">VpC:</span>
+                <span id="vpc-value">10.6 V</span>
+              </div>
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
+                <span class="label">VpR:</span>
+                <span id="vpr-value">0.53 V</span>
+              </div>
+            </div>
+
+            <div class="value-item flex flex-col justify-center items-center">
+              <div
+                class="value-item border-2 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+              >
                 <span class="label">i pico:</span>
                 <span id="ipeak-value">0.015 A</span>
               </div>
@@ -296,14 +317,14 @@
               </div>
             </div>
             <div
-              class="dominance-indicator text-slate-950 dark:text-white col-span-3 text-center text-xl"
+              class="dominance-indicator text-slate-950 dark:text-white col-span-3 mt-8 text-center text-xl"
               id="dominanceIndicator"
             >
               <p id="dominanceText">
                 Estado del circuito: Capacitivo. XC > XL. El voltaje atrasa a la
                 corriente por 87.1°
               </p>
-              <div id="resonanceMessage" class="message"></div>
+              <div id="resonanceMessage" class="mt-8"></div>
             </div>
 
             <!-- Fin inside container calculados-->
@@ -319,7 +340,7 @@
               <h2
                 class="dark:text-white text-slate-950 text-2xl font-bold text-center"
               >
-                Parámetros de resonancia
+                Parámetros del circuito
               </h2>
               <p class="text-gray-400 text-center">
                 Los valores decimales deben introducirse separados por un punto
@@ -342,8 +363,9 @@
                 max="100"
                 value="5"
                 step="0.1"
-                class="rounded-full border-1 border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 lg:w-48 border-white dark:text-white w-full text-center"
               />
+              <p class="text-center dark:text-gray-500 mt-2">De 1 Ω a 100 Ω</p>
             </div>
 
             <div
@@ -358,11 +380,14 @@
                 type="number"
                 id="inductance"
                 min="10"
-                max="500"
+                max="1000"
                 value="100"
                 step="1"
-                class="rounded-full border-1 border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 lg:w-48 border-white dark:text-white w-full text-center"
               />
+              <p class="text-center dark:text-gray-500 mt-2">
+                De 10 mH a 1000 mH
+              </p>
             </div>
 
             <div
@@ -380,8 +405,11 @@
                 max="1000"
                 value="10"
                 step="1"
-                class="rounded-full border-1 border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 lg:w-48 border-white dark:text-white w-full text-center"
               />
+              <p class="text-center dark:text-gray-500 mt-2">
+                De 1 µF a 1000 µF
+              </p>
             </div>
 
             <div
@@ -395,12 +423,15 @@
               <input
                 type="number"
                 id="frequency"
-                min="0"
+                min="1"
                 max="500"
                 value="100"
                 step="0.01"
-                class="rounded-full border-1 border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 lg:w-48 border-white dark:text-white w-full text-center"
               />
+              <p class="text-center dark:text-gray-500 mt-2">
+                De 1 rad/s a 500 rad/s
+              </p>
             </div>
 
             <div
@@ -414,12 +445,13 @@
               <input
                 type="number"
                 id="voltage"
-                min="0"
+                min="1"
                 max="50"
                 value="15"
                 step="1"
-                class="rounded-full border-1 border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 lg:w-48 border-white dark:text-white w-full text-center"
               />
+              <p class="text-center dark:text-gray-500 mt-2">De 1 V a 50 V</p>
             </div>
 
             <div
@@ -437,24 +469,33 @@
                 max="600"
                 value="100"
                 step="10"
-                class="decoration-none rounded-full border-1 border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 lg:w-48 border-white dark:text-white w-full text-center"
               />
+              <p class="text-center dark:text-gray-500 mt-2">
+                De 10 ms a 600ms
+              </p>
             </div>
             <div
               id="botones"
-              class="flex flex-col justify-center items-center col-span-2 mt-8"
+              class="flex flex-col justify-center items-center col-span-2 mt-4"
             >
               <button
                 id="resonanceBtn"
                 class="dark:bg-utn-regular mt-4 dark:text-slate-950 text-xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border-1 border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer"
               >
-                Configurar resonancia
+                Configurar circuito
               </button>
               <button
                 id="osci_on"
                 class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer"
               >
-                Encender osciloscopio
+                Iniciar osciloscopio
+              </button>
+              <button
+                id="resonancia_si"
+                class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer"
+              >
+                Buscar resonancia
               </button>
             </div>
           </div>
@@ -462,7 +503,7 @@
         </div>
       </div>
       <!-- Fin main-->
-
+      <!-- Comienzo interfaz de gráficos -->
       <div
         class="flex flex-row justify-center mt-8 mr-12 ml-12"
         id="contenedor-1"
@@ -549,8 +590,9 @@
           </div>
           <!--Fin de botonera osciloscopio-->
         </div>
+        <!--Fin de osciloscopio-->
       </div>
-      <!--Fin de osciloscopio-->
+      <!-- Fin interfaz de gráficos -->
     </div>
     <!-- FIN CONTENIDO -->
 
