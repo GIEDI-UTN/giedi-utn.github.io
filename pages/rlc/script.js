@@ -15,6 +15,7 @@ class RLCSimulator {
     this.frequencySlider = document.getElementById("frequency");
     this.voltageSlider = document.getElementById("voltage");
     this.timeScaleSlider = document.getElementById("timeScale");
+
     this.resonanceBtn = document.getElementById("resonanceBtn");
     this.resonanceMessage = document.getElementById("resonanceMessage");
     this.bus_resonancia = document.getElementById("resonancia_si");
@@ -104,12 +105,12 @@ class RLCSimulator {
   }
 
   getCircuitValues() {
-    const R = parseFloat(this.resistanceValue);
-    const L = parseFloat(this.inductanceValue) / 1000; // mH to H
-    const C = parseFloat(this.capacitanceValue) / 1000000; // µF to F
-    const omega = parseFloat(this.frequencyValue);
-    const V0 = parseFloat(this.voltageValue);
-    const timeScale = parseFloat(this.timeScaleValue) / 1000; // ms to s
+    const R = parseFloat(this.resistanceSlider.value);
+    const L = parseFloat(this.inductanceSlider.value) / 1000; // mH -> H
+    const C = parseFloat(this.capacitanceSlider.value) / 1e6; // µF -> F
+    const omega = parseFloat(this.frequencySlider.value);
+    const V0 = parseFloat(this.voltageSlider.value);
+    const timeScale = parseFloat(this.timeScaleSlider.value) / 1000; // ms -> s
 
     return { R, L, C, omega, V0, timeScale };
   }
@@ -149,6 +150,7 @@ class RLCSimulator {
     const P = Irms * Irms * R; // Potencia activa
     const S = Irms * V0; // Potencia aparente
     const Q = S * Math.sin(phi); // Potencia reactiva
+
     return {
       R,
       L,
@@ -181,6 +183,7 @@ class RLCSimulator {
     // Actualizar valores mostrados
     this.valueElements.freq.textContent = values.f.toFixed(3) + " Hz";
     this.valueElements.period.textContent = values.T.toFixed(3) + " s";
+
     this.valueElements.xl.textContent = values.XL.toFixed(3) + " Ω";
     this.valueElements.xc.textContent = values.XC.toFixed(3) + " Ω";
     this.valueElements.z.textContent = values.Z.toFixed(3) + " Ω";
@@ -236,7 +239,7 @@ class RLCSimulator {
       2
     )} mH y C = ${c1.toFixed(
       2
-    )} µF.  <br> Frecuencia de resonancia: ${omega0.toFixed(
+    )} µF  <br> Frecuencia de resonancia: ${omega0.toFixed(
       1
     )} rad/s <br>  Luego, f = ${f1.toFixed(1)} Hz`;
   }
