@@ -498,6 +498,8 @@ document.addEventListener("DOMContentLoaded", () => {
 $(function () {
   $("#caja_osci").hide();
   $("#datos-calculados").hide();
+  $("#tercer-caja").hide();
+
   let resonancia_seteada = false;
 
   $("#resonanceBtn").on("click", function () {
@@ -505,11 +507,18 @@ $(function () {
     resonancia_seteada = true;
   });
 
+  $("#resonancia_si").on("click", function () {
+    if (!resonancia_seteada) {
+      alert("Por favor, configure el circuito primero");
+    }
+  });
+
   $("#osci_on").on("click", function () {
     if (resonancia_seteada) {
       $("#caja_osci").show();
+      $("#tercer-caja").show();
     } else {
-      alert("Por favor, configure una resonancia primero");
+      alert("Por favor, configure el circuito primero");
     }
   });
 });
