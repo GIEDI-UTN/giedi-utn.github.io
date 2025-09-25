@@ -31,12 +31,14 @@ class RLCSimulator {
     // Canvas
     this.waveformsCanvas = document.getElementById("waveforms");
     this.waveformsCtx = this.waveformsCanvas.getContext("2d");
-    //this.impedanceCanvas = document.getElementById('impedanceTriangle');
-    //this.impedanceCtx = this.impedanceCanvas.getContext('2d');
-    //this.voltageCanvas = document.getElementById('voltageTriangle');
-    //this.voltageCtx = this.voltageCanvas.getContext('2d');
-    //this.powerCanvas = document.getElementById('powerTriangle');
-    //this.powerCtx = this.powerCanvas.getContext('2d');
+
+    this.osciloscopio = document.getElementById("osci_on");
+    this.impedanceCanvas = document.getElementById("impedanceTriangle");
+    this.impedanceCtx = this.impedanceCanvas.getContext("2d");
+    this.voltageCanvas = document.getElementById("voltageTriangle");
+    this.voltageCtx = this.voltageCanvas.getContext("2d");
+    this.powerCanvas = document.getElementById("powerTriangle");
+    this.powerCtx = this.powerCanvas.getContext("2d");
 
     // Elementos de valores calculados
     this.valueElements = {
@@ -97,6 +99,12 @@ class RLCSimulator {
     // Botón de resonancia
     this.resonanceBtn.addEventListener("click", () => {
       this.update();
+    });
+
+    this.osciloscopio.addEventListener("click", () => {
+      // Dibujar diagramas
+      const values = this.calculateValues();
+      this.drawTriangles(values);
     });
 
     this.bus_resonancia.addEventListener("click", () => {
@@ -203,9 +211,6 @@ class RLCSimulator {
 
     // Actualizar indicador de dominancia
     this.updateDominanceIndicator(values);
-
-    // Dibujar diagramas
-    //this.drawTriangles(values);
   }
 
   updateDominanceIndicator(values) {
@@ -497,7 +502,6 @@ $(function () {
 
   $("#resonanceBtn").on("click", function () {
     $("#datos-calculados").show();
-    $("#datos-modificables").addClass("w-2/5");
     resonancia_seteada = true;
   });
 
