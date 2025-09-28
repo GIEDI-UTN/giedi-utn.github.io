@@ -16,6 +16,13 @@
       gtag("config", "G-XLJH6E9S1H");
     </script>
 
+    <!--MathJax-->
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
+    ></script>
+
     <!--Metadata-->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,7 +40,7 @@
     <link rel="stylesheet" href="../../src/output.css" />
     <link
       rel="icon"
-      href="../../src/media/test-icon-2.png"
+      href="../../src/media/LOGO-UTN-GIEDI.png"
       type="image/x-icon"
     />
     <title>GIEDI - Simulador RLC</title>
@@ -620,6 +627,7 @@
       </div>
       <!-- Fin interfaz de gráficos -->
 
+      <!-- Comienzo de tercer caja: Triangulos y formulas-->
       <div
         id="tercer-caja"
         class="flex flex-row justify-center p-4 max-w-screen-2xl mx-auto"
@@ -651,17 +659,51 @@
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              f = omega / 2pi
+              $$f = \frac {\omega}{2\pi}$$
+            </p>
+            <p
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl mb-2"
+            >
+              $$T = \frac 1 f$$
+            </p>
+            <p
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl"
+            >
+              $$\phi = \arctan \frac {XL-XC}{R}$$
+            </p>
+          </div>
+          <div class="flex flex-col text-center justify-center">
+            <p
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+            >
+              $$i p = irms.\sqrt{2}$$
             </p>
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              T = 1/f
+              $$i rms = \frac {Vrms}{Z}$$
+            </p>
+            <p
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl"
+            >
+              $$Z = \frac {Vrms}{i rms}$$
+            </p>
+          </div>
+          <div class="flex flex-col text-center justify-center">
+            <p
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+            >
+              $$Z = \sqrt{R² + (XL - XC)²}$$
             </p>
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              phi = arctg ((XL-XC)/R)
+              $$XL = \omega L$$
+            </p>
+            <p
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2"
+            >
+              $$XC = \omega C$$
             </p>
           </div>
 
@@ -669,35 +711,17 @@
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              XL = omega.L
+              $$VL = irms.XL$$
             </p>
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              XC = omega.C
+              $$VC = irms.XC$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2"
             >
-              Z = sqrt(R² + (XL - XC)²)
-            </p>
-          </div>
-
-          <div class="flex flex-col text-center justify-center">
-            <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
-            >
-              P = irms².R
-            </p>
-            <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
-            >
-              Q = irms.(VL - VC)
-            </p>
-            <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
-            >
-              S = irms.Vrms
+              $$VR = irms.R$$
             </p>
           </div>
 
@@ -705,49 +729,35 @@
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              VL = irms.XL
+              $$VpL = ip.XL$$
             </p>
+
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              VC = irms.XC
+              $$VpC = ip.XC$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2"
             >
-              VR = irms.R
+              $$VpR = ip.R$$
             </p>
           </div>
-
           <div class="flex flex-col text-center justify-center">
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              VpL = ip.XL
-            </p>
-
-            <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
-            >
-              VpC = ip.XC
+              $$P = irms².R$$
             </p>
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              VpR = ip.R
-            </p>
-          </div>
-
-          <div class="flex flex-col text-center justify-center">
-            <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
-            >
-              i p = irms.sqrt(2)
+              $$Q = irms.(VL - VC)$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2"
             >
-              i rms = Vrms/Z
+              $$S = irms.Vrms$$
             </p>
           </div>
 
@@ -770,6 +780,7 @@
         </div>
         <!--Fin fórmulas-->
       </div>
+      <!-- Fin de tercer caja: Triangulos y formulas-->
     </div>
     <!-- FIN CONTENIDO -->
 
