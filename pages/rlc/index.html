@@ -185,9 +185,12 @@
 
             <p class="dark:text-white text-slate-950 text-lg mt-2">
               Introduzca los parámetros deseados y haga click en
-              <strong class="text-utn-regular">"Configurar resonancia"</strong>.
+              <strong class="text-utn-regular">"Configurar circuito"</strong>.
               Para cambiar los valores, deberá clickear nuevamente en
-              "Configurar resonancia" con los nuevos valores. <br /><br />
+              "Configurar circuito" con los nuevos valores. <br /><br />
+              Para obtener los valores de resonancia sin modificar los
+              parámetros, haga click en
+              <strong class="text-utn-regular">"Obtener resonancia"</strong>.
               Haga click en
               <strong class="text-utn-regular">"Encender osciloscopio"</strong>
               para visualizar el diagrama fasorial.
@@ -201,7 +204,7 @@
         >
           <!-- Inicio panel datos calculados -->
           <div
-            class="values-grid grid grid-cols-3 auto-rows-max text-slate-950 dark:text-white gap-2 w-3/5 p-4 m-4 border-2 border-utn-regular rounded-3xl"
+            class="values-grid grid grid-cols-3 auto-rows-max text-slate-950 dark:text-white gap-2 p-4 m-4 border-2 border-utn-regular rounded-3xl"
             id="datos-calculados"
           >
             <div
@@ -635,16 +638,31 @@
         <!-- Inicio caja triangulos-->
         <div
           id="panel-izq"
-          class="diagrams-container flex flex-col items-center justify-around border-2 border-utn-regular rounded-4xl p-8 mr-4"
+          class="diagrams-container flex flex-col items-center justify-around border-2 border-utn-regular rounded-4xl p-4 mr-4"
         >
-          <div class="diagram pr-4 pl-4">
+          <div class="diagram">
             <canvas id="impedanceTriangle" width="200" height="200"></canvas>
+            <p class="text-center">
+              <span class="text-red-600">X en Ω, </span>
+              <span class="text-green-400">Z en Ω, </span>
+              <span class="text-utn-regular">R en Ω</span>
+            </p>
           </div>
-          <div class="diagram pr-4 pl-4">
+          <div class="diagram">
             <canvas id="voltageTriangle" width="200" height="200"></canvas>
+            <p class="text-center">
+              <span class="text-red-600">VX en V, </span>
+              <span class="text-green-400">V en V, </span>
+              <span class="text-utn-regular">VR en V</span>
+            </p>
           </div>
-          <div class="diagram pr-4 pl-4">
+          <div class="diagram">
             <canvas id="powerTriangle" width="200" height="200"></canvas>
+            <p class="text-center">
+              <span class="text-red-600">Q en VAR, </span>
+              <span class="text-green-400">S en VA, </span>
+              <span class="text-utn-regular">P en Watts</span>
+            </p>
           </div>
         </div>
         <!-- Fin caja triangulos-->
