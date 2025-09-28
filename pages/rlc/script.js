@@ -256,89 +256,332 @@ class RLCSimulator {
   }
 
   drawImpedanceTriangle(values) {
+    // Obtengo contexto y canvas de cada div que contiene el triángulo
     const ctx = this.impedanceCtx;
     const canvas = this.impedanceCanvas;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const { R, XL, XC, Z, phi } = values;
     const X = XL - XC;
 
-    // Escalado
-    const scale = Math.min(150 / Math.max(R, Math.abs(X), Z), 1);
+    // Máxima magnitud
+    const max_magnitud = Math.max(Math.abs(R), Math.abs(X), Math.abs(Z));
+
+    // Magnitudes
+    const normalR = R / max_magnitud;
+    const normalX = X / max_magnitud;
+
+    // Centro de canvas y escala fija
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
+    const scale = 60;
 
-    // Coordenadas del triángulo
-    const x1 = centerX - (R * scale) / 2;
-    const y1 = centerY;
-    const x2 = centerX + (R * scale) / 2;
-    const y2 = centerY;
-    const x3 = x2;
-    const y3 = centerY - X * scale;
+    // Inicio (recordar que eje y se mueve al revés que cartesiano)
+    const inicioX = centerX - 40;
+    const inicioY = centerY + 20;
 
-    // Dibujar triángulo
-    ctx.strokeStyle = "#2c3e50";
-    ctx.lineWidth = 2;
+    // Ejes de referencia
+    ctx.strokeStyle = "#cccccc";
+    ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.lineTo(x3, y3);
-    ctx.lineTo(x1, y1);
+
+    // Eje horizontal
+    ctx.moveTo(inicioX - 10, inicioY);
+    ctx.lineTo(inicioX + scale + 10, inicioY);
+
+    // Eje vertical
+    ctx.moveTo(inicioX, inicioY - scale - 10);
+    ctx.lineTo(inicioX, inicioY + 10);
     ctx.stroke();
 
+    ctx.lineWidth = 3;
+
+    // R
+    if (R > 0.01) {
+      ctx.strokeStyle = "#4FA3D9";
+      ctx.beginPath();
+
+      ctx.moveTo(inicioX, inicioY);
+      ctx.lineTo(inicioX + normalR * scale, inicioY);
+
+      ctx.stroke();
+
+      this.drawArrowhead(ctx, inicioX + normalR * scale, inicioY, 0, 8);
+    }
+
+    // X
+    if (Math.abs(X) > 0.01) {
+      ctx.strokeStyle = "red";
+      const y_fin = inicioY - normalX * scale;
+
+      ctx.beginPath();
+
+      ctx.moveTo(inicioX, inicioY);
+      ctx.lineTo(inicioX, y_fin);
+
+      ctx.stroke();
+
+      const arrowDirection = X > 0 ? -Math.PI / 2 : Math.PI / 2;
+      this.drawArrowhead(ctx, inicioX, y_fin, arrowDirection, 8);
+    } else {
+      ctx.fillStyle = "red";
+      ctx.font = "13px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("X" + "\u2245" + "0", inicioX - 30, inicioY);
+    }
+
+    // Z
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(inicioX, inicioY);
+    const zX = inicioX + normalR * scale;
+    const zY = inicioY - normalX * scale;
+    ctx.lineTo(zX, zY);
+
+    ctx.stroke();
+
+    const zAngle = Math.atan2(-normalX * scale, normalR * scale);
+    this.drawArrowhead(ctx, zX, zY, zAngle, 8);
+
     // Etiquetas
-    ctx.fillStyle = "#2c3e50";
-    ctx.font = "12px Arial";
+    ctx.font = "13px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(`R = ${R.toFixed(1)}Ω`, (x1 + x2) / 2, y1 + 20);
-    ctx.fillText(`X = ${X.toFixed(1)}Ω`, x2 + 20, (y2 + y3) / 2);
-    ctx.fillText(`Z = ${Z.toFixed(1)}Ω`, (x1 + x3) / 2 - 20, (y1 + y3) / 2);
-    ctx.fillText(
-      `φ = ${((phi * 180) / Math.PI).toFixed(1)}°`,
-      x2 - 30,
-      y2 - 10
-    );
+
+    // Etiqueta R
+    if (R > 0.01) {
+      ctx.fillStyle = "#4FA3D9";
+      ctx.fillText(`R`, inicioX + (normalR * scale) / 2, inicioY + 15);
+      ctx.fillText(
+        `${R.toFixed(1)}Ω`,
+        inicioX + (normalR * scale) / 2,
+        inicioY + 30
+      );
+    }
+
+    // Etiqueta X
+    if (Math.abs(X) > 0.01) {
+      ctx.fillStyle = "red";
+
+      const labelX = inicioX - 25;
+      const labelY = inicioY - (normalX * scale) / 2;
+      ctx.fillText("X", labelX, labelY);
+      ctx.fillText(`${Math.abs(X).toFixed(1)}Ω`, labelX, labelY + 15);
+    }
+
+    // Etiqueta Z
+    ctx.fillStyle = "green";
+    const zLabelX = (inicioX + zX) / 2 + 35;
+    const zLabelY = (inicioY + zY) / 2 - 5;
+    ctx.fillText(`Z = ${Z.toFixed(1)}Ω`, zLabelX, zLabelY);
+
+    // Arco φ
+    if (Math.abs(phi) > 0.1) {
+      ctx.fillStyle = "orange";
+      ctx.strokeStyle = "orange";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      const radius = 15;
+
+      // Inductivo, sentido antihorario
+      if (phi > 0) {
+        ctx.arc(inicioX, inicioY, radius, 0, -phi, true);
+      }
+
+      // Capacitivo, sentido horario
+      else {
+        ctx.arc(inicioX, inicioY, radius, 0, -phi, false);
+      }
+
+      ctx.stroke();
+
+      // Posición etiqueta del ángulo
+      let angleLabelX, angleLabelY;
+      const labelAngle = -phi / 2;
+
+      angleLabelX = inicioX + (radius + 20) * Math.cos(labelAngle);
+      angleLabelY = inicioY + (radius + 8) * Math.sin(labelAngle);
+
+      ctx.fillText(
+        `φ = ${((phi * 180) / Math.PI).toFixed(1)}°`,
+        angleLabelX,
+        angleLabelY
+      );
+    } else {
+      // Ángulos chicos
+      ctx.fillText(
+        `φ = ${((phi * 180) / Math.PI).toFixed(1)}°`,
+        inicioX + 20,
+        inicioY - 10
+      );
+    }
+
+    // Título
+    ctx.fillStyle = "#4FA3D9";
+    ctx.font = "bold 16px Arial";
+    ctx.fillText("Vectores R-X-Z", centerX, 30);
   }
 
   drawVoltageTriangle(values) {
     const ctx = this.voltageCtx;
     const canvas = this.voltageCanvas;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const { VR, VL, VC, V0, phi } = values;
+    const { VR, VL, VC, phi } = values;
     const VX = VL - VC;
-    const Vrms = V0 / Math.sqrt(2);
+    const Vtotal = Math.sqrt(VR * VR + VX * VX);
 
-    // Escalado
-    const scale = Math.min(150 / Math.max(VR, Math.abs(VX), Vrms), 1);
+    // Normalizado
+    const max_magnitud = Math.max(Math.abs(VR), Math.abs(VX), Math.abs(Vtotal));
+    const normalizedVR = VR / max_magnitud;
+    const normalizedVX = VX / max_magnitud;
+
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
+    const scale = 60;
 
-    // Coordenadas del triángulo
-    const x1 = centerX - (VR * scale) / 2;
-    const y1 = centerY;
-    const x2 = centerX + (VR * scale) / 2;
-    const y2 = centerY;
-    const x3 = x2;
-    const y3 = centerY - VX * scale;
+    const inicioX = centerX - 40;
+    const inicioY = centerY + 20;
 
-    // Dibujar triángulo
-    ctx.strokeStyle = "#e74c3c";
-    ctx.lineWidth = 2;
+    // Ejes de referencia
+    ctx.strokeStyle = "#cccccc";
+    ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.lineTo(x3, y3);
-    ctx.lineTo(x1, y1);
+    ctx.moveTo(inicioX - 10, inicioY);
+    ctx.lineTo(inicioX + scale + 10, inicioY);
+    ctx.moveTo(inicioX, inicioY - scale - 10);
+    ctx.lineTo(inicioX, inicioY + 10);
     ctx.stroke();
 
+    // Vectores
+    ctx.lineWidth = 3;
+
+    // VR
+    if (VR > 0.01) {
+      ctx.strokeStyle = "#4FA3D9";
+      ctx.beginPath();
+      ctx.moveTo(inicioX, inicioY);
+      ctx.lineTo(inicioX + normalizedVR * scale, inicioY);
+      ctx.stroke();
+      this.drawArrowhead(ctx, inicioX + normalizedVR * scale, inicioY, 0, 8);
+    }
+
+    // VX
+    if (Math.abs(VX) > 0.01) {
+      ctx.strokeStyle = "red";
+      ctx.beginPath();
+      ctx.moveTo(inicioX, inicioY);
+      const y_fin = inicioY - normalizedVX * scale;
+      ctx.lineTo(inicioX, y_fin);
+      ctx.stroke();
+
+      this.drawArrowhead(
+        ctx,
+        inicioX,
+        y_fin,
+        VX > 0 ? -Math.PI / 2 : Math.PI / 2,
+        8
+      );
+    }
+
+    // Vtotal
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(inicioX, inicioY);
+    const vX = inicioX + normalizedVR * scale;
+    const vY = inicioY - normalizedVX * scale;
+    ctx.lineTo(vX, vY);
+    ctx.stroke();
+
+    const vAngle = Math.atan2(-normalizedVX * scale, normalizedVR * scale);
+    this.drawArrowhead(ctx, vX, vY, vAngle, 8);
+
+    // Arco φ
+    if (Math.abs(phi) > 0.1) {
+      ctx.font = "13px Arial";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "orange";
+      ctx.strokeStyle = "orange";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      const radius = 15;
+
+      // Inductivo, sentido antihorario
+      if (phi > 0) {
+        ctx.arc(inicioX, inicioY, radius, 0, -phi, true);
+      }
+
+      // Capacitivo, sentido horario
+      else {
+        ctx.arc(inicioX, inicioY, radius, 0, -phi, false);
+      }
+
+      ctx.stroke();
+
+      // Posición etiqueta del ángulo
+      let angleLabelX, angleLabelY;
+      const labelAngle = -phi / 2;
+
+      angleLabelX = inicioX + (radius + 30) * Math.cos(labelAngle);
+      angleLabelY = inicioY + (radius + 8) * Math.sin(labelAngle);
+
+      ctx.fillText(
+        `φ = ${((phi * 180) / Math.PI).toFixed(1)}°`,
+        angleLabelX,
+        angleLabelY
+      );
+    } else {
+      // Ángulos chicos
+      ctx.fillText(
+        `φ = ${((phi * 180) / Math.PI).toFixed(1)}°`,
+        inicioX + 20,
+        inicioY - 10
+      );
+    }
+
     // Etiquetas
-    ctx.fillStyle = "#e74c3c";
-    ctx.font = "12px Arial";
+    ctx.font = "13px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(`VR = ${VR.toFixed(1)}V`, (x1 + x2) / 2, y1 + 20);
-    ctx.fillText(`VX = ${VX.toFixed(1)}V`, x2 + 20, (y2 + y3) / 2);
-    ctx.fillText(`V = ${Vrms.toFixed(1)}V`, (x1 + x3) / 2 - 20, (y1 + y3) / 2);
+
+    // ETIQUETA VR: AZUL - HORIZONTAL
+    if (VR > 0.01) {
+      ctx.fillStyle = "#4FA3D9";
+      ctx.fillText(`VR`, inicioX + (normalizedVR * scale) / 2, inicioY + 15);
+      ctx.fillText(
+        `${VR.toFixed(1)}V`,
+        inicioX + (normalizedVR * scale) / 2,
+        inicioY + 30
+      );
+    }
+
+    // ETIQUETA VX: ROJO - VERTICAL
+    if (Math.abs(VX) > 0.01 || phi != 0) {
+      ctx.fillStyle = "red";
+      const labelX = inicioX - 15;
+      const labelY = inicioY - (normalizedVX * scale) / 2;
+      ctx.fillText("VX", labelX - 10, labelY);
+      ctx.fillText(`${Math.abs(VX).toFixed(2)}V`, labelX - 10, labelY + 15);
+    } else {
+      ctx.fillStyle = "red";
+      ctx.font = "13px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("VX" + "\u2245" + "0", inicioX - 30, inicioY);
+    }
+
+    // ETIQUETA V: VERDE - HIPOTENUSA
+    ctx.fillStyle = "green";
+    const vLabelX = (inicioX + vX) / 2 + 40;
+    const vLabelY = (inicioY + vY) / 2 - 5;
+    ctx.fillText(`V = ${Vtotal.toFixed(1)}V`, vLabelX, vLabelY);
+
+    ctx.fillStyle = "#e74c3c";
+    ctx.font = "bold 16px Arial";
+    ctx.fillText("Vectores VR-VX-Vrms", centerX, 30);
   }
 
   drawPowerTriangle(values) {
@@ -346,38 +589,162 @@ class RLCSimulator {
     const canvas = this.powerCanvas;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const { P, Q, S } = values;
+    const { P, Q, S, phi } = values;
 
-    // Escalado
-    const scale = Math.min(150 / Math.max(Math.abs(P), Math.abs(Q), S), 1);
+    // Normalizado
+    const max_magnitud = Math.max(Math.abs(P), Math.abs(Q), Math.abs(S));
+    const normalizedP = P / max_magnitud;
+    const normalizedQ = Q / max_magnitud;
+
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
+    const scale = 60;
 
-    // Coordenadas del triángulo
-    const x1 = centerX - (P * scale) / 2;
-    const y1 = centerY;
-    const x2 = centerX + (P * scale) / 2;
-    const y2 = centerY;
-    const x3 = x2;
-    const y3 = centerY - Q * scale;
+    const inicioX = centerX - 40;
+    const inicioY = centerY + 20;
 
-    // Dibujar triángulo
-    ctx.strokeStyle = "#27ae60";
-    ctx.lineWidth = 2;
+    // Ejes
+    ctx.strokeStyle = "#cccccc";
+    ctx.lineWidth = 1;
+
     ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.lineTo(x3, y3);
-    ctx.lineTo(x1, y1);
+    ctx.moveTo(inicioX - 10, inicioY);
+    ctx.lineTo(inicioX + scale + 10, inicioY);
+    ctx.moveTo(inicioX, inicioY - scale - 10);
+    ctx.lineTo(inicioX, inicioY + 10);
     ctx.stroke();
 
+    ctx.lineWidth = 3;
+
+    // P
+    if (P > 0.01) {
+      ctx.strokeStyle = "#4FA3D9";
+      ctx.beginPath();
+      ctx.moveTo(inicioX, inicioY);
+      ctx.lineTo(inicioX + normalizedP * scale, inicioY);
+      ctx.stroke();
+      this.drawArrowhead(ctx, inicioX + normalizedP * scale, inicioY, 0, 8);
+    }
+
+    // Q
+    if (Math.abs(Q) > 0.01) {
+      ctx.strokeStyle = "red";
+      ctx.beginPath();
+      ctx.moveTo(inicioX, inicioY);
+      const y_fin = inicioY - normalizedQ * scale;
+      ctx.lineTo(inicioX, y_fin);
+      ctx.stroke();
+
+      const arrowDirection = Q > 0 ? -Math.PI / 2 : Math.PI / 2;
+      this.drawArrowhead(ctx, inicioX, y_fin, arrowDirection, 8);
+    } else {
+      ctx.fillStyle = "red";
+      ctx.font = "13px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Q" + "\u2245" + "0", inicioX - 30, inicioY);
+    }
+
+    // S
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(inicioX, inicioY);
+    const sX = inicioX + normalizedP * scale;
+    const sY = inicioY - normalizedQ * scale;
+    ctx.lineTo(sX, sY);
+    ctx.stroke();
+    const sAngle = Math.atan2(-normalizedQ * scale, normalizedP * scale);
+    this.drawArrowhead(ctx, sX, sY, sAngle, 8);
+
+    // Arco φ
+    if (Math.abs(phi) > 0.1) {
+      ctx.font = "13px Arial";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "orange";
+      ctx.strokeStyle = "orange";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      const radius = 15;
+
+      // Inductivo, sentido antihorario
+      if (phi > 0) {
+        ctx.arc(inicioX, inicioY, radius, 0, -phi, true);
+      }
+
+      // Capacitivo, sentido horario
+      else {
+        ctx.arc(inicioX, inicioY, radius, 0, -phi, false);
+      }
+
+      ctx.stroke();
+
+      // Posición etiqueta del ángulo
+      let angleLabelX, angleLabelY;
+      const labelAngle = -phi / 2;
+
+      angleLabelX = inicioX + (radius + 30) * Math.cos(labelAngle);
+      angleLabelY = inicioY + (radius + 8) * Math.sin(labelAngle);
+
+      ctx.fillText(
+        `φ = ${((phi * 180) / Math.PI).toFixed(1)}°`,
+        angleLabelX,
+        angleLabelY
+      );
+    } else {
+      // Ángulos chicos
+      ctx.fillText(
+        `φ = ${((phi * 180) / Math.PI).toFixed(1)}°`,
+        inicioX + 20,
+        inicioY - 10
+      );
+    }
+
     // Etiquetas
-    ctx.fillStyle = "#27ae60";
-    ctx.font = "12px Arial";
+    ctx.font = "13px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(`P = ${P.toFixed(3)}W`, (x1 + x2) / 2, y1 + 20);
-    ctx.fillText(`Q = ${Q.toFixed(3)}VAR`, x2 + 20, (y2 + y3) / 2);
-    ctx.fillText(`S = ${S.toFixed(3)}VA`, (x1 + x3) / 2 - 20, (y1 + y3) / 2);
+
+    if (P > 0.01) {
+      ctx.fillStyle = "#4FA3D9";
+      ctx.fillText(`P`, inicioX + (normalizedP * scale) / 2, inicioY + 15);
+      ctx.fillText(
+        `${P.toFixed(3)}W`,
+        inicioX + (normalizedP * scale) / 2,
+        inicioY + 30
+      );
+    }
+
+    if (Math.abs(Q) > 0.01) {
+      ctx.fillStyle = "red";
+      const labelX = inicioX - 15;
+      const labelY = inicioY - (normalizedQ * scale) / 2;
+      ctx.fillText("Q", labelX - 10, labelY);
+      ctx.fillText(`${Math.abs(Q).toFixed(2)}VAR`, labelX - 10, labelY + 15);
+    }
+
+    ctx.fillStyle = "green";
+    const sLabelX = (inicioX + sX) / 2 + 13;
+    const sLabelY = (inicioY + sY) / 2 - 5;
+    ctx.fillText(`S = ${S.toFixed(2)}VA`, sLabelX + 20, sLabelY);
+
+    ctx.fillStyle = "#27ae60";
+    ctx.font = "bold 16px Arial";
+    ctx.fillText("Vectores P-Q-S", centerX, 30);
+  }
+
+  drawArrowhead(ctx, x, y, angle, size) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(-size, -size / 2);
+    ctx.lineTo(-size, size / 2);
+    ctx.closePath();
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.fill();
+
+    ctx.restore();
   }
 
   animate() {
