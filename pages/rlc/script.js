@@ -96,8 +96,10 @@ class RLCSimulator {
       this.update();
     });
 
-    // Botón de resonancia
+    let circuito_ok = false;
+    // Configurar circuito
     this.resonanceBtn.addEventListener("click", () => {
+      circuito_ok = true;
       this.update();
     });
 
@@ -108,7 +110,9 @@ class RLCSimulator {
     });
 
     this.bus_resonancia.addEventListener("click", () => {
-      this.busca_resonancia();
+      if (circuito_ok) {
+        this.busca_resonancia();
+      }
     });
   }
 
@@ -854,39 +858,60 @@ class RLCSimulator {
     ctx.fillText("Amplitud", 0, 0);
     ctx.restore();
   }
+
+  validarRangos() {
+    let { R, L, C, omega, V0, timeScale } = this.getCircuitValues();
+
+    L = L * 1000;
+    C = C * 1e6;
+    timeScale = timeScale * 1000;
+
+    if (R < 1 || R > 100) return false;
+    if (L < 10 || L > 1000) return false;
+    if (C < 1 || C > 1000) return false;
+    if (omega < 1 || omega > 500) return false;
+    if (V0 < 1 || V0 > 50) return false;
+
+    return true;
+  }
 }
 
 // Inicializar el simulador cuando se carga la página
 document.addEventListener("DOMContentLoaded", () => {
-  new RLCSimulator();
-});
+  let simulador = new RLCSimulator();
+  // Encontrar todos los elementos en el DOM
+  const cajaOsci = document.getElementById("caja_osci");
+  const datosCalculados = document.getElementById("datos-calculados");
+  const tercerCaja = document.getElementById("tercer-caja");
+  const resonanceBtn = document.getElementById("resonanceBtn");
+  const resonanciaSi = document.getElementById("resonancia_si");
+  const osciOn = document.getElementById("osci_on");
 
-// COMIENZO JQUERY
-$(function () {
-  $("#caja_osci").hide();
-  $("#datos-calculados").hide();
-  $("#tercer-caja").hide();
+  // Ocultar todas las cajas a menos que se opriman los botones
+  cajaOsci.classList.add("hidden");
+  datosCalculados.classList.add("hidden");
+  tercerCaja.classList.add("hidden");
 
-  let resonancia_seteada = false;
+  // Inicialmente no hay circuito configurado
+  let resonanciaSeteada = false;
 
-  $("#resonanceBtn").on("click", function () {
-    $("#datos-calculados").show();
-    resonancia_seteada = true;
-  });
-
-  $("#resonancia_si").on("click", function () {
-    if (!resonancia_seteada) {
-      alert("Por favor, configure el circuito primero");
+  // Si se configura el circuito, las demás cajas están habilitadas
+  resonanceBtn.addEventListener("click", function () {
+    let rango_valido = simulador.validarRangos();
+    if (rango_valido) {
+      datosCalculados.classList.remove("hidden");
+      resonanciaSeteada = true;
+    } else {
+      alert("Por favor, ingrese valores dentro de los rangos permitidos.");
     }
   });
 
-  $("#osci_on").on("click", function () {
-    if (resonancia_seteada) {
-      $("#caja_osci").show();
-      $("#tercer-caja").show();
+  osciOn.addEventListener("click", function () {
+    if (resonanciaSeteada) {
+      cajaOsci.classList.remove("hidden");
+      tercerCaja.classList.remove("hidden");
     } else {
       alert("Por favor, configure el circuito primero");
     }
   });
 });
-// FIN JQUERY
