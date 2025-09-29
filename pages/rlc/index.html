@@ -143,15 +143,17 @@
     <div class="flex flex-col justify-center items-center" id="main">
       <!-- Comienzo main: Paneles superiores valores calc y parametros-->
       <div
-        class="flex flex-col justify-center max-w-screen-2xl mx-auto"
+        class="flex flex-col justify-center w-full px-4 mx-auto max-w-screen-lg lg:max-w-screen-2xl"
         id="contenedor-0"
       >
         <h1
-          class="dark:text-white text-slate-950 text-5xl font-bold text-center mt-4"
+          class="dark:text-white text-slate-950 text-2xl lg:text-5xl font-bold text-center mt-4"
         >
           Simulador de circuito RLC
         </h1>
-        <p class="dark:text-white text-slate-950 text-center mt-2">
+        <p
+          class="text-base sm:text-lg md:text-xl dark:text-white text-slate-950 text-center break-words mt-2"
+        >
           Modifica las variables para aplicar la resonancia del circuito. Luego,
           podrás sacar conclusiones a partir de las variables calculadas.
         </p>
@@ -199,12 +201,12 @@
         </div>
 
         <div
-          class="flex flex-row justify-center mt-8 max-w-screen-2xl"
+          class="flex flex-col md:flex-row justify-center mt-8 max-w-screen-2xl"
           id="contenedor-1"
         >
           <!-- Inicio panel datos calculados -->
           <div
-            class="values-grid grid grid-cols-3 auto-rows-max text-slate-950 dark:text-white gap-2 p-4 m-4 border-2 border-utn-regular rounded-3xl"
+            class="values-grid md:mr-4 sm:grid flex flex-col sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-4 p-4 mx-auto mb-4 border-2 border-utn-regular rounded-3xl text-slate-950 dark:text-white w-full"
             id="datos-calculados"
           >
             <div
@@ -347,10 +349,10 @@
 
           <!-- Inicio panel selectores -->
           <div
-            class="grid grid-cols-2 auto-rows-max gap-4 m-4 p-4 border-2 border-utn-regular w-2xl rounded-3xl items-center"
+            class="sm:grid flex flex-col sm:grid-cols-2 gap-4 mx-auto p-4 border-2 border-utn-regular w-full max-w-lg sm:max-w-2xl rounded-3xl items-center"
             id="datos-modificables"
           >
-            <div class="col-span-2">
+            <div class="md:col-span-2">
               <h2
                 class="dark:text-white text-slate-950 text-2xl font-bold text-center"
               >
@@ -363,7 +365,7 @@
             </div>
 
             <div
-              class="control-group mt-4 flex flex-col items-center justify-center"
+              class="control-group mt-4 flex flex-col items-center justify-center w-full"
             >
               <label
                 for="resistance"
@@ -377,13 +379,13 @@
                 max="100"
                 value="5"
                 step="0.1"
-                class="rounded-lg border-1 lg:w-48 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">De 1 Ω a 100 Ω</p>
             </div>
 
             <div
-              class="control-group mt-4 flex flex-col items-center justify-center"
+              class="control-group mt-4 flex flex-col items-center justify-center w-full"
             >
               <label
                 for="inductance"
@@ -397,7 +399,7 @@
                 max="1000"
                 value="300"
                 step="1"
-                class="rounded-lg border-1 lg:w-48 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
                 De 10 mH a 1000 mH
@@ -405,7 +407,7 @@
             </div>
 
             <div
-              class="control-group mt-4 flex flex-col items-center justify-center"
+              class="control-group mt-4 flex flex-col items-center justify-center w-full"
             >
               <label
                 for="capacitance"
@@ -419,7 +421,7 @@
                 max="1000"
                 value="1000"
                 step="1"
-                class="rounded-lg border-1 lg:w-48 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
                 De 1 µF a 1000 µF
@@ -427,7 +429,7 @@
             </div>
 
             <div
-              class="control-group mt-4 flex flex-col items-center justify-center"
+              class="control-group mt-4 flex flex-col items-center justify-center w-full"
             >
               <label
                 for="frequency"
@@ -441,7 +443,7 @@
                 max="500"
                 value="100"
                 step="0.01"
-                class="rounded-lg border-1 lg:w-48 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
                 De 1 rad/s a 500 rad/s
@@ -449,7 +451,7 @@
             </div>
 
             <div
-              class="control-group mt-4 flex flex-col items-center justify-center"
+              class="control-group mt-4 flex flex-col items-center justify-center w-full"
             >
               <label
                 for="voltage"
@@ -463,13 +465,13 @@
                 max="50"
                 value="15"
                 step="1"
-                class="rounded-lg border-1 lg:w-48 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">De 1 V a 50 V</p>
             </div>
 
             <div
-              class="control-group mt-4 flex flex-col items-center justify-center"
+              class="control-group mt-4 flex flex-col items-center justify-center w-full"
             >
               <label
                 for="timeScale"
@@ -483,7 +485,7 @@
                 max="600"
                 value="300"
                 step="10"
-                class="rounded-lg border-1 lg:w-48 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
                 De 10 ms a 600ms
@@ -525,16 +527,23 @@
       >
         <!-- Comienzo de caja-->
         <div
-          class="graphs-panel flex flex-row text-white text-center items-start justify-center mt-4 border-2 border-utn-regular rounded-4xl p-4"
+          class="graphs-panel mx-auto flex lg:flex-row flex-col text-white text-center items-start justify-center mt-4 border-2 border-utn-regular rounded-4xl p-4"
           id="caja_osci"
         >
           <!--Comienzo osciloscopio-->
-          <div class="flex flex-col">
+          <div
+            class="w-full overflow-x-auto flex lg:flex-row flex-col justify-center"
+          >
             <!--Inicio canvas-->
             <div
-              class="graph-container border-1 border-utn-regular rounded-2xl p-4 mt-4"
+              class="graph-container border-1 border-utn-regular rounded-2xl p-4 mt-4 relative w-full max-w-full sm:max-w-2xl"
             >
-              <canvas id="waveforms" width="750" height="400"></canvas>
+              <canvas
+                id="waveforms"
+                width="750"
+                height="400"
+                class="w-full h-auto"
+              ></canvas>
             </div>
 
             <!--Fin canvas-->
@@ -543,7 +552,7 @@
           <div id="panel-der">
             <!--Comienzo botonera osciloscopio-->
             <div
-              class="border-1 h-[200px] mt-4 ml-4 p-4 border-utn-regular rounded-2xl flex flex-col"
+              class="border-1 mt-4 ml-4 p-4 border-utn-regular rounded-2xl flex flex-col"
             >
               <label class="inline-flex items-center cursor-pointer">
                 <input
@@ -556,7 +565,7 @@
                   class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-utn-regular rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-utn-regular"
                 ></div>
                 <span
-                  class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  class="ms-3 text-sm text-nowrap font-medium text-gray-900 dark:text-gray-300"
                   >CHANNEL 1</span
                 >
               </label>
@@ -572,7 +581,7 @@
                   class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-500"
                 ></div>
                 <span
-                  class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  class="ms-3 text-sm text-nowrap font-medium text-gray-900 dark:text-gray-300"
                   >CHANNEL 2</span
                 >
               </label>
@@ -588,7 +597,7 @@
                   class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-500"
                 ></div>
                 <span
-                  class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  class="ms-3 text-sm text-nowrap font-medium text-gray-900 dark:text-gray-300"
                   >CHANNEL 3</span
                 >
               </label>
@@ -604,7 +613,7 @@
                   class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-500"
                 ></div>
                 <span
-                  class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  class="ms-3 text-sm text-nowrap font-medium text-gray-900 dark:text-gray-300"
                   >CHANNEL 4</span
                 >
               </label>
@@ -633,12 +642,12 @@
       <!-- Comienzo de tercer caja: Triangulos y formulas-->
       <div
         id="tercer-caja"
-        class="flex flex-row justify-center p-4 max-w-screen-2xl mx-auto"
+        class="flex flex-col md:flex-row justify-center p-4 max-w-screen-2xl mx-auto"
       >
         <!-- Inicio caja triangulos-->
         <div
           id="panel-izq"
-          class="diagrams-container flex flex-col items-center justify-around border-2 border-utn-regular rounded-4xl p-4 mr-4"
+          class="diagrams-container flex mb-4 flex-col items-center justify-around border-2 border-utn-regular rounded-4xl p-4 mx-4"
         >
           <div class="diagram">
             <canvas id="impedanceTriangle" width="200" height="200"></canvas>
@@ -668,7 +677,7 @@
         <!-- Fin caja triangulos-->
         <!--Inicio formulas-->
         <div
-          class="border-2 border-utn-regular dark:text-white text-center rounded-4xl grid grid-cols-3 gap-4 auto-rows-max p-8"
+          class="border-2 border-utn-regular dark:text-white text-center rounded-4xl flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-max p-8"
         >
           <h3 class="font-semibold text-xl col-span-3 mb-2">
             Fórmulas y conceptos de utilidad
