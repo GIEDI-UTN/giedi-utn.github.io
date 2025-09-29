@@ -160,43 +160,78 @@
 
         <div
           id="info"
-          class="text-center flex flex-col lg:flex-row items-center justify-center"
+          class="text-center flex flex-col items-center justify-center"
         >
-          <!--Inicio imagen circuito RLC -->
           <div
-            class="content-center justify-center items-center flex flex-col mt-8"
-            id="circuito"
+            id="info2"
+            class="text-center flex flex-col lg:flex-row items-center justify-center max-w-screen-lg"
           >
-            <img
-              src="../../src/media/RLC_light.png"
-              class="h-md w-md ml-4 flex dark:hidden justify-center"
-              alt="Circuito RLC estándar"
-            />
-            <img
-              src="../../src/media/RLC_dark.png"
-              class="h-sm w-sm hidden justify-self-center dark:flex mr-8"
-              alt="Circuito RLC estándar"
-            />
+            <!--Inicio imagen circuito RLC -->
+            <div
+              class="content-center justify-center items-center flex flex-col mt-8"
+              id="circuito"
+            >
+              <img
+                src="../../src/media/RLC_light.png"
+                class="h-sm w-sm flex dark:hidden justify-center"
+                alt="Circuito RLC estándar"
+              />
+              <img
+                src="../../src/media/RLC_dark.png"
+                class="h-sm w-sm hidden justify-self-center dark:flex"
+                alt="Circuito RLC estándar"
+              />
+            </div>
+            <!--Fin imagen RLC-->
+
+            <div class="flex-col ml-2 max-w-xl mt-4" id="info-instrucciones">
+              <p class="dark:text-white text-slate-950 text-3xl font-bold">
+                Instrucciones:
+              </p>
+
+              <p class="dark:text-white text-slate-950 text-lg mt-2">
+                Introduzca los parámetros deseados y haga click en
+                <strong class="text-utn-regular">"Configurar circuito"</strong>.
+                Para cambiar los valores, deberá clickear nuevamente en
+                "Configurar circuito" con los nuevos valores. <br /><br />
+                Para obtener los valores de resonancia sin modificar los
+                parámetros, haga click en
+                <strong class="text-utn-regular">"Obtener resonancia"</strong>.
+              </p>
+            </div>
           </div>
-          <!--Fin imagen RLC-->
+          <div
+            id="info3"
+            class="text-center flex flex-col lg:flex-row items-center justify-center max-w-screen-lg"
+          >
+            <!--Inicio imagen bornera RLC -->
+            <div
+              class="content-center justify-center items-center flex flex-col mt-4"
+              id="pinzas_img"
+            >
+              <img
+                src="../../src/media/pinzas_light.png"
+                class="h-sm w-sm flex dark:hidden justify-center"
+                alt="Pinzas de osciloscopio colocadas en paralelo a una resistencia"
+              />
+              <img
+                src="../../src/media/pinzas_dark.png"
+                class="h-sm w-sm hidden justify-self-center dark:flex"
+                alt="Pinzas de osciloscopio colocadas en paralelo a una resistencia"
+              />
+            </div>
+            <!--Fin imagen bornera RLC-->
 
-          <div class="flex-col ml-2 max-w-xl" id="info-instrucciones">
-            <p class="dark:text-white text-slate-950 text-3xl font-bold">
-              Instrucciones:
-            </p>
-
-            <p class="dark:text-white text-slate-950 text-lg mt-2">
-              Introduzca los parámetros deseados y haga click en
-              <strong class="text-utn-regular">"Configurar circuito"</strong>.
-              Para cambiar los valores, deberá clickear nuevamente en
-              "Configurar circuito" con los nuevos valores. <br /><br />
-              Para obtener los valores de resonancia sin modificar los
-              parámetros, haga click en
-              <strong class="text-utn-regular">"Obtener resonancia"</strong>.
-              Haga click en
-              <strong class="text-utn-regular">"Encender osciloscopio"</strong>
-              para visualizar el diagrama fasorial.
-            </p>
+            <div class="flex-col ml-2 max-w-xl lg:pl-8" id="info-3">
+              <p class="dark:text-white text-slate-950 text-lg">
+                Haga click en
+                <strong class="text-utn-regular"
+                  >"Encender osciloscopio"</strong
+                >
+                para visualizar el diagrama fasorial. Puede visualizar las
+                tensiones de cada componente al seleccionar los canales.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -601,22 +636,6 @@
                   >CHANNEL 3</span
                 >
               </label>
-
-              <label class="inline-flex items-center cursor-pointer mt-4">
-                <input
-                  type="checkbox"
-                  name="chanel4"
-                  id="chanel4"
-                  class="sr-only peer"
-                />
-                <div
-                  class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-500"
-                ></div>
-                <span
-                  class="ms-3 text-sm text-nowrap font-medium text-gray-900 dark:text-gray-300"
-                  >CHANNEL 4</span
-                >
-              </label>
             </div>
             <div
               id="restart"
@@ -631,7 +650,11 @@
                   class="cursor-pointer mt-4"
                 />
               </a>
-              <p class="text-center font-semibold text-xl mt-2">Reiniciar</p>
+              <p
+                class="dark:text-white text-slate-950 text-center font-semibold text-xl mt-2"
+              >
+                Reiniciar
+              </p>
             </div>
             <!--Fin de botonera osciloscopio-->
           </div>
