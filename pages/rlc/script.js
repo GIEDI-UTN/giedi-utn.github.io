@@ -767,9 +767,8 @@ class RLCSimulator {
     const ch1 = document.getElementById("chanel1").checked;
     const ch2 = document.getElementById("chanel2").checked;
     const ch3 = document.getElementById("chanel3").checked;
-    const ch4 = document.getElementById("chanel4").checked;
 
-    const { omega, Ipeak, VR, VL, VC, V0, phi } = values;
+    const { omega, Ipeak, VR, VL, VC, V0 } = values;
 
     // Configuración de la gráfica
     const width = canvas.width;
@@ -830,20 +829,12 @@ class RLCSimulator {
 
     // Dibujar las ondas
     if (ch1) {
-      drawWave(
-        amplitude * (Ipeak / Math.max(Ipeak, V0 / 50)),
-        0,
-        "#3498db",
-        "i(t)"
-      );
-    }
-    if (ch2) {
       drawWave(amplitude * (VR / V0), 0, "#e74c3c", "vR(t)");
     }
-    if (ch3) {
+    if (ch2) {
       drawWave(amplitude * (VL / V0), Math.PI / 2, "#27ae60", "vL(t)");
     }
-    if (ch4) {
+    if (ch3) {
       drawWave(amplitude * (VC / V0), -Math.PI / 2, "#f39c12", "vC(t)");
     }
 
