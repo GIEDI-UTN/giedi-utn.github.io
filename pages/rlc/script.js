@@ -884,13 +884,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const datosCalculados = document.getElementById("datos-calculados");
   const tercerCaja = document.getElementById("tercer-caja");
   const resonanceBtn = document.getElementById("resonanceBtn");
-  const resonanciaSi = document.getElementById("resonancia_si");
   const osciOn = document.getElementById("osci_on");
 
   // Ocultar todas las cajas a menos que se opriman los botones
-  cajaOsci.classList.add("hidden");
-  datosCalculados.classList.add("hidden");
-  tercerCaja.classList.add("hidden");
+  cajaOsci.classList.add("!hidden");
+  datosCalculados.classList.add("!hidden");
+  tercerCaja.classList.add("!hidden");
 
   // Inicialmente no hay circuito configurado
   let resonanciaSeteada = false;
@@ -899,7 +898,7 @@ document.addEventListener("DOMContentLoaded", () => {
   resonanceBtn.addEventListener("click", function () {
     let rango_valido = simulador.validarRangos();
     if (rango_valido) {
-      datosCalculados.classList.remove("hidden");
+      datosCalculados.classList.remove("!hidden");
       resonanciaSeteada = true;
     } else {
       alert("Por favor, ingrese valores dentro de los rangos permitidos.");
@@ -908,8 +907,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   osciOn.addEventListener("click", function () {
     if (resonanciaSeteada) {
-      cajaOsci.classList.remove("hidden");
-      tercerCaja.classList.remove("hidden");
+      cajaOsci.classList.remove("!hidden");
+      tercerCaja.classList.remove("!hidden");
     } else {
       alert("Por favor, configure el circuito primero");
     }
