@@ -250,8 +250,8 @@
               <div
                 class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
-                <span class="label">Frecuencia (f):</span>
-                <span id="freq-value">15.92 Hz</span>
+                <span class="label">Frecuencia angular (ω):</span>
+                <span id="freq-value">15.92 rad/s</span>
               </div>
 
               <div
@@ -469,19 +469,19 @@
               <label
                 for="frequency"
                 class="dark:text-white text-slate-950 text-lg"
-                >Frecuencia angular (ω) [rad/s]:</label
+                >Frecuencia [Hz]:</label
               >
               <input
                 type="number"
                 id="frequency"
                 min="1"
                 max="500"
-                value="100"
+                value="20"
                 step="0.01"
                 class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
-                De 1 rad/s a 500 rad/s
+                De 1 Hz a 500 Hz
               </p>
             </div>
 
@@ -719,7 +719,7 @@
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
-              $$f = \frac {\omega}{2\pi}$$
+              $$\omega = {2\pi}.f$$
             </p>
             <p
               class="border-1 border-utn-dark dark:border-utn-light rounded-xl mb-2"

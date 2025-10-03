@@ -120,15 +120,19 @@ class RLCSimulator {
     const R = parseFloat(this.resistanceSlider.value);
     const L = parseFloat(this.inductanceSlider.value) / 1000; // mH -> H
     const C = parseFloat(this.capacitanceSlider.value) / 1e6; // µF -> F
-    const omega = parseFloat(this.frequencySlider.value);
+    const f = parseFloat(this.frequencySlider.value);
     const V0 = parseFloat(this.voltageSlider.value);
     const timeScale = parseFloat(this.timeScaleSlider.value) / 1000; // ms -> s
 
-    return { R, L, C, omega, V0, timeScale };
+    return { R, L, C, f, V0, timeScale };
   }
 
   calculateValues() {
-    const { R, L, C, omega, V0 } = this.getCircuitValues();
+    const { R, L, C, f, V0 } = this.getCircuitValues();
+
+    // Frecuencia y período
+    const T = f === 0 ? Infinity : 1 / f;
+    const omega = 2 * Math.PI * f;
 
     // Reactancias
     const XL = omega * L;
@@ -139,10 +143,6 @@ class RLCSimulator {
 
     // Ángulo de fase
     const phi = Math.atan((XL - XC) / R);
-
-    // Frecuencia y período
-    const f = omega / (2 * Math.PI);
-    const T = f === 0 ? Infinity : 1 / f;
 
     // Corrientes
     const Irms = Z === 0 ? 0 : V0 / Z;
@@ -193,7 +193,7 @@ class RLCSimulator {
     const values = this.calculateValues();
 
     // Actualizar valores mostrados
-    this.valueElements.freq.textContent = values.f.toFixed(2) + " Hz";
+    this.valueElements.freq.textContent = values.omega.toFixed(2) + " rad/s";
     this.valueElements.period.textContent = values.T.toFixed(2) + " s";
 
     this.valueElements.xl.textContent = values.XL.toFixed(2) + " Ω";
