@@ -9,7 +9,7 @@
 
 ## Objetivo
 
-_Finalizar el simulador RLC. Insertar con éxito Google Analytics._
+_Implementar el simulador RLC. Obtener una versión funcional. Insertar con éxito Google Analytics._
 
 ---
 
@@ -126,7 +126,11 @@ Luego, llama al método getContext con argumento '2d' y obtiene el CanvasRenderi
 
 ## Entrega parcial Septiembre:
 
-Por completar
+Simulador funcional con ciertos ajustes pendientes de responsive.
+
+## Defectos conocidos
+
+Problemas de resolución para tablets y tamaños intermedios entre PC y tablet. Solución: Sobreescribir los valores por defecto de lg y xl de Tailwind.
 
 ## Tecnologías utilizadas
 
