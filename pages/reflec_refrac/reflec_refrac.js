@@ -72,7 +72,7 @@ const grid10mmBtn = document.getElementById("grid-10mm");
 
 const resetBtn = document.getElementById("reset-simulation");
 const addDataBtn = document.getElementById("add-data");
-const exportDataBtn = document.getElementById("export-data");
+const exportar_dataBtn = document.getElementById("export-data");
 
 
 // Inicializar la simulación
@@ -82,11 +82,11 @@ function initSimulation() {
   window.addEventListener("resize", resizeCanvas);
 
   // Seleccionar material inicial y medio exterior
-  updateCurrentMaterial();
-  updateCurrentExteriorMedium();
+  actualizar_material();
+  actualizar_medio_ext();
 
   // Iniciar el bucle de renderizado
-  startRenderLoop();
+  iniciar_render_loop();
 
   // Añadir eventos para controles de simulación
   setupEventListeners();
@@ -98,7 +98,7 @@ function resizeCanvas() {
   canvas.height = simulationView.clientHeight;
 }
 
-function updateCurrentMaterial() {
+function actualizar_material() {
   // Si se selecciona desconocido, generar semilla rand para elegir del array
   if (simulation.material === "unknown") {
     // Excluir "unknown" de las opciones
@@ -115,18 +115,18 @@ function updateCurrentMaterial() {
   }
 }
 
-function updateCurrentExteriorMedium() {
+function actualizar_medio_ext() {
   simulation.currentExteriorMedium =
     EXTERIOR_MEDIUMS[simulation.exteriorMedium];
 }
 
-function startRenderLoop() {
+function iniciar_render_loop() {
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
   }
 
   const render = () => {
-    drawSimulation();
+    dibujar_sim();
     animationFrameId = requestAnimationFrame(render);
   };
 
@@ -149,44 +149,44 @@ function setupEventListeners() {
 
   materialSelect.addEventListener("change", function () {
     simulation.material = this.value;
-    updateCurrentMaterial();
+    actualizar_material();
   });
 
   exteriorSelect.addEventListener("change", function () {
     simulation.exteriorMedium = this.value;
-    updateCurrentExteriorMedium();
+    actualizar_medio_ext();
   });
 
   // Botones de la grilla
   grid1mmBtn.addEventListener("click", function () {
-    setGridSpacing(1);
+    set_grilla(1);
   });
 
   grid5mmBtn.addEventListener("click", function () {
-    setGridSpacing(5);
+    set_grilla(5);
   });
 
   grid10mmBtn.addEventListener("click", function () {
-    setGridSpacing(10);
+    set_grilla(10);
   });
 
 
   resetBtn.addEventListener("click", function () {
-    resetSimulation();
+    reset_sim();
   });
 
   addDataBtn.addEventListener("click", function () {
-    addMeasurement();
+    agregar_medida();
   });
 
 
-  exportDataBtn.addEventListener("click", function () {
-    exportData();
+  exportar_dataBtn.addEventListener("click", function () {
+    exportar_data();
   });
 
 }
 
-function setGridSpacing(spacing) {
+function set_grilla(spacing) {
   simulation.gridSpacing = spacing;
 
   // Actualizar clases de los botones
@@ -199,7 +199,7 @@ function setGridSpacing(spacing) {
   else if (spacing === 10) grid10mmBtn.classList.add("active");
 }
 
-function resetSimulation() {
+function reset_sim() {
   simulation = {
     material: "glass",
     exteriorMedium: "air",
@@ -225,7 +225,7 @@ function resetSimulation() {
   materialSelect.value = simulation.material;
   exteriorSelect.value = simulation.exteriorMedium;
 
-  setGridSpacing(1);
+  set_grilla(1);
 
   // Limpiar tabla
   dataTable.innerHTML = "";
@@ -234,7 +234,7 @@ function resetSimulation() {
 
 }
 
-function drawSimulation() {
+function dibujar_sim() {
   const width = canvas.width;
   const height = canvas.height;
 
@@ -254,25 +254,25 @@ function drawSimulation() {
   ctx.fillRect(0, 0, width, height);
 
   // Calcular escala y origen para la visualización
-  const desiredXRange = 160; // -80 to 80 = 160 total width
-  const scale = width / desiredXRange; // Adjust scale to fit desired range
+  const desiredXRange = 160; 
+  const scale = width / desiredXRange; 
   const originX = width / 2;
-  const originY = height * 0.7; // Punto de origen más abajo para ver el láser mejor
+  const originY = height * 0.7; 
 
   // Dibujar grilla
-  drawGrid(originX, originY, scale);
+  dibujar_grilla(originX, originY, scale);
 
   // Dibujar placa de material
-  drawMaterialPlate(originX, originY, scale);
+  dibujar_placa(originX, originY, scale);
 
   // Dibujar láser
-  drawLaser(originX, originY, scale);
+  dibujar_laser(originX, originY, scale);
 
   // Dibujar medidas y dimensiones
-  drawMeasurements(originX, originY, scale);
+  dibujar_medidas(originX, originY, scale);
 }
 
-function drawGrid(originX, originY, scale) {
+function dibujar_grilla(originX, originY, scale) {
   const width = canvas.width;
   const height = canvas.height;
 
@@ -411,7 +411,7 @@ function drawGrid(originX, originY, scale) {
   ctx.fillText("0", originX - 20, originY + 20);
 }
 
-function drawMaterialPlate(originX, originY, scale) {
+function dibujar_placa(originX, originY, scale) {
   // Parámetros de la placa
   const plateWidth = 100 * scale; // Ancho fijo de 10 cm
   const plateThickness = simulation.realThickness * scale; // Convertir mm a escala
@@ -478,7 +478,7 @@ function drawMaterialPlate(originX, originY, scale) {
   ctx.fillText(materialName, originX - 160, plateTop + 45);
 }
 
-function drawLaser(originX, originY, scale) {
+function dibujar_laser(originX, originY, scale) {
   // Punto de incidencia del láser
   const incidenceX = originX;
   const incidenceY = originY;
@@ -547,7 +547,7 @@ function drawLaser(originX, originY, scale) {
   const exitY = incidenceY + plateThickness; // Punto de salida en la parte inferior de la placa
 
   // Rayo dentro del material
-  ctx.strokeStyle = adjustColorIntensity(laserColor, 0.7);
+  ctx.strokeStyle = ajustar_intensidad_color(laserColor, 0.7);
   ctx.lineWidth = 3;
 
   ctx.beginPath();
@@ -572,13 +572,13 @@ function drawLaser(originX, originY, scale) {
   ctx.stroke();
 
   // Dibujar ángulos
-  drawAngle(
+  dibujar_angulo(
     incidenceX, incidenceY,
     Math.PI+angleRad,
     -Math.PI/2,
     30,"α","#52bfa0"
   );
-  drawAngle(incidenceX, incidenceY, 
+  dibujar_angulo(incidenceX, incidenceY, 
     -Math.PI / 2, 
     -reflectionAngle, 
     30, "β", "#e57f71");
@@ -591,7 +591,7 @@ function drawLaser(originX, originY, scale) {
   };
 }
 
-function drawAngle(x, y, angle1, angle2, radius, label, color) {
+function dibujar_angulo(x, y, angle1, angle2, radius, label, color) {
   ctx.strokeStyle = color;
   ctx.fillStyle = color;
   ctx.lineWidth = 1.5;
@@ -603,7 +603,7 @@ function drawAngle(x, y, angle1, angle2, radius, label, color) {
 
 }
 
-function drawMeasurements(originX, originY, scale) {
+function dibujar_medidas(originX, originY, scale) {
   const plateThickness = simulation.realThickness * scale;
   const plateWidth = 100 * scale;
   const plateLeft = originX - plateWidth / 2;
@@ -625,8 +625,8 @@ function drawMeasurements(originX, originY, scale) {
   ctx.stroke();
 
   // Flechas
-  drawArrow(dimX, originY, dimX, plateBottom);
-  drawArrow(dimX, plateBottom, dimX, originY);
+  dibujar_flecha(dimX, originY, dimX, plateBottom);
+  dibujar_flecha(dimX, plateBottom, dimX, originY);
 
   // Etiqueta de espesor
   ctx.font = "12px Arial";
@@ -636,60 +636,9 @@ function drawMeasurements(originX, originY, scale) {
     dimX + 30,
     originY + plateThickness / 2
   );
-
-  // Información del láser
-  ctx.fillStyle = "#f19300";
-  ctx.textAlign = "left";
-  ctx.font = "14px Arial";
-
-  const infoX = 20;
-  const infoY = 15;
-  const lineHeight = 20;
-
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    ctx.fillStyle = "white";
-  } else {
-    ctx.fillStyle = "#020617";
-  }
-  ctx.fillText(
-    `Ángulo de incidencia: ${simulation.incidenceAngle}°`,
-    infoX,
-    infoY + lineHeight
-  );
-
-  if (simulation.material !== "unknown") {
-    ctx.fillText(
-      `Índice de refracción: ${simulation.currentMaterial.refractiveIndex.toFixed(
-        2
-      )}`,
-      infoX,
-      infoY + lineHeight * 2
-    );
-  }
-
-  // Mostrar ángulos en la interfaz
-  ctx.textAlign = "right";
-  const anglesX = canvas.width - 20;
-
-  ctx.fillStyle = "#52bfa0";
-  ctx.fillText(
-    `α (incidencia): ${simulation.calculatedAngles.incidence.toFixed(1)}°`,
-    anglesX,
-    infoY+20
-  );
-
-  ctx.fillStyle = "#e57f71";
-  ctx.fillText(
-    `β (reflexión): ${simulation.calculatedAngles.reflection.toFixed(1)}°`,
-    anglesX,
-    infoY + lineHeight + 15
-  );
 }
 
-function drawArrow(fromX, fromY, toX, toY) {
+function dibujar_flecha(fromX, fromY, toX, toY) {
   const headLength = 10;
   const angle = Math.atan2(toY - fromY, toX - fromX);
 
@@ -741,7 +690,7 @@ function boxmuller(real, cant_error) {
   return z0 * cant_error + real;
 }
 
-function addMeasurement() {
+function agregar_medida() {
   const userRefractionAngle = prompt(
     "Ingrese el ángulo de refracción medido usando '.' para decimales",
     ""
@@ -824,7 +773,7 @@ function importarJSON(event) {
           alert("El escenario subido no corresponde a este simulador.")
         }
         else{
-          setearEscenario(data);
+          set_escenario(data);
         }
 
       } catch (err) {
@@ -835,7 +784,7 @@ function importarJSON(event) {
     reader.readAsText(file);
   }
 
-function setearEscenario(data) {
+function set_escenario(data) {
   hayEscenario = true;
   // Cargar los valores del escenario como array en cada variable de la simulación actual
   simulation.error = parseFloat(data[1]);
@@ -852,8 +801,8 @@ function setearEscenario(data) {
   materialSelect.value = simulation.material;
   exteriorSelect.value = simulation.exteriorMedium;
 
-  updateCurrentMaterial();
-  updateCurrentExteriorMedium();
+  actualizar_material();
+  actualizar_medio_ext();
   inhabInput();
 }
 
@@ -868,7 +817,7 @@ function inhabInput() {
   exitoEsc.textContent = 'Escenario cargado con éxito.';
 }
 
-function exportData() {
+function exportar_data() {
   if (simulation.measurements.length === 0) {
     alert("Aún no hay datos para exportar");
     return;
@@ -909,7 +858,7 @@ function exportData() {
   URL.revokeObjectURL(url);
 }
 
-function adjustColorIntensity(rgbColor, factor) {
+function ajustar_intensidad_color(rgbColor, factor) {
   // Extraer valores RGB
   const rgb = rgbColor.match(/\d+/g).map(Number);
 
