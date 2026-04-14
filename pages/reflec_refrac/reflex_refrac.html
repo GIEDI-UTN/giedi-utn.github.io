@@ -151,7 +151,7 @@
       <!--COMIENZO DE INTERFACE SIMULADOR-->      
       <div class="simulation-container flex flex-col lg:flex-row content-around gap-3 mt-12">
             <div class="simulation-view w-screen h-[500px] lg:w-[900px] lg:h-[700px]">
-              <canvas id="simulation-canvas"></canvas>
+              <canvas id="simulacion-canvas"></canvas>
             </div>
 
             <div id="contenedor-datos" class="controls-panel ml-4 mr-4 border-2 border-utn-regular pb-4 pr-7 pl-7 pt-4 rounded-4xl">
@@ -163,39 +163,37 @@
                     <div class="control-group mb-4">
                         <label for="material" class="text-lg font-semibold text-center dark:text-white">Selecciona el material</label>
                         <select id="material" class="text-black border-2 w-[284px] border-utn-regular rounded-full pl-2 mt-1 dark:text-white dark:bg-slate-950">
-                            <option value="glass">Vidrio</option>
-                            <option value="acrylic">Acrílico</option>
-                            <option value="zirconium">Circonio</option>
-                            <option value="quartz">Cuarzo</option>
-                            <option value="diamond">Diamante</option>
-                            <option value="ice">Hielo</option>
+                            <option value="vidrio">Vidrio</option>
+                            <option value="acrilico">Acrílico</option>
+                            <option value="circonio">Circonio</option>
+                            <option value="cuarzo">Cuarzo</option>
+                            <option value="diamante">Diamante</option>
+                            <option value="hielo">Hielo</option>
                             <option value="unknown">Material desconocido</option>
-                            <!--<option value="custom">Personalizado</option>-->
                         </select>
                     </div>
 
                     <!--espesor material-->
                     <div class="control-group flex flex-col mb-4 text-lg dark:text-white">
-                        <label for="thickness" class="text-lg font-semibold">Espesor [mm]</label>
-                        <input type="range" id="thickness" min="1" max="20" value="5" step="1"
+                        <label for="ancho_placa" class="text-lg font-semibold">Espesor [mm]</label>
+                        <input type="range" id="ancho_placa_value" min="1" max="20" value="5" step="1"
                         class="accent-utn-regular rounded-full text-lg border-none bg-utn-light dark:bg-utn-dark cursor-pointer">
-                        <span id="thickness-value" class="text-utn-regular appearance-none pt-0 text-center font-semibold text-md">5 mm</span>
                     </div>
 
                     <!--desplegable selección de medio-->
                     <div class="control-group mb-4">
                         <label for="exterior" class="text-lg font-semibold dark:text-white">Selecciona el medio</label>
                         <select id="exterior" class="text-black border-2 w-[284px] border-utn-regular rounded-full pl-3 mt-1 dark:bg-slate-950 dark:text-white">
-                            <option value="air">Aire</option>
-                            <option value="acetaldehyde">Acetaldeído</option>
-                            <option value="water">Agua</option>
-                            <option value="benzene">Benceno</option>
-                            <option value="glycerin">Glicerina</option>
+                            <option value="aire">Aire</option>
+                            <option value="acetaldeido">Acetaldeído</option>
+                            <option value="agua">Agua</option>
+                            <option value="benceno">Benceno</option>
+                            <option value="glicerina">Glicerina</option>
                             <option value="heptanol">Heptanol (25°C)</option>
-                            <option value="methanol">Metanol</option>
+                            <option value="metanol">Metanol</option>
                             <option value="sugarSolution30">Solución de azúcar 30%</option>
                             <option value="sugarSolution80">Solución de azúcar 80%</option>
-                            <option value="vacuum">Vacío</option>
+                            <option value="vacio">Vacío</option>
                         </select>
                       </div>
                 </div>
@@ -204,8 +202,7 @@
                     
                     <div class="control-group flex flex-col mb-4 dark:text-white">
                         <label for="angle">Ángulo de incidencia</label>
-                        <input type="range" id="angle" min="1" max="89" value="30" step="1" class="accent-utn-regular">
-                        <span id="angle-value" class="text-utn-regular text-md pt-0 text-center">30°</span>
+                        <input type="range" id="angle_value" min="1" max="89" value="30" step="1" class="accent-utn-regular">
                     </div>
                 </div>
                 
@@ -226,7 +223,7 @@
                 
                 <div class="simulation-options">
                     <div class="button-group mt-8 flex flex-col justify-center">
-                        <button id="reset-simulation" class="dark:bg-utn-regular dark:text-slate-950 text-2xl 
+                        <button id="boton_reset" class="dark:bg-utn-regular dark:text-slate-950 text-2xl 
                         hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular
                         dark:hover:bg-slate-950 dark:hover:text-utn-regular border border-utn-regular
                         font-semibold px-3 py-1 rounded-2xl cursor-pointer">Reiniciar simulación</button>
@@ -279,6 +276,7 @@
                 <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Ángulo Incidencia</th>
                 <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Ángulo Refracción</th>
                 <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">IR Experimental</th>
+                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Eliminar</th>
               </tr>
             </thead>
             <tbody>
@@ -393,7 +391,6 @@
     </footer>
     <!--FIN FOOTER-->
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="./reflec_refrac.js"></script>
   <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 
