@@ -868,8 +868,8 @@ function inhabInput() {
 }
 
 function exportar_txt() {
-  if (simulacion.medidas.length === 0) {
-    alert("Aún no hay datos para exportar");
+  if (simulacion.medidas.length <5) {
+    alert("Necesitas al menos 5 mediciones para poder exportar los datos");
     return;
   }
 
@@ -890,8 +890,8 @@ function exportar_txt() {
 }
 
 function exportar_csv() {
-  if (simulacion.medidas.length === 0) {
-    alert("Aún no hay datos para exportar");
+  if (simulacion.medidas.length <5) {
+    alert("Necesitas al menos 5 mediciones para poder exportar los datos");
     return;
   }
 
