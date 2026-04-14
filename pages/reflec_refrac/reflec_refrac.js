@@ -66,8 +66,8 @@ const grid10mmBtn = document.getElementById("grid-10mm");
 
 const boton_reset = document.getElementById("boton_reset");
 const agregar_data_btn = document.getElementById("add-data");
-const exportar_btn = document.getElementById("export-data");
-
+const exportar_txt_btn = document.getElementById("export-txt");
+const exportar_csv_btn = document.getElementById("export-csv");
 
 // Inicializar la simulación
 function iniciar_simulacion() {
@@ -172,8 +172,12 @@ function setupEventListeners() {
   });
 
 
-  exportar_btn.addEventListener("click", function () {
-    exportar_data();
+  exportar_txt_btn.addEventListener("click", function () {
+    exportar_txt();
+  });
+
+  exportar_csv_btn.addEventListener("click", function () {
+    exportar_csv();
   });
 
 }
@@ -863,7 +867,7 @@ function inhabInput() {
   exitoEsc.textContent = 'Escenario cargado con éxito.';
 }
 
-function exportar_data() {
+function exportar_txt() {
   if (simulacion.medidas.length === 0) {
     alert("Aún no hay datos para exportar");
     return;
@@ -872,34 +876,40 @@ function exportar_data() {
   let text = "DATOS DE SIMULACIÓN DE REFRACCIÓN Y REFLEXIÓN\n";
   text += "------------------------------------------------\n\n";
   text += `Fecha: ${new Date().toLocaleDateString()}\n`;
-  text += "Grupo de Investigación GIEDI\n";
-  text += "Facultad Regional Santa Fe, Universidad Tecnológica Nacional\n\n";
-
-  text += "PARÁMETROS DE SIMULACIÓN:\n";
-  text += `Material: ${
-    simulacion.material === "unknown"
-      ? "Desconocido"
-      : simulacion.material_actual.name
-  }\n`;
-  text += `Espesor: ${simulacion.ancho_placa} mm\n`;
-  text += `Medio Exterior: ${simulacion.medio_actual.name}\n`;
+  text += "Grupo de Investigación GIEDI\n\n";
 
   text += "MEDICIONES:\n";
-  text +=
-    "N°\tEspesor(mm)\tMaterial\tIR\tMedio ext.\tÁng. inc.\tÁng. ref.\tIR Exp.\n";
-  text +=
-    "---------------------------------------------------------------------------------------------------------------\n";
+  text += "N°\tEspesor(mm)\tMaterial\tIR\tMedio ext.\tÁng. inc.\tÁng. ref.\tIR Exp.\n";
+  text += "---------------------------------------------------------------------------------------------------------------\n";
 
   simulacion.medidas.forEach((m) => {
-    text += `${m.number}\t\t${m.ancho_placa}\t${m.material}\t\t${m.indice_refrac}\t${m.medio_exterior}\t\t${m.angulo_incidencia}\t\t${m.angulo_refraccion}\t\t${m.experimentalRI}\n`;
+    text += `${m.number}\t${m.ancho_placa}\t\t${m.material}\t\t${m.indice_refrac}\t${m.medio_exterior}\t\t${m.angulo_incidencia}\t\t${m.angulo_refraccion}\t\t${m.experimentalRI}\n`;
   });
 
-  // Crear y descargar archivo
-  const blob = new Blob([text], { type: "text/plain" });
+  descargar_archivo(text, "datos_sim_optica.txt", "text/plain");
+}
+
+function exportar_csv() {
+  if (simulacion.medidas.length === 0) {
+    alert("Aún no hay datos para exportar");
+    return;
+  }
+
+  const headers = ["N°", "Espesor (mm)", "Material", "IR", "Medio Ext.", "Áng. Inc.", "Áng. Ref.", "IR Exp."];
+  const rows = simulacion.medidas.map(m =>
+    [m.number, m.ancho_placa, m.material, m.indice_refrac, m.medio_exterior, m.angulo_incidencia, m.angulo_refraccion, m.experimentalRI].join(",")
+  );
+
+  const csvContent = [headers.join(","), ...rows].join("\n");
+  descargar_archivo(csvContent, "datos_sim_optica.csv", "text/csv;charset=utf-8;");
+}
+
+function descargar_archivo(contenido, nombre, tipo) {
+  const blob = new Blob([contenido], { type: tipo });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "datos_sim_optica.txt";
+  a.download = nombre;
   a.click();
   URL.revokeObjectURL(url);
 }
