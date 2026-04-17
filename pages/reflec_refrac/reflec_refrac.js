@@ -71,18 +71,14 @@ const exportar_csv_btn = document.getElementById("export-csv");
 
 // simulación: inicio, render, redimensionado, reinicio
 function iniciar_simulacion() {
-  // Establecer el tamaño del canvas al tamaño del contenedor
   redim_canvas();
   window.addEventListener("resize", redim_canvas);
 
-  // Seleccionar material inicial y medio exterior
   actualizar_material();
   actualizar_medio_ext();
 
-  // Iniciar el bucle de renderizado
+  // iniciar el bucle de renderizado
   iniciar_render_loop();
-
-  // Añadir eventos para controles de simulación
   setupEventListeners();
 }
 
@@ -128,10 +124,9 @@ function reset_sim() {
   MATERIALESSelect.value = simulacion.material;
   exteriorSelect.value = simulacion.medio_exterior;
 
-  // esto se usa para restablecer el estado visual de los botones de grilla a 10mm
   set_grilla(10);
 
-  // Limpiar tabla
+  // limpiar tabla
   datos_tabla.innerHTML = "";
   const exitoEsc = document.getElementById("exito-esc");
   if (exitoEsc) {
@@ -145,7 +140,6 @@ function reset_sim() {
 function set_grilla(spacing) {
   simulacion.espacio_grilla = spacing;
 
-  // Actualizar clases de los botones
   [grid1mmBtn, grid5mmBtn, grid10mmBtn].forEach((btn) => {
     btn.classList.remove("active");
   });
@@ -159,10 +153,10 @@ function dibujar_sim() {
   const width = canvas.width;
   const height = canvas.height;
 
-  // Limpiar canvas
+  // limpiar canvas
   ctx.clearRect(0, 0, width, height);
 
-  // Dibujar fondo
+  // dibujare el fondo
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -174,22 +168,15 @@ function dibujar_sim() {
 
   ctx.fillRect(0, 0, width, height);
 
-  // Calcular escala y origen para la visualización
+  // calcular escala y origen para la visualización
   const desiredXRange = 160;
   const escala = width / desiredXRange;
   const origen_x = width / 2;
   const origen_y = height * 0.5;
 
-  // Dibujar grilla
   dibujar_grilla(origen_x, origen_y, escala);
-
-  // Dibujar placa de material
   dibujar_placa(origen_x, origen_y, escala);
-
-  // Dibujar láser
   dibujar_laser(origen_x, origen_y, escala);
-
-  // Dibujar medidas y dimensiones
   dibujar_medidas(origen_x, origen_y, escala);
 }
 
@@ -200,7 +187,7 @@ function dibujar_grilla(origen_x, origen_y, escala) {
   const offsetX = simulacion.gridOffset.x * escala;
   const offsetY = simulacion.gridOffset.y * escala;
 
-  // Dibujar líneas de la grilla
+  // líneas de la grilla
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -212,7 +199,7 @@ function dibujar_grilla(origen_x, origen_y, escala) {
 
   ctx.lineWidth = 0.5;
 
-  // Líneas verticales
+  // verticales
   for (let x = offsetX; x < width; x += tam_paso) {
     ctx.beginPath();
     ctx.moveTo(origen_x + x, 0);
@@ -227,7 +214,7 @@ function dibujar_grilla(origen_x, origen_y, escala) {
     ctx.stroke();
   }
 
-  // Líneas horizontales
+  // horizontales
   for (let y = offsetY; y < height; y += tam_paso) {
     ctx.beginPath();
     ctx.moveTo(0, origen_y + y);
@@ -242,7 +229,7 @@ function dibujar_grilla(origen_x, origen_y, escala) {
     ctx.stroke();
   }
 
-  // Dibujar ejes X e Y
+  // ejes x-y
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -254,20 +241,19 @@ function dibujar_grilla(origen_x, origen_y, escala) {
 
   ctx.lineWidth = 1.5;
 
-  // Eje X
+  // x
   ctx.beginPath();
   ctx.moveTo(0, origen_y);
   ctx.lineTo(width, origen_y);
   ctx.stroke();
 
-  // Eje Y
+  // y
   ctx.beginPath();
   ctx.moveTo(origen_x, 0);
   ctx.lineTo(origen_x, height);
   ctx.stroke();
 
-  // Dibujar marcas de escala y etiquetas
-
+  // marcas de escala y etiquetas
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -280,9 +266,9 @@ function dibujar_grilla(origen_x, origen_y, escala) {
   ctx.font = "12px Arial";
   ctx.textAlign = "center";
 
-  // Marcas en X
+  // en x
   for (let x = 0; x < width / 2; x += tam_paso * 5) {
-    // Marca positiva
+    // x positiva
     ctx.beginPath();
     ctx.moveTo(origen_x + x, origen_y - 5);
     ctx.lineTo(origen_x + x, origen_y + 5);
@@ -292,7 +278,7 @@ function dibujar_grilla(origen_x, origen_y, escala) {
       ctx.fillText(`${Math.round(x / escala)}`, origen_x + x, origen_y + 20);
     }
 
-    // Marca negativa
+    // x negativa
     if (x > 0) {
       ctx.beginPath();
       ctx.moveTo(origen_x - x, origen_y - 5);
@@ -301,57 +287,55 @@ function dibujar_grilla(origen_x, origen_y, escala) {
       ctx.fillText(`-${Math.round(x / escala)}`, origen_x - x, origen_y + 20);
     }
   }
-
+  // en y
   for (let y = 0; y < height / 2; y += tam_paso * 5) {
-    // Marca física hacia abajo
+    // y positiva
     ctx.beginPath();
     ctx.moveTo(origen_x - 5, origen_y + y);
     ctx.lineTo(origen_x + 5, origen_y + y);
     ctx.stroke();
 
     if (y > 0) {
-      // esto se usa para asignar valores negativos en la mitad inferior
       ctx.fillText(`-${Math.round(y / escala)}`, origen_x - 20, origen_y + y);
     }
 
-    // Marca física hacia arriba
+    // y negativa
     if (y > 0) {
       ctx.beginPath();
       ctx.moveTo(origen_x - 5, origen_y - y);
       ctx.lineTo(origen_x + 5, origen_y - y);
       ctx.stroke();
 
-      // esto se usa para asignar valores positivos en la mitad superior
       ctx.fillText(`${Math.round(y / escala)}`, origen_x - 20, origen_y - y);
     }
   }
 
-  // Etiquetar origen
+  // origen
   ctx.fillText("0", origen_x - 20, origen_y + 20);
 }
 
 function dibujar_placa(origen_x, origen_y, escala) {
-  // Parámetros de la placa
-  const ancho_placa = 100 * escala; // Ancho fijo de 10 cm
-  const grosor_placa = simulacion.ancho_placa * escala; // Convertir mm a escala
+  const ancho_placa = 100 * escala;
+  // mm a escala
+  const grosor_placa = simulacion.ancho_placa * escala;
   const placa_izq = origen_x - ancho_placa / 2;
-  const placa_top = origen_y; // La placa comienza en Y=0
+  const placa_top = origen_y;
 
-  // Dibujar la placa. Cambia de color según material. Gris circonio, rosa cuarzo, azul el resto
+  // gris circonio, rosa cuarzo, azul el resto
   if (
     simulacion.material_actual == MATERIALES.circonio ||
     simulacion.material_actual == MATERIALES.diamante
   ) {
-    ctx.fillStyle = "rgba(243, 243, 243, 0.5)"; // Azul claro semitransparente
-    ctx.strokeStyle = "rgba(243, 243, 243, 0.5)"; // Azul más oscuro
+    ctx.fillStyle = "rgba(243, 243, 243, 0.5)";
+    ctx.strokeStyle = "rgba(243, 243, 243, 0.5)";
     ctx.lineWidth = 2;
   } else if (simulacion.material_actual == MATERIALES.cuarzo) {
-    ctx.fillStyle = "rgba(130, 112, 116, 0.8)"; // Azul claro semitransparente
-    ctx.strokeStyle = "rgba(130, 112, 116, 0.8)"; // Azul más oscuro
+    ctx.fillStyle = "rgba(130, 112, 116, 0.8)";
+    ctx.strokeStyle = "rgba(130, 112, 116, 0.8)";
     ctx.lineWidth = 2;
   } else {
-    ctx.fillStyle = "rgba(135, 206, 250, 0.3)"; // Azul claro semitransparente
-    ctx.strokeStyle = "rgba(70, 130, 180, 0.3)"; // Azul más oscuro
+    ctx.fillStyle = "rgba(135, 206, 250, 0.3)";
+    ctx.strokeStyle = "rgba(70, 130, 180, 0.3)";
     ctx.lineWidth = 2;
   }
 
@@ -360,7 +344,7 @@ function dibujar_placa(origen_x, origen_y, escala) {
   ctx.fill();
   ctx.stroke();
 
-  // Etiqueta con el material
+  // etiqueta de material
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -380,29 +364,26 @@ function dibujar_placa(origen_x, origen_y, escala) {
     materialName = simulacion.material_actual.name;
   }
 
-  // Etiqueta con el medio exterior
+  // etiquetas con el medio exterior
   ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top - 30);
-
-  // Etiqueta con el medio exterior
   ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top + 100);
 
-  //Etiqueta con el material de la placa
+  // etiqueta con el material de la placa
   ctx.fillStyle = "white";
   ctx.fillText(materialName, origen_x - 80, placa_top + 40);
 }
 
 function dibujar_laser(origen_x, origen_y, escala) {
-  // Punto de incidencia del láser
+  // punto de incidencia del láser
   const incidencia_ejeX = origen_x;
   const incidencia_ejeY = origen_y;
 
-  // Convertir ángulo a radianes (ajustando para que 0° sea vertical y crezca hacia la derecha)
+  // grados a radianes
   const angulo_radianes = ((90 - simulacion.angulo_incidencia) * Math.PI) / 180;
 
-  // Color del láser según la longitud de onda
   const color_laser = "rgb(0, 162, 255)";
 
-  // Dibujar rayo incidente
+  // rayo incidente
   const incidentLength = 150 * escala;
   const incidentEndX =
     incidencia_ejeX + incidentLength * Math.cos(angulo_radianes);
@@ -417,30 +398,26 @@ function dibujar_laser(origen_x, origen_y, escala) {
   ctx.lineTo(incidentEndX, incidentEndY);
   ctx.stroke();
 
-  // Calcular ángulos de reflexión y refracción
+  // ángulos de reflexión y refracción
   const n1 = simulacion.medio_actual.indice_refrac;
   const n2 = simulacion.material_actual.indice_refrac;
 
-  // Ángulo de incidencia desde la normal
+  // incidencia desde la normal
   const incidencia_normal = (simulacion.angulo_incidencia * Math.PI) / 180;
-
-  // Ángulo de reflexión (igual al de incidencia)
   const angulo_reflexion = Math.PI / 2 - incidencia_normal;
 
-  // Ángulo de refracción usando la ley de Snell
+  // refracción usando ley de Snell
   let angulo_refraccion;
   const seno_refrac = (n1 / n2) * Math.sin(incidencia_normal);
 
-  // Comprobar si hay reflexión total interna
+  // comprobar si hay reflexión total interna
   if (seno_refrac > 1) {
-    // Reflexión total interna
-    angulo_refraccion = Math.PI / 2; // 90 grados
+    angulo_refraccion = Math.PI / 2;
   } else {
     angulo_refraccion = Math.asin(seno_refrac);
   }
 
-  // Dibujar rayo reflejado
-  const reflexion_rad = Math.PI - angulo_radianes; // Reflejo del ángulo incidente
+  const reflexion_rad = Math.PI - angulo_radianes;
   const largo_reflejado = 100 * escala;
   const reflectedEndX =
     incidencia_ejeX + largo_reflejado * Math.cos(reflexion_rad);
@@ -448,23 +425,20 @@ function dibujar_laser(origen_x, origen_y, escala) {
     incidencia_ejeY - largo_reflejado * Math.sin(reflexion_rad);
 
   ctx.beginPath();
-  ctx.setLineDash([]); // Línea discontinua para el rayo reflejado
+  ctx.setLineDash([]);
   ctx.moveTo(incidencia_ejeX, incidencia_ejeY);
   ctx.lineTo(reflectedEndX, reflectedEndY);
   ctx.stroke();
-  ctx.setLineDash([]); // Restaurar línea continua
+  ctx.setLineDash([]);
 
-  // Dibujar rayo refractado
-
-  // Calcular punto de salida del material
+  // punto de salida del material
   const grosor_placa = simulacion.ancho_placa * escala;
   const largo_material_reflex = grosor_placa / Math.cos(angulo_refraccion);
   const exitX =
     incidencia_ejeX + largo_material_reflex * Math.sin(angulo_refraccion);
-  const exitY = incidencia_ejeY + grosor_placa; // Punto de salida en la parte inferior de la placa
+  const exitY = incidencia_ejeY + grosor_placa;
 
-  // Rayo dentro del material
-  ctx.strokeStyle = ajustar_intensidad_color(color_laser, 0.7);
+  ctx.strokeStyle = color_laser;
   ctx.lineWidth = 3;
 
   ctx.beginPath();
@@ -472,8 +446,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
   ctx.lineTo(exitX, exitY);
   ctx.stroke();
 
-  // Rayo al salir del material (segunda refracción)
-  // Al salir, el rayo vuelve al ángulo original
+  // al salir, el rayo vuelve al ángulo original
   const largo_refractado = 100 * escala;
   const largo_refractado_X =
     exitX + largo_refractado * Math.sin(incidencia_normal);
@@ -488,7 +461,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
   ctx.lineTo(largo_refractado_X, largo_refractado_Y);
   ctx.stroke();
 
-  // Dibujar ángulos
+  // ángulos
   dibujar_angulo(
     incidencia_ejeX,
     incidencia_ejeY,
@@ -498,6 +471,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
     "α",
     "#52bfa0",
   );
+
   dibujar_angulo(
     incidencia_ejeX,
     incidencia_ejeY,
@@ -508,10 +482,9 @@ function dibujar_laser(origen_x, origen_y, escala) {
     "#e57f71",
   );
 
-  // Guardar los ángulos calculados para uso en mediciones
   simulacion.angulos_calculados = {
     incidence: simulacion.angulo_incidencia,
-    reflection: simulacion.angulo_incidencia, // Mismo valor
+    reflection: simulacion.angulo_incidencia,
     refraction: (angulo_refraccion * 180) / Math.PI,
   };
 
@@ -536,7 +509,7 @@ function dibujar_angulo(x, y, ang_1, ang_2, radio, etiqueta, color) {
   ctx.fillStyle = color;
   ctx.lineWidth = 1.5;
 
-  // Dibujar arco
+  // arco
   ctx.beginPath();
   ctx.arc(x, y, radio, ang_1, ang_2);
   ctx.stroke();
@@ -547,15 +520,14 @@ function dibujar_medidas(origen_x, origen_y, escala) {
   const ancho_placa = 100 * escala;
   const placa_izq = origen_x - ancho_placa / 2;
   const placa_der = origen_x + ancho_placa / 2;
-  const placa_top = origen_y; // Ajustado a Y=0
-  const placa_bot = origen_y + grosor_placa; // Parte inferior de la placa
+  const placa_top = origen_y;
+  const placa_bot = origen_y + grosor_placa;
 
-  // Dibujar indicador de espesor
+  // indicador de espesor
   ctx.strokeStyle = "#e74c3c";
   ctx.fillStyle = "#e74c3c";
   ctx.lineWidth = 1;
 
-  // Línea de dimensión
   const dimX = placa_der + 30;
 
   ctx.beginPath();
@@ -563,17 +535,16 @@ function dibujar_medidas(origen_x, origen_y, escala) {
   ctx.lineTo(dimX, placa_bot);
   ctx.stroke();
 
-  // Flechas
   dibujar_flecha(dimX, origen_y, dimX, placa_bot);
   dibujar_flecha(dimX, placa_bot, dimX, origen_y);
 
-  // Etiqueta de espesor
-  ctx.font = "12px Arial";
+  // etiqueta de distancias
+  ctx.font = "15px Arial";
   ctx.textAlign = "center";
   ctx.fillText(
     `${simulacion.ancho_placa} mm`,
     dimX + 30,
-    origen_y + grosor_placa / 2,
+    origen_y + grosor_placa / 2 + 5,
   );
 }
 
@@ -603,7 +574,6 @@ function generar_transportador() {
   const width = canvas.width;
   const height = canvas.height;
 
-  // esto se usa para igualar la caja de vista del SVG a la resolución exacta del canvas
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   svg.setAttribute(
     "class",
@@ -703,19 +673,8 @@ function generar_transportador() {
   svg.appendChild(grupo);
 }
 
-function ajustar_intensidad_color(rgbColor, factor) {
-  // Extraer valores RGB
-  const rgb = rgbColor.match(/\d+/g).map(Number);
-
-  // Ajustar intensidad
-  const adjustedRgb = rgb.map((value) => Math.floor(value * factor));
-
-  return `rgb(${adjustedRgb[0]}, ${adjustedRgb[1]}, ${adjustedRgb[2]})`;
-}
-
 // eventos
 function setupEventListeners() {
-  // Eventos de los controles de material y láser
   ancho_placaSlider.addEventListener("input", function () {
     simulacion.ancho_placa = parseInt(this.value);
   });
@@ -734,7 +693,6 @@ function setupEventListeners() {
     actualizar_medio_ext();
   });
 
-  // Botones de la grilla
   grid1mmBtn.addEventListener("click", function () {
     set_grilla(1);
   });
@@ -765,9 +723,8 @@ function setupEventListeners() {
 }
 
 function actualizar_material() {
-  // Si se selecciona desconocido, generar semilla rand para elegir del array
+  // si se selecciona desconocido, generar semilla rand para elegir del array
   if (simulacion.material === "unknown") {
-    // Excluir "unknown" de las opciones
     const materialKeys = Object.keys(MATERIALES).filter(
       (key) => key !== "unknown",
     );
@@ -894,7 +851,6 @@ function agregar_medida() {
     return;
   }
 
-  // Calcular el índice de refracción experimental usando la ley de Snell
   const angulo_incidenciaRad =
     (simulacion.angulos_calculados.incidence * Math.PI) / 180;
   const angulo_refraccionRad = (angulo_refraccion * Math.PI) / 180;
@@ -927,33 +883,6 @@ function agregar_medida() {
   };
 
   simulacion.medidas.push(medida);
-
-  // Agregar a la tabla
-  /*
-  const row = datos_tabla.insertRow();
-  row.className = "bg-utn-light text-slate-950 dark:bg-slate-950 dark:text-white items-center text-center pt-4";
-
-  const cellNum = row.insertCell(0);
-  cellNum.textContent = medida.number;
-  cellNum.className = "py-2";
-
-  const cellancho_placa = row.insertCell(1);
-  cellancho_placa.textContent = medida.ancho_placa;
-
-  const cellMaterial = row.insertCell(2);
-  cellMaterial.textContent = medida.material;
-
-  const cellRI = row.insertCell(3);
-  cellRI.textContent = medida.indice_refrac;
-
-  const cellIncidence = row.insertCell(4);
-  cellIncidence.textContent = medida.angulo_incidencia;
-
-  const cellRefraction = row.insertCell(5);
-  cellRefraction.textContent = medida.angulo_refraccion;
-
-  const cellExpRI = row.insertCell(6);
-  cellExpRI.textContent = medida.experimentalRI;*/
   renderizar_tabla();
 }
 
@@ -995,14 +924,12 @@ function importarJSON(event) {
 
 function set_escenario(data) {
   hayEscenario = true;
-  // Cargar los valores del escenario como array en cada variable de la simulación actual
   simulacion.error = parseFloat(data[1]);
   simulacion.material = data[2];
   simulacion.medio_exterior = data[3];
   simulacion.ancho_placa = parseFloat(data[4]);
   simulacion.angulo_incidencia = parseInt(data[5]);
 
-  // Cambiar los valores visuales de los selectores en el contenedor con los recibidos
   ancho_placaSlider.value = simulacion.ancho_placa;
   angleSlider.value = simulacion.angulo_incidencia;
   MATERIALESSelect.value = simulacion.material;
