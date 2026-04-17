@@ -1,4 +1,4 @@
-// Constantes y variables globales
+// materiales de placa
 const MATERIALES = {
   vidrio: { name: "Vidrio", indice_refrac: 1.52 },
   acrilico: { name: "Acrílico", indice_refrac: 1.49 },
@@ -6,8 +6,8 @@ const MATERIALES = {
   diamante: { name: "Diamante", indice_refrac: 2.42 },
   hielo: { name: "Hielo", indice_refrac: 1.31 },
   circonio: { name: "Circonio", indice_refrac: 2.15 },
-  
-  // Materiales adicionales para la selección aleatoria
+
+  // adicionales para la selección aleatoria
   safiro: { name: "Zafiro", indice_refrac: 1.77 },
   rubi: { name: "Rubí", indice_refrac: 1.76 },
   amber: { name: "Ámbar", indice_refrac: 1.55 },
@@ -16,7 +16,7 @@ const MATERIALES = {
   agua: { name: "Agua", indice_refrac: 1.33 },
 };
 
-// Lista de medios exteriores y sus índices de refracción
+// medios exteriores
 const EXTERIOR_MEDIUMS = {
   vacio: { name: "Vacío", indice_refrac: 1.0 },
   aire: { name: "Aire", indice_refrac: 1.0003 },
@@ -30,27 +30,27 @@ const EXTERIOR_MEDIUMS = {
   benceno: { name: "Benceno", indice_refrac: 1.501 },
 };
 
-// Estado de la simulación
+// estado de la simulación
 let simulacion = {
   error: 0,
   material: "vidrio",
   medio_exterior: "aire",
   ancho_placa: 5,
   angulo_incidencia: 30,
-  espacio_grilla: 1,
+  espacio_grilla: 10,
   gridOffset: { x: 0, y: 0 },
   medidas: [],
   material_actual: "vidrio",
   medio_actual: "aire",
 };
 
-// Inicialización del canvas
+// inicialización del canvas
 const canvas = document.getElementById("simulacion-canvas");
 const ctx = canvas.getContext("2d");
 let animationFrameId = null;
 let hayEscenario = false;
 
-// Referencias de elementos DOM
+// referencias del DOM
 const ancho_placaSlider = document.getElementById("ancho_placa_value");
 const angleSlider = document.getElementById("angle_value");
 const MATERIALESSelect = document.getElementById("material");
@@ -59,7 +59,7 @@ const datos_tabla = document
   .getElementById("data-table")
   .getElementsByTagName("tbody")[0];
 
-// Botones
+// botones
 const grid1mmBtn = document.getElementById("grid-1mm");
 const grid5mmBtn = document.getElementById("grid-5mm");
 const grid10mmBtn = document.getElementById("grid-10mm");
@@ -69,7 +69,7 @@ const agregar_data_btn = document.getElementById("add-data");
 const exportar_txt_btn = document.getElementById("export-txt");
 const exportar_csv_btn = document.getElementById("export-csv");
 
-// Inicializar la simulación
+// simulación: inicio, render, redimensionado, reinicio
 function iniciar_simulacion() {
   // Establecer el tamaño del canvas al tamaño del contenedor
   redim_canvas();
@@ -86,35 +86,6 @@ function iniciar_simulacion() {
   setupEventListeners();
 }
 
-function redim_canvas() {
-  const vista_simulacion = document.querySelector(".simulation-view");
-  canvas.width = vista_simulacion.clientWidth;
-  canvas.height = vista_simulacion.clientHeight;
-}
-
-function actualizar_material() {
-  // Si se selecciona desconocido, generar semilla rand para elegir del array
-  if (simulacion.material === "unknown") {
-    // Excluir "unknown" de las opciones
-    const materialKeys = Object.keys(MATERIALES).filter(
-      (key) => key !== "unknown"
-    );
-    const randomIndex = Math.floor(Math.random() * materialKeys.length);
-    const randomMaterial = materialKeys[randomIndex];
-
-    simulacion.material_actual = MATERIALES[randomMaterial];
-  } 
-  
-  else {
-    simulacion.material_actual = MATERIALES[simulacion.material];
-  }
-}
-
-function actualizar_medio_ext() {
-  simulacion.medio_actual =
-    EXTERIOR_MEDIUMS[simulacion.medio_exterior];
-}
-
 function iniciar_render_loop() {
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
@@ -128,60 +99,49 @@ function iniciar_render_loop() {
   render();
 }
 
-// Manejo de eventos ante actualizaciones y clicks
-function setupEventListeners() {
-  // Eventos de los controles de material y láser
-  ancho_placaSlider.addEventListener("input", function () {
-    simulacion.ancho_placa = parseInt(this.value);
-  });
+function redim_canvas() {
+  const vista_simulacion = document.querySelector(".simulation-view");
+  canvas.width = vista_simulacion.clientWidth;
+  canvas.height = vista_simulacion.clientHeight;
 
-  angleSlider.addEventListener("input", function () {
-    simulacion.angulo_incidencia = parseInt(this.value);
-  });
-
-  MATERIALESSelect.addEventListener("change", function () {
-    simulacion.material = this.value;
-    actualizar_material();
-  });
-
-  exteriorSelect.addEventListener("change", function () {
-    simulacion.medio_exterior = this.value;
-    actualizar_medio_ext();
-  });
-
-  // Botones de la grilla
-  grid1mmBtn.addEventListener("click", function () {
-    set_grilla(1);
-  });
-
-  grid5mmBtn.addEventListener("click", function () {
-    set_grilla(5);
-  });
-
-  grid10mmBtn.addEventListener("click", function () {
-    set_grilla(10);
-  });
-
-
-  boton_reset.addEventListener("click", function () {
-    reset_sim();
-  });
-
-  agregar_data_btn.addEventListener("click", function () {
-    agregar_medida();
-  });
-
-
-  exportar_txt_btn.addEventListener("click", function () {
-    exportar_txt();
-  });
-
-  exportar_csv_btn.addEventListener("click", function () {
-    exportar_csv();
-  });
-
+  generar_transportador();
 }
 
+function reset_sim() {
+  simulacion = {
+    error: 0,
+    material: "vidrio",
+    medio_exterior: "aire",
+    ancho_placa: 5,
+    angulo_incidencia: 30,
+    espacio_grilla: 10,
+    gridOffset: { x: 0, y: 0 },
+    medidas: [],
+    material_actual: MATERIALES.vidrio,
+    medio_actual: EXTERIOR_MEDIUMS.aire,
+  };
+
+  // esto se usa para restablecer los controles de UI
+  ancho_placaSlider.value = simulacion.ancho_placa;
+  angleSlider.value = simulacion.angulo_incidencia;
+
+  MATERIALESSelect.value = simulacion.material;
+  exteriorSelect.value = simulacion.medio_exterior;
+
+  // esto se usa para restablecer el estado visual de los botones de grilla a 10mm
+  set_grilla(10);
+
+  // Limpiar tabla
+  datos_tabla.innerHTML = "";
+  const exitoEsc = document.getElementById("exito-esc");
+  if (exitoEsc) {
+    exitoEsc.innerHTML = "";
+  }
+
+  hayEscenario = false;
+}
+
+// canvas: dibujo
 function set_grilla(spacing) {
   simulacion.espacio_grilla = spacing;
 
@@ -193,39 +153,6 @@ function set_grilla(spacing) {
   if (spacing === 1) grid1mmBtn.classList.add("active");
   else if (spacing === 5) grid5mmBtn.classList.add("active");
   else if (spacing === 10) grid10mmBtn.classList.add("active");
-}
-
-function reset_sim() {
-  simulacion = {
-    error: 0,
-    material: MATERIALES.vidrio,
-    medio_exterior: EXTERIOR_MEDIUMS.aire,
-    ancho_placa: 5,
-    angulo_incidencia: 30,
-    espacio_grilla: 1,
-    gridOffset: { x: 0, y: 0 },
-    medidas: [],
-    material_actual: MATERIALES.vidrio,
-    medio_actual: EXTERIOR_MEDIUMS.aire,
-  };
-
-  // Restablecer controles de UI
-  ancho_placaSlider.value = simulacion.ancho_placa;
-
-  angleSlider.value = simulacion.angulo_incidencia;
-
-  MATERIALESSelect.value = simulacion.material;
-  exteriorSelect.value = simulacion.medio_exterior;
-
-  set_grilla(1);
-
-  // Limpiar tabla
-  datos_tabla.innerHTML = "";
-  const exitoEsc = document.getElementById('exito-esc');
-  exitoEsc.innerHTML = "";
-
-  hayEscenario = false;
-
 }
 
 function dibujar_sim() {
@@ -248,10 +175,10 @@ function dibujar_sim() {
   ctx.fillRect(0, 0, width, height);
 
   // Calcular escala y origen para la visualización
-  const desiredXRange = 160; 
-  const escala = width / desiredXRange; 
+  const desiredXRange = 160;
+  const escala = width / desiredXRange;
   const origen_x = width / 2;
-  const origen_y = height * 0.7; 
+  const origen_y = height * 0.5;
 
   // Dibujar grilla
   dibujar_grilla(origen_x, origen_y, escala);
@@ -269,11 +196,7 @@ function dibujar_sim() {
 function dibujar_grilla(origen_x, origen_y, escala) {
   const width = canvas.width;
   const height = canvas.height;
-
-  // Tamaño de paso en pixeles
   const tam_paso = simulacion.espacio_grilla * escala;
-
-  // Offset en pixeles
   const offsetX = simulacion.gridOffset.x * escala;
   const offsetY = simulacion.gridOffset.y * escala;
 
@@ -324,9 +247,9 @@ function dibujar_grilla(origen_x, origen_y, escala) {
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
   ) {
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
   } else {
-    ctx.strokeStyle = "#000000";
+    ctx.strokeStyle = "black";
   }
 
   ctx.lineWidth = 1.5;
@@ -349,12 +272,12 @@ function dibujar_grilla(origen_x, origen_y, escala) {
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
   ) {
-    ctx.fillStyle = "white";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
   } else {
-    ctx.fillStyle = "#000000";
+    ctx.strokeStyle = "rgba(63, 63, 63, 0.8)";
   }
 
-  ctx.font = "8px Arial";
+  ctx.font = "12px Arial";
   ctx.textAlign = "center";
 
   // Marcas en X
@@ -379,25 +302,27 @@ function dibujar_grilla(origen_x, origen_y, escala) {
     }
   }
 
-  // Marcas en Y
   for (let y = 0; y < height / 2; y += tam_paso * 5) {
-    // Marca positiva
+    // Marca física hacia abajo
     ctx.beginPath();
     ctx.moveTo(origen_x - 5, origen_y + y);
     ctx.lineTo(origen_x + 5, origen_y + y);
     ctx.stroke();
 
     if (y > 0) {
-      ctx.fillText(`${Math.round(y / escala)}`, origen_x - 20, origen_y + y);
+      // esto se usa para asignar valores negativos en la mitad inferior
+      ctx.fillText(`-${Math.round(y / escala)}`, origen_x - 20, origen_y + y);
     }
 
-    // Marca negativa
+    // Marca física hacia arriba
     if (y > 0) {
       ctx.beginPath();
       ctx.moveTo(origen_x - 5, origen_y - y);
       ctx.lineTo(origen_x + 5, origen_y - y);
       ctx.stroke();
-      ctx.fillText(`-${Math.round(y / escala)}`, origen_x - 20, origen_y - y);
+
+      // esto se usa para asignar valores positivos en la mitad superior
+      ctx.fillText(`${Math.round(y / escala)}`, origen_x - 20, origen_y - y);
     }
   }
 
@@ -412,37 +337,39 @@ function dibujar_placa(origen_x, origen_y, escala) {
   const placa_izq = origen_x - ancho_placa / 2;
   const placa_top = origen_y; // La placa comienza en Y=0
 
-  
   // Dibujar la placa. Cambia de color según material. Gris circonio, rosa cuarzo, azul el resto
-  if ((simulacion.material_actual == MATERIALES.circonio) || (simulacion.material_actual == MATERIALES.diamante)){
+  if (
+    simulacion.material_actual == MATERIALES.circonio ||
+    simulacion.material_actual == MATERIALES.diamante
+  ) {
     ctx.fillStyle = "rgba(243, 243, 243, 0.5)"; // Azul claro semitransparente
     ctx.strokeStyle = "rgba(243, 243, 243, 0.5)"; // Azul más oscuro
     ctx.lineWidth = 2;
-  }
-
-  else if (simulacion.material_actual == MATERIALES.cuarzo) {
+  } else if (simulacion.material_actual == MATERIALES.cuarzo) {
     ctx.fillStyle = "rgba(130, 112, 116, 0.8)"; // Azul claro semitransparente
     ctx.strokeStyle = "rgba(130, 112, 116, 0.8)"; // Azul más oscuro
     ctx.lineWidth = 2;
-  }
-    else {
+  } else {
     ctx.fillStyle = "rgba(135, 206, 250, 0.3)"; // Azul claro semitransparente
     ctx.strokeStyle = "rgba(70, 130, 180, 0.3)"; // Azul más oscuro
     ctx.lineWidth = 2;
   }
-  
+
   ctx.beginPath();
   ctx.rect(placa_izq, placa_top, ancho_placa, grosor_placa);
   ctx.fill();
   ctx.stroke();
 
   // Etiqueta con el material
-  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
     ctx.fillStyle = "rgba(70, 130, 180, 1)";
   } else {
-    ctx.fillStyle = "#020617";
+    ctx.fillStyle = "rgba(0,0,0,1)";
   }
-  
+
   ctx.font = "17px Arial";
   ctx.textAlign = "center";
 
@@ -454,22 +381,14 @@ function dibujar_placa(origen_x, origen_y, escala) {
   }
 
   // Etiqueta con el medio exterior
-  ctx.fillText(
-    simulacion.medio_actual.name,
-    origen_x - 160,
-    placa_top - 70
-  );
+  ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top - 30);
 
   // Etiqueta con el medio exterior
-  ctx.fillText(
-    simulacion.medio_actual.name,
-    origen_x - 160,
-    placa_top + 120
-  );
+  ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top + 100);
 
   //Etiqueta con el material de la placa
   ctx.fillStyle = "white";
-  ctx.fillText(materialName, origen_x - 160, placa_top + 45);
+  ctx.fillText(materialName, origen_x - 80, placa_top + 40);
 }
 
 function dibujar_laser(origen_x, origen_y, escala) {
@@ -481,12 +400,14 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const angulo_radianes = ((90 - simulacion.angulo_incidencia) * Math.PI) / 180;
 
   // Color del láser según la longitud de onda
-  const color_laser = 'rgb(0, 162, 255)';
+  const color_laser = "rgb(0, 162, 255)";
 
   // Dibujar rayo incidente
   const incidentLength = 150 * escala;
-  const incidentEndX = incidencia_ejeX + incidentLength * Math.cos(angulo_radianes);
-  const incidentEndY = incidencia_ejeY - incidentLength * Math.sin(angulo_radianes);
+  const incidentEndX =
+    incidencia_ejeX + incidentLength * Math.cos(angulo_radianes);
+  const incidentEndY =
+    incidencia_ejeY - incidentLength * Math.sin(angulo_radianes);
 
   ctx.strokeStyle = color_laser;
   ctx.lineWidth = 2;
@@ -504,7 +425,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const incidencia_normal = (simulacion.angulo_incidencia * Math.PI) / 180;
 
   // Ángulo de reflexión (igual al de incidencia)
-  const angulo_reflexion = (Math.PI/2)-incidencia_normal;
+  const angulo_reflexion = Math.PI / 2 - incidencia_normal;
 
   // Ángulo de refracción usando la ley de Snell
   let angulo_refraccion;
@@ -521,8 +442,10 @@ function dibujar_laser(origen_x, origen_y, escala) {
   // Dibujar rayo reflejado
   const reflexion_rad = Math.PI - angulo_radianes; // Reflejo del ángulo incidente
   const largo_reflejado = 100 * escala;
-  const reflectedEndX = incidencia_ejeX + largo_reflejado * Math.cos(reflexion_rad);
-  const reflectedEndY = incidencia_ejeY - largo_reflejado * Math.sin(reflexion_rad);
+  const reflectedEndX =
+    incidencia_ejeX + largo_reflejado * Math.cos(reflexion_rad);
+  const reflectedEndY =
+    incidencia_ejeY - largo_reflejado * Math.sin(reflexion_rad);
 
   ctx.beginPath();
   ctx.setLineDash([]); // Línea discontinua para el rayo reflejado
@@ -567,15 +490,23 @@ function dibujar_laser(origen_x, origen_y, escala) {
 
   // Dibujar ángulos
   dibujar_angulo(
-    incidencia_ejeX, incidencia_ejeY,
-    Math.PI+angulo_radianes,
-    -Math.PI/2,
-    30,"α","#52bfa0"
+    incidencia_ejeX,
+    incidencia_ejeY,
+    Math.PI + angulo_radianes,
+    -Math.PI / 2,
+    30,
+    "α",
+    "#52bfa0",
   );
-  dibujar_angulo(incidencia_ejeX, incidencia_ejeY, 
-    -Math.PI / 2, 
-    -angulo_reflexion, 
-    30, "β", "#e57f71");
+  dibujar_angulo(
+    incidencia_ejeX,
+    incidencia_ejeY,
+    -Math.PI / 2,
+    -angulo_reflexion,
+    30,
+    "β",
+    "#e57f71",
+  );
 
   // Guardar los ángulos calculados para uso en mediciones
   simulacion.angulos_calculados = {
@@ -583,6 +514,21 @@ function dibujar_laser(origen_x, origen_y, escala) {
     reflection: simulacion.angulo_incidencia, // Mismo valor
     refraction: (angulo_refraccion * 180) / Math.PI,
   };
+
+  const largo_auxiliar = 150 * escala;
+  const aux_X = exitX + largo_auxiliar * Math.sin(angulo_refraccion);
+  const aux_Y = exitY + largo_auxiliar * Math.cos(angulo_refraccion);
+
+  ctx.strokeStyle = color_laser;
+  ctx.lineWidth = 1;
+  ctx.setLineDash([5, 5]);
+
+  ctx.beginPath();
+  ctx.moveTo(exitX, exitY);
+  ctx.lineTo(aux_X, aux_Y);
+  ctx.stroke();
+
+  ctx.setLineDash([]);
 }
 
 function dibujar_angulo(x, y, ang_1, ang_2, radio, etiqueta, color) {
@@ -592,9 +538,8 @@ function dibujar_angulo(x, y, ang_1, ang_2, radio, etiqueta, color) {
 
   // Dibujar arco
   ctx.beginPath();
-  ctx.arc(x, y, radio,ang_1,ang_2);
+  ctx.arc(x, y, radio, ang_1, ang_2);
   ctx.stroke();
-
 }
 
 function dibujar_medidas(origen_x, origen_y, escala) {
@@ -628,9 +573,8 @@ function dibujar_medidas(origen_x, origen_y, escala) {
   ctx.fillText(
     `${simulacion.ancho_placa} mm`,
     dimX + 30,
-    origen_y + grosor_placa / 2
+    origen_y + grosor_placa / 2,
   );
-
 }
 
 function dibujar_flecha(fromX, fromY, toX, toY) {
@@ -641,14 +585,203 @@ function dibujar_flecha(fromX, fromY, toX, toY) {
   ctx.moveTo(toX, toY);
   ctx.lineTo(
     toX - headLength * Math.cos(angle - Math.PI / 6),
-    toY - headLength * Math.sin(angle - Math.PI / 6)
+    toY - headLength * Math.sin(angle - Math.PI / 6),
   );
   ctx.lineTo(
     toX - headLength * Math.cos(angle + Math.PI / 6),
-    toY - headLength * Math.sin(angle + Math.PI / 6)
+    toY - headLength * Math.sin(angle + Math.PI / 6),
   );
   ctx.closePath();
   ctx.fill();
+}
+
+function generar_transportador() {
+  const svg = document.getElementById("protractor-svg");
+  if (!svg) return;
+
+  svg.innerHTML = "";
+  const width = canvas.width;
+  const height = canvas.height;
+
+  // esto se usa para igualar la caja de vista del SVG a la resolución exacta del canvas
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.setAttribute(
+    "class",
+    "absolute inset-0 w-full h-full text-slate-800 dark:text-slate-300 pointer-events-none drop-shadow-md",
+  );
+
+  const origen_x = width / 2;
+  const origen_y = height * 0.5;
+
+  const desiredXRange = 160;
+  const escala = width / desiredXRange;
+
+  const r_out = 65 * escala;
+
+  const tickLong = r_out * 0.08;
+  const tickMed = r_out * 0.05;
+  const tickShort = r_out * 0.03;
+  const tickHalf = r_out * 0.015;
+
+  const svgns = "http://www.w3.org/2000/svg";
+
+  const grupo = document.createElementNS(svgns, "g");
+  grupo.setAttribute("transform", `translate(${origen_x}, ${origen_y})`);
+
+  const fondo = document.createElementNS(svgns, "circle");
+  fondo.setAttribute("r", r_out);
+  fondo.setAttribute("fill", "rgba(200, 210, 220, 0.05)");
+  fondo.setAttribute("stroke", "currentColor");
+  fondo.setAttribute("stroke-width", "1");
+  grupo.appendChild(fondo);
+
+  for (let a = 0; a < 360; a += 0.5) {
+    const rad = (a * Math.PI) / 180;
+    const cos = Math.cos(rad);
+    const sin = Math.sin(rad);
+
+    let outerTickLen;
+    let strokeWidth;
+
+    if (a % 10 === 0) {
+      outerTickLen = tickLong;
+      strokeWidth = "1.5";
+    } else if (a % 5 === 0) {
+      outerTickLen = tickMed;
+      strokeWidth = "1";
+    } else if (a % 1 === 0) {
+      outerTickLen = tickShort;
+      strokeWidth = "0.5";
+    } else {
+      outerTickLen = tickHalf;
+      strokeWidth = "0.3";
+    }
+
+    const lineOut = document.createElementNS(svgns, "line");
+    lineOut.setAttribute("x1", cos * r_out);
+    lineOut.setAttribute("y1", sin * r_out);
+    lineOut.setAttribute("x2", cos * (r_out - outerTickLen));
+    lineOut.setAttribute("y2", sin * (r_out - outerTickLen));
+    lineOut.setAttribute("stroke", "currentColor");
+    lineOut.setAttribute("stroke-width", strokeWidth);
+    grupo.appendChild(lineOut);
+
+    if (a % 10 === 0) {
+      const valOuter = (a + 180) % 360;
+      const rTextOut = r_out * 0.83;
+
+      const textElement = document.createElementNS(svgns, "text");
+      textElement.setAttribute("x", cos * rTextOut);
+      textElement.setAttribute("y", sin * rTextOut);
+      textElement.setAttribute("text-anchor", "middle");
+      textElement.setAttribute("dominant-baseline", "middle");
+      textElement.setAttribute("font-size", `${r_out * 0.06}px`);
+      textElement.setAttribute("font-family", "sans-serif");
+      textElement.setAttribute("font-weight", "bold");
+      textElement.setAttribute("fill", "currentColor");
+
+      const rotacion = a + 90;
+      textElement.setAttribute(
+        "transform",
+        `rotate(${rotacion}, ${cos * rTextOut}, ${sin * rTextOut})`,
+      );
+      textElement.textContent = valOuter.toString();
+      grupo.appendChild(textElement);
+    }
+  }
+
+  const cruz = document.createElementNS(svgns, "path");
+  const crossSize = r_out * 0.06;
+  cruz.setAttribute(
+    "d",
+    `M -${crossSize} 0 L ${crossSize} 0 M 0 -${crossSize} L 0 ${crossSize}`,
+  );
+  cruz.setAttribute("stroke", "currentColor");
+  cruz.setAttribute("stroke-width", "1");
+  grupo.appendChild(cruz);
+
+  svg.appendChild(grupo);
+}
+
+function ajustar_intensidad_color(rgbColor, factor) {
+  // Extraer valores RGB
+  const rgb = rgbColor.match(/\d+/g).map(Number);
+
+  // Ajustar intensidad
+  const adjustedRgb = rgb.map((value) => Math.floor(value * factor));
+
+  return `rgb(${adjustedRgb[0]}, ${adjustedRgb[1]}, ${adjustedRgb[2]})`;
+}
+
+// eventos
+function setupEventListeners() {
+  // Eventos de los controles de material y láser
+  ancho_placaSlider.addEventListener("input", function () {
+    simulacion.ancho_placa = parseInt(this.value);
+  });
+
+  angleSlider.addEventListener("input", function () {
+    simulacion.angulo_incidencia = parseFloat(this.value);
+  });
+
+  MATERIALESSelect.addEventListener("change", function () {
+    simulacion.material = this.value;
+    actualizar_material();
+  });
+
+  exteriorSelect.addEventListener("change", function () {
+    simulacion.medio_exterior = this.value;
+    actualizar_medio_ext();
+  });
+
+  // Botones de la grilla
+  grid1mmBtn.addEventListener("click", function () {
+    set_grilla(1);
+  });
+
+  grid5mmBtn.addEventListener("click", function () {
+    set_grilla(5);
+  });
+
+  grid10mmBtn.addEventListener("click", function () {
+    set_grilla(10);
+  });
+
+  boton_reset.addEventListener("click", function () {
+    reset_sim();
+  });
+
+  agregar_data_btn.addEventListener("click", function () {
+    agregar_medida();
+  });
+
+  exportar_txt_btn.addEventListener("click", function () {
+    exportar_txt();
+  });
+
+  exportar_csv_btn.addEventListener("click", function () {
+    exportar_csv();
+  });
+}
+
+function actualizar_material() {
+  // Si se selecciona desconocido, generar semilla rand para elegir del array
+  if (simulacion.material === "unknown") {
+    // Excluir "unknown" de las opciones
+    const materialKeys = Object.keys(MATERIALES).filter(
+      (key) => key !== "unknown",
+    );
+    const randomIndex = Math.floor(Math.random() * materialKeys.length);
+    const randomMaterial = materialKeys[randomIndex];
+
+    simulacion.material_actual = MATERIALES[randomMaterial];
+  } else {
+    simulacion.material_actual = MATERIALES[simulacion.material];
+  }
+}
+
+function actualizar_medio_ext() {
+  simulacion.medio_actual = EXTERIOR_MEDIUMS[simulacion.medio_exterior];
 }
 
 // BOX-MULLER
@@ -686,11 +819,12 @@ function boxmuller(real, cant_error) {
 }
 
 function renderizar_tabla() {
-  datos_tabla.innerHTML = ""; 
+  datos_tabla.innerHTML = "";
 
   simulacion.medidas.forEach((medida, index) => {
     const fila = datos_tabla.insertRow();
-    fila.className = "bg-utn-light text-slate-950 dark:bg-slate-950 dark:text-white items-center text-center pt-4";
+    fila.className =
+      "bg-utn-light text-slate-950 dark:bg-slate-950 dark:text-white items-center text-center pt-4";
 
     const cellNum = fila.insertCell(0);
     cellNum.textContent = medida.number;
@@ -718,17 +852,17 @@ function renderizar_tabla() {
     const cellAction = fila.insertCell(7);
     const btnEliminar = document.createElement("button");
     btnEliminar.textContent = "Eliminar";
-    btnEliminar.className = "text-red-600 font-semibold cursor-pointer py-1 px-2";
-    
-    btnEliminar.onclick = function() {
+    btnEliminar.className =
+      "text-red-600 font-semibold cursor-pointer py-1 px-2";
+
+    btnEliminar.onclick = function () {
       eliminar_medida(index);
     };
-    
+
     cellAction.appendChild(btnEliminar);
   });
 }
 
-// esto se usa para remover una medición específica, reconstruir los índices y actualizar la interfaz
 function eliminar_medida(indice) {
   simulacion.medidas.splice(indice, 1);
 
@@ -742,40 +876,51 @@ function eliminar_medida(indice) {
 function agregar_medida() {
   const ang_refrac_input = prompt(
     "Ingrese el ángulo de refracción medido usando '.' para decimales",
-    ""
+    "",
   );
   if (ang_refrac_input === null || ang_refrac_input === "") {
     return;
   }
 
   const angulo_refraccion = parseFloat(ang_refrac_input);
-  if ((angulo_refraccion <=0 || angulo_refraccion > 90) || (isNaN(angulo_refraccion))) {
+  if (
+    angulo_refraccion <= 0 ||
+    angulo_refraccion > 90 ||
+    isNaN(angulo_refraccion)
+  ) {
     alert(
-      "Por favor, ingrese un valor numérico válido para el ángulo de refracción."
+      "Por favor, ingrese un valor numérico válido para el ángulo de refracción.",
     );
     return;
   }
 
-
   // Calcular el índice de refracción experimental usando la ley de Snell
-  const angulo_incidenciaRad = (simulacion.angulos_calculados.incidence * Math.PI) / 180;
+  const angulo_incidenciaRad =
+    (simulacion.angulos_calculados.incidence * Math.PI) / 180;
   const angulo_refraccionRad = (angulo_refraccion * Math.PI) / 180;
-  const experimentalRI = (simulacion.medio_actual.indice_refrac * Math.sin(angulo_incidenciaRad)) / Math.sin(angulo_refraccionRad);
-  
+  const experimentalRI =
+    (simulacion.medio_actual.indice_refrac * Math.sin(angulo_incidenciaRad)) /
+    Math.sin(angulo_refraccionRad);
+
   let IR_error;
   if (hayEscenario) {
     IR_error = boxmuller(experimentalRI, simulacion.error).toFixed(3);
-  }
-  else {
+  } else {
     IR_error = boxmuller(experimentalRI, 0.1).toFixed(3);
   }
 
   const medida = {
     number: simulacion.medidas.length + 1,
     ancho_placa: simulacion.ancho_placa,
-    material: simulacion.material === "unknown" ? "Desconocido" : simulacion.material_actual.name,
+    material:
+      simulacion.material === "unknown"
+        ? "Desconocido"
+        : simulacion.material_actual.name,
     medio_exterior: simulacion.medio_actual.name,
-    indice_refrac: simulacion.material === "unknown" ? "?": simulacion.material_actual.indice_refrac.toFixed(2),
+    indice_refrac:
+      simulacion.material === "unknown"
+        ? "?"
+        : simulacion.material_actual.indice_refrac.toFixed(2),
     angulo_incidencia: simulacion.angulos_calculados.incidence.toFixed(2),
     angulo_refraccion: angulo_refraccion.toFixed(2),
     experimentalRI: IR_error,
@@ -812,29 +957,41 @@ function agregar_medida() {
   renderizar_tabla();
 }
 
+// carga y descarga de archivos
 function importarJSON(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      try {
-        const data = JSON.parse(e.target.result);
-        if (data[0]!="reflexion"){
-          alert("El escenario subido no corresponde a este simulador.")
-        }
-        // TO-DO: Doble verificación de rangos en lectura de JSON
-        else{
-          set_escenario(data);
-        }
-
-      } catch (err) {
-        alert("Error al leer el archivo JSON");
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data[0] != "reflexion") {
+        alert("El escenario subido no corresponde a este simulador.");
+      } else {
+        set_escenario(data);
       }
-    };
+      if (data[1] != 0.1 || data[1] != 0.5 || data[1] != 1 || data[1] != 2) {
+        alert(
+          "El escenario cuenta con un valor fuera de rango. Asegurate de usar el escenario original válido.",
+        );
+      }
 
-    reader.readAsText(file);
-  }
+      for (key in MATERIALES) {
+        if (data[2] != MATERIALES[key].name) {
+          alert("El material para la placa no es válido.");
+        }
+        if (data[3] != EXTERIOR_MEDIUMS.name) {
+          alert("El medio exterior no es válido.");
+        }
+      }
+    } catch (err) {
+      alert("Error al leer el archivo JSON");
+    }
+  };
+
+  reader.readAsText(file);
+}
 
 function set_escenario(data) {
   hayEscenario = true;
@@ -862,46 +1019,9 @@ function inhabInput() {
   MATERIALESSelect.disabled = true;
   exteriorSelect.disabled = true;
 
-  const exitoEsc = document.getElementById('exito-esc');
-  exitoEsc.className = 'text-center text-green-400 italic mt-4';
-  exitoEsc.textContent = 'Escenario cargado con éxito.';
-}
-
-function exportar_txt() {
-  if (simulacion.medidas.length <5) {
-    alert("Necesitas al menos 5 mediciones para poder exportar los datos");
-    return;
-  }
-
-  let text = "DATOS DE SIMULACIÓN DE REFRACCIÓN Y REFLEXIÓN\n";
-  text += "------------------------------------------------\n\n";
-  text += `Fecha: ${new Date().toLocaleDateString()}\n`;
-  text += "Grupo de Investigación GIEDI\n\n";
-
-  text += "MEDICIONES:\n";
-  text += "N°\tEspesor(mm)\tMaterial\tIR\tMedio ext.\tÁng. inc.\tÁng. ref.\tIR Exp.\n";
-  text += "---------------------------------------------------------------------------------------------------------------\n";
-
-  simulacion.medidas.forEach((m) => {
-    text += `${m.number}\t${m.ancho_placa}\t\t${m.material}\t\t${m.indice_refrac}\t${m.medio_exterior}\t\t${m.angulo_incidencia}\t\t${m.angulo_refraccion}\t\t${m.experimentalRI}\n`;
-  });
-
-  descargar_archivo(text, "datos_sim_optica.txt", "text/plain");
-}
-
-function exportar_csv() {
-  if (simulacion.medidas.length <5) {
-    alert("Necesitas al menos 5 mediciones para poder exportar los datos");
-    return;
-  }
-
-  const headers = ["N°", "Espesor (mm)", "Material", "IR", "Medio Ext.", "Áng. Inc.", "Áng. Ref.", "IR Exp."];
-  const rows = simulacion.medidas.map(m =>
-    [m.number, m.ancho_placa, m.material, m.indice_refrac, m.medio_exterior, m.angulo_incidencia, m.angulo_refraccion, m.experimentalRI].join(",")
-  );
-
-  const csvContent = [headers.join(","), ...rows].join("\n");
-  descargar_archivo(csvContent, "datos_sim_optica.csv", "text/csv;charset=utf-8;");
+  const exitoEsc = document.getElementById("exito-esc");
+  exitoEsc.className = "text-center text-green-400 italic mt-4";
+  exitoEsc.textContent = "Escenario cargado con éxito.";
 }
 
 function descargar_archivo(contenido, nombre, tipo) {
@@ -914,15 +1034,66 @@ function descargar_archivo(contenido, nombre, tipo) {
   URL.revokeObjectURL(url);
 }
 
-function ajustar_intensidad_color(rgbColor, factor) {
-  // Extraer valores RGB
-  const rgb = rgbColor.match(/\d+/g).map(Number);
+function exportar_txt() {
+  if (simulacion.medidas.length < 5) {
+    alert("Necesitas al menos 5 mediciones para poder exportar los datos");
+    return;
+  }
 
-  // Ajustar intensidad
-  const adjustedRgb = rgb.map((value) => Math.floor(value * factor));
+  let text = "DATOS DE SIMULACIÓN DE REFRACCIÓN Y REFLEXIÓN\n";
+  text += "------------------------------------------------\n\n";
+  text += `Fecha: ${new Date().toLocaleDateString()}\n`;
+  text += "Grupo de Investigación GIEDI\n\n";
 
-  return `rgb(${adjustedRgb[0]}, ${adjustedRgb[1]}, ${adjustedRgb[2]})`;
+  text += "MEDICIONES:\n";
+  text +=
+    "N°\tEspesor(mm)\tMaterial\tIR\tMedio ext.\tÁng. inc.\tÁng. ref.\tIR Exp.\n";
+  text +=
+    "---------------------------------------------------------------------------------------------------------------\n";
+
+  simulacion.medidas.forEach((m) => {
+    text += `${m.number}\t${m.ancho_placa}\t\t${m.material}\t\t${m.indice_refrac}\t${m.medio_exterior}\t\t${m.angulo_incidencia}\t\t${m.angulo_refraccion}\t\t${m.experimentalRI}\n`;
+  });
+
+  descargar_archivo(text, "datos_sim_optica.txt", "text/plain");
 }
 
-// Iniciar la simulación cuando la página esté cargada
+function exportar_csv() {
+  if (simulacion.medidas.length < 5) {
+    alert("Necesitas al menos 5 mediciones para poder exportar los datos");
+    return;
+  }
+
+  const headers = [
+    "N°",
+    "Espesor (mm)",
+    "Material",
+    "IR",
+    "Medio Ext.",
+    "Áng. Inc.",
+    "Áng. Ref.",
+    "IR Exp.",
+  ];
+  const rows = simulacion.medidas.map((m) =>
+    [
+      m.number,
+      m.ancho_placa,
+      m.material,
+      m.indice_refrac,
+      m.medio_exterior,
+      m.angulo_incidencia,
+      m.angulo_refraccion,
+      m.experimentalRI,
+    ].join(","),
+  );
+
+  const csvContent = [headers.join(","), ...rows].join("\n");
+  descargar_archivo(
+    csvContent,
+    "datos_sim_optica.csv",
+    "text/csv;charset=utf-8;",
+  );
+}
+
+// iniciar la simulación cuando la página esté cargada
 window.addEventListener("load", iniciar_simulacion);

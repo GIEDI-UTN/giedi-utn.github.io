@@ -1,14 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XLJH6E9S1H"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XLJH6E9S1H"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-XLJH6E9S1H');
+      gtag("config", "G-XLJH6E9S1H");
     </script>
 
     <!--Metadata-->
@@ -31,16 +36,18 @@
       href="../../src/media/icon-page-giedi.png"
       type="image/x-icon"
     />
-    <title> GIEDI - UTN </title>
+    <title>GIEDI - UTN</title>
   </head>
 
   <body class="dark:bg-slate-950 bg-utn-light font-rubik">
-
     <!--COMIENZO NAVBAR-->
-    <nav class="sticky top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b rounded-3xl border-utn-dark/50 min-w-[350px]">
-      <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
+    <nav
+      class="sticky top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b rounded-3xl border-utn-dark/50 min-w-[350px]"
+    >
+      <div
+        class="flex flex-wrap items-center justify-between max-w-7xl mx-auto"
+      >
         <a href="../../index.html" class="flex items-center">
-          
           <img
             src="../../src/media/GIEDI-LOGO-LIGHT.png"
             class="h-7 ml-4 sm:h-9 block dark:hidden"
@@ -139,143 +146,282 @@
     </nav>
     <!--FIN NAVBAR-->
 
-    
-    <div class="flex flex-col items-center justify-center min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl">
-      <h1 class="flex text-3xl md:text-4xl font-bold text-center mt-8 mb-4 text-slate-900 dark:text-white">
-        Simulador didáctico de refracción y reflexión en materiales</h1>
-      <p class="text-utn-dark text-center dark:text-slate-300">Modifica los valores que se encuentran en el simulador y calculá el ángulo de refracción.</p>
-      <p class="text-utn-dark text-center dark:text-slate-300">Luego, presiona "Agregar medición" por cada medición que obtengas. Necesitas al menos 5 mediciones.</p>
-      <p class="text-utn-dark text-center dark:text-slate-300 mt-2">Si tenes un escenario asignado JSON, podes cargarlo a través de "Cargar escenario"</p>
-      <p class="text-utn-regular text-center p-0 mt-4">Para reiniciar la simulación a los valores por defecto, toca en "Reiniciar"</p>
-   
-      <!--COMIENZO DE INTERFACE SIMULADOR-->      
-      <div class="simulation-container flex flex-col lg:flex-row content-around gap-3 mt-12">
-            <div class="simulation-view w-screen h-[500px] lg:w-[900px] lg:h-[700px]">
-              <canvas id="simulacion-canvas"></canvas>
+    <div
+      class="flex flex-col items-center justify-center min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl"
+    >
+      <h1
+        class="flex text-3xl md:text-4xl font-bold text-center mt-8 mb-4 text-slate-900 dark:text-white"
+      >
+        Simulador didáctico de refracción y reflexión en materiales
+      </h1>
+      <p class="text-utn-dark text-center dark:text-slate-300">
+        Modifica los valores que se encuentran en el simulador y calculá el
+        ángulo de refracción.
+      </p>
+      <p class="text-utn-dark text-center dark:text-slate-300">
+        Luego, presiona "Agregar medición" por cada medición que obtengas.
+        Necesitas al menos 5 mediciones.
+      </p>
+      <p class="text-utn-dark text-center dark:text-slate-300 mt-2">
+        Si tenes un escenario asignado JSON, podes cargarlo a través de "Cargar
+        escenario"
+      </p>
+      <p class="text-utn-regular text-center p-0 mt-4">
+        Para reiniciar la simulación a los valores por defecto, toca en
+        "Reiniciar"
+      </p>
+
+      <!--COMIENZO DE INTERFACE SIMULADOR-->
+      <div
+        class="simulation-container flex flex-col lg:flex-row content-around gap-3 mt-12"
+      >
+        <div
+          class="simulation-view relative w-screen h-[500px] lg:w-[900px] lg:h-[700px]"
+        >
+          <canvas
+            id="simulacion-canvas"
+            class="absolute inset-0 w-full h-full"
+          ></canvas>
+
+          <svg
+            id="protractor-svg"
+            class="absolute inset-0 w-full h-full pointer-events-none opacity-80 mix-blend-multiply dark:mix-blend-normal"
+          ></svg>
+        </div>
+
+        <div
+          id="contenedor-datos"
+          class="controls-panel ml-4 mr-4 border-2 border-utn-regular pb-4 pr-7 pl-7 pt-4 rounded-4xl"
+        >
+          <div class="material-controls">
+            <h3
+              class="text-xl font-semibold text-utn-regular dark:text-white mb-2"
+            >
+              Configuración de la placa
+            </h3>
+            <hr class="divider mb-3 text-utn-regular" />
+
+            <!--selección de material-->
+            <div class="control-group mb-4">
+              <label
+                for="material"
+                class="text-lg font-semibold text-center dark:text-white"
+                >Selecciona el material</label
+              >
+              <select
+                id="material"
+                class="text-black border-2 w-[284px] border-utn-regular rounded-full pl-2 mt-1 dark:text-white dark:bg-slate-950"
+              >
+                <option value="vidrio">Vidrio</option>
+                <option value="acrilico">Acrílico</option>
+                <option value="circonio">Circonio</option>
+                <option value="cuarzo">Cuarzo</option>
+                <option value="diamante">Diamante</option>
+                <option value="hielo">Hielo</option>
+                <option value="unknown">Material desconocido</option>
+              </select>
             </div>
 
-            <div id="contenedor-datos" class="controls-panel ml-4 mr-4 border-2 border-utn-regular pb-4 pr-7 pl-7 pt-4 rounded-4xl">
-                <div class="material-controls">
-                    <h3 class="text-xl font-semibold text-utn-regular dark:text-white mb-2">Configuración de la placa</h3>
-                    <hr class="divider mb-3 text-utn-regular">
-
-                    <!--selección de material-->
-                    <div class="control-group mb-4">
-                        <label for="material" class="text-lg font-semibold text-center dark:text-white">Selecciona el material</label>
-                        <select id="material" class="text-black border-2 w-[284px] border-utn-regular rounded-full pl-2 mt-1 dark:text-white dark:bg-slate-950">
-                            <option value="vidrio">Vidrio</option>
-                            <option value="acrilico">Acrílico</option>
-                            <option value="circonio">Circonio</option>
-                            <option value="cuarzo">Cuarzo</option>
-                            <option value="diamante">Diamante</option>
-                            <option value="hielo">Hielo</option>
-                            <option value="unknown">Material desconocido</option>
-                        </select>
-                    </div>
-
-                    <!--espesor material-->
-                    <div class="control-group flex flex-col mb-4 text-lg dark:text-white">
-                        <label for="ancho_placa" class="text-lg font-semibold">Espesor [mm]</label>
-                        <input type="range" id="ancho_placa_value" min="1" max="20" value="5" step="1"
-                        class="accent-utn-regular rounded-full text-lg border-none bg-utn-light dark:bg-utn-dark cursor-pointer">
-                    </div>
-
-                    <!--desplegable selección de medio-->
-                    <div class="control-group mb-4">
-                        <label for="exterior" class="text-lg font-semibold dark:text-white">Selecciona el medio</label>
-                        <select id="exterior" class="text-black border-2 w-[284px] border-utn-regular rounded-full pl-3 mt-1 dark:bg-slate-950 dark:text-white">
-                            <option value="aire">Aire</option>
-                            <option value="acetaldeido">Acetaldeído</option>
-                            <option value="agua">Agua</option>
-                            <option value="benceno">Benceno</option>
-                            <option value="glicerina">Glicerina</option>
-                            <option value="heptanol">Heptanol (25°C)</option>
-                            <option value="metanol">Metanol</option>
-                            <option value="sugarSolution30">Solución de azúcar 30%</option>
-                            <option value="sugarSolution80">Solución de azúcar 80%</option>
-                            <option value="vacio">Vacío</option>
-                        </select>
-                      </div>
-                </div>
-                
-                <div class="laser-controls text-lg font-semibold">
-                    
-                    <div class="control-group flex flex-col mb-4 dark:text-white">
-                        <label for="angle">Ángulo de incidencia</label>
-                        <input type="range" id="angle_value" min="1" max="89" value="30" step="1" class="accent-utn-regular">
-                    </div>
-                </div>
-                
-                <div class="grid-controls mt-9 ">
-                  <h3 class="text-xl font-semibold text-utn-regular dark:text-white mb-2">Configuración de la grilla</h3>
-                  <hr class="divider mb-3 text-utn-regular">
-
-                    <div class="control-group">
-                        <label class="text-lg font-semibold dark:text-white">Separación</label>
-
-                        <div class="button-group flex flex-row space-x-3 mt-2">
-                            <button id="grid-1mm" class="grid-button dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">1 mm</button>
-                            <button id="grid-5mm" class="grid-button  dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">5 mm</button>
-                            <button id="grid-10mm" class="grid-button  dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular">10 mm</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="simulation-options">
-                    <div class="button-group mt-8 flex flex-col justify-center">
-                        <button id="boton_reset" class="dark:bg-utn-regular dark:text-slate-950 text-2xl 
-                        hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular
-                        dark:hover:bg-slate-950 dark:hover:text-utn-regular border border-utn-regular
-                        font-semibold px-3 py-1 rounded-2xl cursor-pointer">Reiniciar simulación</button>
-                        
-                        
-                        <button id="cargar-escenario"
-                        class="dark:bg-slate-950 dark:text-utn-regular border border-utn-regular
-                        bg-utn-light text-slate-950 text-xl px-3 py-1 rounded-2xl mt-2 cursor-pointer
-                        hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
-                        onclick="document.getElementById('fileInput').click()">
-                        Cargar escenario</button>
-
-                        <input type="file" id="fileInput" accept=".json" class="hidden" onchange="importarJSON(event)">
-                    </div>
-
-
-                </div>            
-                <div id="exito-esc">
-                  <!--Si el escenario se carga con éxito, acá se va a dar el mensaje-->
-                </div>
+            <!--espesor material-->
+            <div
+              class="control-group flex flex-col mb-4 text-lg dark:text-white"
+            >
+              <label for="ancho_placa" class="text-lg font-semibold"
+                >Espesor [mm]</label
+              >
+              <input
+                type="range"
+                id="ancho_placa_value"
+                min="1"
+                max="20"
+                value="5"
+                step="1"
+                class="accent-utn-regular rounded-full text-lg border-none bg-utn-light dark:bg-utn-dark cursor-pointer"
+              />
             </div>
 
+            <!--desplegable selección de medio-->
+            <div class="control-group mb-4">
+              <label
+                for="exterior"
+                class="text-lg font-semibold dark:text-white"
+                >Selecciona el medio</label
+              >
+              <select
+                id="exterior"
+                class="text-black border-2 w-[284px] border-utn-regular rounded-full pl-3 mt-1 dark:bg-slate-950 dark:text-white"
+              >
+                <option value="aire">Aire</option>
+                <option value="acetaldeido">Acetaldeído</option>
+                <option value="agua">Agua</option>
+                <option value="benceno">Benceno</option>
+                <option value="glicerina">Glicerina</option>
+                <option value="heptanol">Heptanol (25°C)</option>
+                <option value="metanol">Metanol</option>
+                <option value="sugarSolution30">Solución de azúcar 30%</option>
+                <option value="sugarSolution80">Solución de azúcar 80%</option>
+                <option value="vacio">Vacío</option>
+              </select>
+            </div>
           </div>
+
+          <div class="laser-controls text-lg font-semibold">
+            <div class="control-group flex flex-col mb-4 dark:text-white">
+              <label for="angle">Ángulo de incidencia</label>
+              <input
+                type="range"
+                id="angle_value"
+                min="0.1"
+                max="89"
+                value="30"
+                step="0.1"
+                class="accent-utn-regular"
+              />
+            </div>
+          </div>
+
+          <div class="grid-controls mt-9">
+            <h3
+              class="text-xl font-semibold text-utn-regular dark:text-white mb-2"
+            >
+              Configuración de la grilla
+            </h3>
+            <hr class="divider mb-3 text-utn-regular" />
+
+            <div class="control-group">
+              <label class="text-lg font-semibold dark:text-white"
+                >Separación</label
+              >
+
+              <div class="button-group flex flex-row space-x-3 mt-2">
+                <button
+                  id="grid-1mm"
+                  class="grid-button dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular"
+                >
+                  1 mm
+                </button>
+                <button
+                  id="grid-5mm"
+                  class="grid-button dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular"
+                >
+                  5 mm
+                </button>
+                <button
+                  id="grid-10mm"
+                  class="grid-button dark:bg-utn-dark bg-slate-400 text-white font-semibold pl-3 pr-3 pt-1 pb-1 rounded-xl focus:bg-utn-regular"
+                >
+                  10 mm
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="simulation-options">
+            <div class="button-group mt-8 flex flex-col justify-center">
+              <button
+                id="boton_reset"
+                class="dark:bg-utn-regular dark:text-slate-950 text-2xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border border-utn-regular font-semibold px-3 py-1 rounded-2xl cursor-pointer"
+              >
+                Reiniciar simulación
+              </button>
+
+              <button
+                id="cargar-escenario"
+                class="dark:bg-slate-950 dark:text-utn-regular border border-utn-regular bg-utn-light text-slate-950 text-xl px-3 py-1 rounded-2xl mt-2 cursor-pointer hover:shadow-utn-regular hover:shadow-2xl transition-shadow duration-80"
+                onclick="document.getElementById('fileInput').click()"
+              >
+                Cargar escenario
+              </button>
+
+              <input
+                type="file"
+                id="fileInput"
+                accept=".json"
+                class="hidden"
+                onchange="importarJSON(event)"
+              />
+            </div>
+          </div>
+          <div id="exito-esc">
+            <!--Si el escenario se carga con éxito, acá se va a dar el mensaje-->
+          </div>
+        </div>
+      </div>
     </div>
     <!--FIN DE INTERFACE SIMULADOR-->
 
     <!--COMIENZO DE TABLA DE DATOS-->
-    <div class="data-section flex flex-col items-center border-2 border-utn-regular rounded-2xl p-4 md:mx-auto mx-4 mt-10 max-w-screen-xl">
-      <h3 class="text-2xl font-semibold dark:text-white mb-4">Tabla de datos</h3>
-    
-      <div class="table-controls dark:text-white flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-4 w-full max-w-screen-xl md:mx-auto">
-        <button id="add-data" class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
+    <div
+      class="data-section flex flex-col items-center border-2 border-utn-regular rounded-2xl p-4 md:mx-auto mx-4 mt-10 max-w-screen-xl"
+    >
+      <h3 class="text-2xl font-semibold dark:text-white mb-4">
+        Tabla de datos
+      </h3>
+
+      <div
+        class="table-controls dark:text-white flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-4 w-full max-w-screen-xl md:mx-auto"
+      >
+        <button
+          id="add-data"
+          class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors"
+        >
           Agregar medición
         </button>
-
-        
       </div>
-      
-    
+
       <div class="w-full overflow-x-auto shadow-sm p-2">
-        <div class="min-w-[600px]"> 
+        <div class="min-w-[600px]">
           <table id="data-table" class="w-full text-sm border-collapse">
             <thead class="bg-utn-light dark:bg-slate-950 uppercase mb-4">
               <tr class="border border-utn-regular">
-                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">N°</th>
-                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Espesor (mm)</th>
-                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Material</th>
-                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Índice Refracción</th>
-                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Ángulo Incidencia</th>
-                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Ángulo Refracción</th>
-                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">IR Experimental</th>
-                <th scope="col" class="px-3 py-2 dark:text-white text-center whitespace-nowrap">Eliminar</th>
+                <th
+                  scope="col"
+                  class="px-3 py-2 dark:text-white text-center whitespace-nowrap"
+                >
+                  N°
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-2 dark:text-white text-center whitespace-nowrap"
+                >
+                  Espesor (mm)
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-2 dark:text-white text-center whitespace-nowrap"
+                >
+                  Material
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-2 dark:text-white text-center whitespace-nowrap"
+                >
+                  Índice Refracción
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-2 dark:text-white text-center whitespace-nowrap"
+                >
+                  Ángulo Incidencia
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-2 dark:text-white text-center whitespace-nowrap"
+                >
+                  Ángulo Refracción
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-2 dark:text-white text-center whitespace-nowrap"
+                >
+                  IR Experimental
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-2 dark:text-white text-center whitespace-nowrap"
+                >
+                  Eliminar
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -284,57 +430,89 @@
           </table>
         </div>
       </div>
-      
     </div>
     <!--FIN DE TABLA DE DATOS-->
     <div class="flex flex-col gap-2 w-full">
-  <label class="text-2xl font-semibold dark:text-white text-center mt-8">Exportar resultados</label>
-  <div class="flex flex-row justify-center gap-2">
-    <button id="export-txt" class="flex-1 cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
-      Archivo TXT
-    </button>
-    <button id="export-csv" class="flex-1 cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors">
-      Archivo CSV
-    </button>
-  </div>
-</div>
+      <label class="text-2xl font-semibold dark:text-white text-center mt-8"
+        >Exportar resultados</label
+      >
+      <div class="flex flex-row justify-center gap-2">
+        <button
+          id="export-txt"
+          class="flex-1 cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors"
+        >
+          Archivo TXT
+        </button>
+        <button
+          id="export-csv"
+          class="flex-1 cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors"
+        >
+          Archivo CSV
+        </button>
+      </div>
+    </div>
 
     <!--COMIENZO MINI WIKI-->
-    <div class="flex flex-col justify-start min-w-[350px] sm:mx-auto m-4 max-w-screen-xl p-4">
-    <h1 class="flex text-3xl md:text-4xl font-bold mt-8 mb-4 text-slate-900 dark:text-white justify-center">
-      ¿Qué necesitas saber para este simulador?</h1>
-    <p class="text-utn-dark  dark:text-slate-300">
-      <span class="font-semibold">Rayo luminoso:</span> Trayectoria a lo largo de la cual se propaga la energía luminosa en un medio homogéneo.
-    </p>
-    <p class="text-utn-dark  dark:text-slate-300">
-      <span class="font-semibold">Ley de reciprocidad:</span> La trayectoria de un rayo no depende del punto del que parte. Siempre sigue el mismo recorrido.
-    </p>
-    <p class="text-utn-dark  dark:text-slate-300">
-      <span class="font-semibold">Refracción:</span> Fenómeno que experimenta un rayo luminoso al pasar de un medio a otro con distinto índice de refracción.
-    </p>
+    <div
+      class="flex flex-col justify-start min-w-[350px] sm:mx-auto m-4 max-w-screen-xl p-4"
+    >
+      <h1
+        class="flex text-3xl md:text-4xl font-bold mt-8 mb-4 text-slate-900 dark:text-white justify-center"
+      >
+        ¿Qué necesitas saber para este simulador?
+      </h1>
+      <p class="text-utn-dark dark:text-slate-300">
+        <span class="font-semibold">Rayo luminoso:</span> Trayectoria a lo largo
+        de la cual se propaga la energía luminosa en un medio homogéneo.
+      </p>
+      <p class="text-utn-dark dark:text-slate-300">
+        <span class="font-semibold">Ley de reciprocidad:</span> La trayectoria
+        de un rayo no depende del punto del que parte. Siempre sigue el mismo
+        recorrido.
+      </p>
+      <p class="text-utn-dark dark:text-slate-300">
+        <span class="font-semibold">Refracción:</span> Fenómeno que experimenta
+        un rayo luminoso al pasar de un medio a otro con distinto índice de
+        refracción.
+      </p>
 
-    <p class="text-utn-dark  dark:text-slate-300">
-      <span class="font-semibold">Índice de refracción:</span> Relación entre la velocidad a la que viaja la luz en el vacío y la velocidad a la que viaja en el medio elegido.
-      <br>
-      Cuando el medio tiene mayor índice de refracción, se dice que es más "denso".
-      <br><br>
-      <span class="font-semibold text-utn-regular">Importante: El índice de refracción SIEMPRE es mayor o igual a 1. No existe medio en el cual la luz viaje más rápido que en el vacío.</span>
-      <br><br>
-    </p>
-    <br>
-    <p class="text-utn-dark  dark:text-slate-300">
-      <span class="font-semibold">Ángulo de incidencia:</span> Ángulo con el que impacta el rayo luminoso en la superficie respecto de una normal perpendicular a esta.
-    </p>
-    <p class="text-utn-dark  dark:text-slate-300">
-      <span class="font-semibold">Ángulo refractado:</span> Ángulo que sufre una desviación debido al cambio de medio en el recorrido del rayo luminoso. Puede obtenerse a través de la Ley de Snell.
-    </p>
-    <p class="text-utn-dark  dark:text-slate-300">
-      <span class="font-semibold">Ley de Snell:</span> Relaciona los senos de los ángulos incidente y refractado, que son constantes para dos medios dados, a través de la fórmula 
-      <span class="font-semibold text-utn-regular">n1.sen(&theta;1)=n2.sen(&theta;2)</span>
-      <br>
-      donde n1 es el índice de refracción del medio incidente, &theta;1 el ángulo de incidencia, n2 el índice de refracción del medio destino, y &theta;2 el ángulo refractado.
-    </p>
-
+      <p class="text-utn-dark dark:text-slate-300">
+        <span class="font-semibold">Índice de refracción:</span> Relación entre
+        la velocidad a la que viaja la luz en el vacío y la velocidad a la que
+        viaja en el medio elegido.
+        <br />
+        Cuando el medio tiene mayor índice de refracción, se dice que es más
+        "denso".
+        <br /><br />
+        <span class="font-semibold text-utn-regular"
+          >Importante: El índice de refracción SIEMPRE es mayor o igual a 1. No
+          existe medio en el cual la luz viaje más rápido que en el vacío.</span
+        >
+        <br /><br />
+      </p>
+      <br />
+      <p class="text-utn-dark dark:text-slate-300">
+        <span class="font-semibold">Ángulo de incidencia:</span> Ángulo con el
+        que impacta el rayo luminoso en la superficie respecto de una normal
+        perpendicular a esta.
+      </p>
+      <p class="text-utn-dark dark:text-slate-300">
+        <span class="font-semibold">Ángulo refractado:</span> Ángulo que sufre
+        una desviación debido al cambio de medio en el recorrido del rayo
+        luminoso. Puede obtenerse a través de la Ley de Snell.
+      </p>
+      <p class="text-utn-dark dark:text-slate-300">
+        <span class="font-semibold">Ley de Snell:</span> Relaciona los senos de
+        los ángulos incidente y refractado, que son constantes para dos medios
+        dados, a través de la fórmula
+        <span class="font-semibold text-utn-regular"
+          >n1.sen(&theta;1)=n2.sen(&theta;2)</span
+        >
+        <br />
+        donde n1 es el índice de refracción del medio incidente, &theta;1 el
+        ángulo de incidencia, n2 el índice de refracción del medio destino, y
+        &theta;2 el ángulo refractado.
+      </p>
     </div>
     <!--FIN MINI WIKI-->
 
@@ -367,7 +545,10 @@
             </p>
 
             <div class="flex flex-row justify-center space-x-4 mt-2">
-              <a href="https://www.instagram.com/giediutnsantafe/" alt="Instagram de GIEDI">
+              <a
+                href="https://www.instagram.com/giediutnsantafe/"
+                alt="Instagram de GIEDI"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -381,7 +562,8 @@
                 </svg>
               </a>
               <a
-                href="https://www.frsf.utn.edu.ar/investigacion-y-vinculacion/investigacion-y-vinculacion/centros-y-grupos/giedi" alt="Información sobre GIEDI"
+                href="https://www.frsf.utn.edu.ar/investigacion-y-vinculacion/investigacion-y-vinculacion/centros-y-grupos/giedi"
+                alt="Información sobre GIEDI"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -402,8 +584,7 @@
     </footer>
     <!--FIN FOOTER-->
 
-  <script src="./reflec_refrac.js"></script>
-  <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
-
+    <script src="./reflec_refrac.js"></script>
+    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
   </body>
 </html>

@@ -52,48 +52,13 @@ $(function () {
           id="material"
           class="border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent min-w-52"
         >
-          <option
-            value="acrylic"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          >
-            Acrílico
-          </option>
-          <option
-            value="quartz"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          >
-            Cuarzo
-          </option>
-          <option
-            value="zirconium"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          >
-            Circonio
-          </option>
-          <option
-            value="diamond"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          >
-            Diamante
-          </option>
-          <option
-            value="ice"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          >
-            Hielo
-          </option>
-          <option
-            value="unknown"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          >
-            Material Desconocido
-          </option>
-          <option
-            value="glass"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          >
-            Vidrio
-          </option>
+                <option value="vidrio">Vidrio</option>
+                <option value="acrilico">Acrílico</option>
+                <option value="circonio">Circonio</option>
+                <option value="cuarzo">Cuarzo</option>
+                <option value="diamante">Diamante</option>
+                <option value="hielo">Hielo</option>
+                <option value="unknown">Material desconocido</option>
         </select>
       </div>
 
@@ -105,66 +70,16 @@ $(function () {
         id="medioExterior"
         class="min-w-52 border-2 border-utn-regular rounded-lg px-2 py-1 bg-transparent"
       >
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="acetaldehyde"
-        >
-          Acetaldeído
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="water"
-        >
-          Agua
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="air"
-        >
-          Aire
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="benzene"
-        >
-          Benceno
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="glycerin"
-        >
-          Glicerina
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="heptanol"
-        >
-          Heptanol (25°C)
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="methanol"
-        >
-          Metanol
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="sugarSolution30"
-        >
-          Solución de azúcar 30%
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="sugarSolution80"
-        >
-          Solución de azúcar 80%
-        </option>
-        <option
-          class="dark:bg-slate-950 text-utn-dark dark:text-white"
-          value="vacuum"
-        >
-          Vacío
-        </option>
+                <option value="aire">Aire</option>
+                <option value="acetaldeido">Acetaldeído</option>
+                <option value="agua">Agua</option>
+                <option value="benceno">Benceno</option>
+                <option value="glicerina">Glicerina</option>
+                <option value="heptanol">Heptanol (25°C)</option>
+                <option value="metanol">Metanol</option>
+                <option value="sugarSolution30">Solución de azúcar 30%</option>
+                <option value="sugarSolution80">Solución de azúcar 80%</option>
+                <option value="vacio">Vacío</option>
       </select>
     </div>
 
@@ -193,8 +108,8 @@ $(function () {
       <input
         type="number"
         id="anguloIncidencia"
-        step="1"
-        min="1"
+        step="0.1"
+        min="0.1"
         max="89"
         placeholder="Por defecto: 30°"
         class="min-w-52 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
@@ -914,7 +829,7 @@ $(function () {
     "click",
     function () {
       simulador = this.id;
-    }
+    },
   );
 
   // click en siguiente habilita mostrar la caja
@@ -1348,7 +1263,7 @@ $(function () {
 
       default:
         console.log(
-          "Error de lectura \nFavor de reportar a giedifrsfutn@gmail.com"
+          "Error de lectura \nFavor de reportar a giedifrsfutn@gmail.com",
         );
     }
   });
