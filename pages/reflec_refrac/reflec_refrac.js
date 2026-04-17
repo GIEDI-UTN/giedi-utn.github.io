@@ -543,8 +543,8 @@ function dibujar_medidas(origen_x, origen_y, escala) {
   ctx.textAlign = "center";
   ctx.fillText(
     `${simulacion.ancho_placa} mm`,
-    dimX + 30,
-    origen_y + grosor_placa / 2 + 5,
+    dimX + 25,
+    5 + origen_y + grosor_placa / 2,
   );
 }
 
