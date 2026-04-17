@@ -169,7 +169,7 @@ function dibujar_sim() {
   ctx.fillRect(0, 0, width, height);
 
   // calcular escala y origen para la visualización
-  const desiredXRange = 160;
+  const desiredXRange = 180;
   const escala = width / desiredXRange;
   const origen_x = width / 2;
   const origen_y = height * 0.5;
@@ -350,8 +350,10 @@ function dibujar_placa(origen_x, origen_y, escala) {
     window.matchMedia("(prefers-color-scheme: dark)").matches
   ) {
     ctx.fillStyle = "rgba(70, 130, 180, 1)";
+    ctx.strokeStyle = "rgba(70, 130, 180, 1)";
   } else {
     ctx.fillStyle = "rgba(0,0,0,1)";
+    ctx.strokeStyle = "rgba(0,0,0,1)";
   }
 
   ctx.font = "17px Arial";
@@ -365,11 +367,20 @@ function dibujar_placa(origen_x, origen_y, escala) {
   }
 
   // etiquetas con el medio exterior
-  ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top - 30);
-  ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top + 100);
+  ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top - 50);
+  ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top + 120);
 
   // etiqueta con el material de la placa
-  ctx.fillStyle = "white";
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = "white";
+  } else {
+    ctx.fillStyle = "rgba(0,0,0,1)";
+    ctx.strokeStyle = "rgba(0,0,0,1)";
+  }
   ctx.fillText(materialName, origen_x - 80, placa_top + 40);
 }
 
@@ -434,24 +445,58 @@ function dibujar_laser(origen_x, origen_y, escala) {
   // punto de salida del material
   const grosor_placa = simulacion.ancho_placa * escala;
   const largo_material_reflex = grosor_placa / Math.cos(angulo_refraccion);
-  const exitX =
+  const exitX_real =
     incidencia_ejeX + largo_material_reflex * Math.sin(angulo_refraccion);
-  const exitY = incidencia_ejeY + grosor_placa;
+  let exitY = incidencia_ejeY + grosor_placa;
+
+  // esto se usa para definir los límites horizontales de la placa
+  const ancho_placa_dibujo = 100 * escala;
+  const placa_izq = origen_x - ancho_placa_dibujo / 2;
+  const placa_der = origen_x + ancho_placa_dibujo / 2;
+
+  // recortar el rayo si sale de los límites de la placa
+  let exitX = exitX_real;
+  let exitX_dibujo = exitX_real;
+  let exitY_dibujo = exitY;
+
+  if (exitX_real > placa_der) {
+    const t = (placa_der - incidencia_ejeX) / (exitX_real - incidencia_ejeX);
+    exitX_dibujo = placa_der;
+    exitY_dibujo = incidencia_ejeY + t * (exitY - incidencia_ejeY);
+    exitX = placa_der;
+    exitY = exitY_dibujo;
+  } else if (exitX_real < placa_izq) {
+    const t = (placa_izq - incidencia_ejeX) / (exitX_real - incidencia_ejeX);
+    exitX_dibujo = placa_izq;
+    exitY_dibujo = incidencia_ejeY + t * (exitY - incidencia_ejeY);
+    exitX = placa_izq;
+    exitY = exitY_dibujo;
+  }
 
   ctx.strokeStyle = color_laser;
   ctx.lineWidth = 3;
 
   ctx.beginPath();
   ctx.moveTo(incidencia_ejeX, incidencia_ejeY);
-  ctx.lineTo(exitX, exitY);
+  ctx.lineTo(exitX_dibujo, exitY_dibujo);
   ctx.stroke();
 
-  // al salir, el rayo vuelve al ángulo original
-  const largo_refractado = 100 * escala;
-  const largo_refractado_X =
-    exitX + largo_refractado * Math.sin(incidencia_normal);
-  const largo_refractado_Y =
-    exitY + largo_refractado * Math.cos(incidencia_normal);
+  // al salir, el rayo vuelve al ángulo original — limitado a los bordes del canvas
+  const largo_refractado = 150 * escala;
+  const dy_refrac = largo_refractado * Math.cos(incidencia_normal);
+  const dx_refrac = largo_refractado * Math.sin(incidencia_normal);
+  let escala_refrac = 1;
+  if (dy_refrac > 0)
+    escala_refrac = Math.min(
+      escala_refrac,
+      (canvas.height - exitY) / dy_refrac,
+    );
+  if (dx_refrac > 0)
+    escala_refrac = Math.min(escala_refrac, (canvas.width - exitX) / dx_refrac);
+  if (dx_refrac < 0)
+    escala_refrac = Math.min(escala_refrac, -exitX / dx_refrac);
+  const largo_refractado_X = exitX + dx_refrac * escala_refrac;
+  const largo_refractado_Y = exitY + dy_refrac * escala_refrac;
 
   ctx.strokeStyle = color_laser;
   ctx.lineWidth = 2;
@@ -489,8 +534,16 @@ function dibujar_laser(origen_x, origen_y, escala) {
   };
 
   const largo_auxiliar = 150 * escala;
-  const aux_X = exitX + largo_auxiliar * Math.sin(angulo_refraccion);
-  const aux_Y = exitY + largo_auxiliar * Math.cos(angulo_refraccion);
+  const dy_aux = largo_auxiliar * Math.cos(angulo_refraccion);
+  const dx_aux = largo_auxiliar * Math.sin(angulo_refraccion);
+  let escala_aux = 1;
+  if (dy_aux > 0)
+    escala_aux = Math.min(escala_aux, (canvas.height - exitY) / dy_aux);
+  if (dx_aux > 0)
+    escala_aux = Math.min(escala_aux, (canvas.width - exitX) / dx_aux);
+  if (dx_aux < 0) escala_aux = Math.min(escala_aux, -exitX / dx_aux);
+  const aux_X = exitX + dx_aux * escala_aux;
+  const aux_Y = exitY + dy_aux * escala_aux;
 
   ctx.strokeStyle = color_laser;
   ctx.lineWidth = 1;
