@@ -42,6 +42,7 @@ let simulacion = {
   medidas: [],
   material_actual: "vidrio",
   medio_actual: "aire",
+  bm_estatico: 0,
 };
 
 // inicialización del canvas
@@ -80,6 +81,9 @@ function iniciar_simulacion() {
   // iniciar el bucle de renderizado
   iniciar_render_loop();
   setupEventListeners();
+
+  // generar bm estático al inicio de la simulación
+  muestrear_bm();
 }
 
 function iniciar_render_loop() {
@@ -134,6 +138,9 @@ function reset_sim() {
   }
 
   hayEscenario = false;
+
+  // regenerar error estático si hay recarga de página o simulación
+  muestrear_bm();
 }
 
 // canvas: dibujo
@@ -395,21 +402,21 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const color_laser = "rgb(0, 162, 255)";
 
   // rayo incidente
-  const incidentLength = 150 * escala;
-  const incidentEndX =
-    incidencia_ejeX + incidentLength * Math.cos(angulo_radianes);
+  const largo_incidencia = 150 * escala;
+  const fin_x_incidencia =
+    incidencia_ejeX + largo_incidencia * Math.cos(angulo_radianes);
   const incidentEndY =
-    incidencia_ejeY - incidentLength * Math.sin(angulo_radianes);
+    incidencia_ejeY - largo_incidencia * Math.sin(angulo_radianes);
 
   ctx.strokeStyle = color_laser;
   ctx.lineWidth = 2;
 
   ctx.beginPath();
   ctx.moveTo(incidencia_ejeX, incidencia_ejeY);
-  ctx.lineTo(incidentEndX, incidentEndY);
+  ctx.lineTo(fin_x_incidencia, incidentEndY);
   ctx.stroke();
 
-  // ángulos de reflexión y refracción
+  // índices de refracción
   const n1 = simulacion.medio_actual.indice_refrac;
   const n2 = simulacion.material_actual.indice_refrac;
 
@@ -426,6 +433,27 @@ function dibujar_laser(origen_x, origen_y, escala) {
     angulo_refraccion = Math.PI / 2;
   } else {
     angulo_refraccion = Math.asin(seno_refrac);
+  }
+
+  {
+    let cant_error;
+
+    if (hayEscenario) {
+      cant_error = simulacion.error;
+    } else {
+      cant_error = 1.5;
+    }
+
+    // box muller necesita el ángulo en grados
+    const refrac_grados = (angulo_refraccion * 180) / Math.PI;
+    // aplico el bm estático para que no oscile
+    const refrac_con_error =
+      refrac_grados +
+      simulacion.bm_estatico * refrac_grados * (cant_error / 100);
+
+    // recorte de [0°, 89.99°]
+    const ang_refrac_corte = Math.max(0, Math.min(refrac_con_error, 89.99));
+    angulo_refraccion = (ang_refrac_corte * Math.PI) / 180;
   }
 
   const reflexion_rad = Math.PI - angulo_radianes;
@@ -481,7 +509,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
   ctx.lineTo(exitX_dibujo, exitY_dibujo);
   ctx.stroke();
 
-  // al salir, el rayo vuelve al ángulo original — limitado a los bordes del canvas
+  // al salir, el rayo vuelve al ángulo original
   const largo_refractado = 150 * escala;
   const dy_refrac = largo_refractado * Math.cos(incidencia_normal);
   const dx_refrac = largo_refractado * Math.sin(incidencia_normal);
@@ -794,7 +822,7 @@ function actualizar_medio_ext() {
   simulacion.medio_actual = EXTERIOR_MEDIUMS[simulacion.medio_exterior];
 }
 
-// BOX-MULLER
+/* BOX-MULLER
 let resto;
 let sobra = false;
 
@@ -826,6 +854,19 @@ function boxmuller(real, cant_error) {
   resto = z1;
 
   return z0 * cant_error + real;
+}*/
+
+// cálculo estático de box-muller
+function muestrear_bm() {
+  let u1 = Math.random();
+  const u2 = Math.random();
+  if (u1 === 0) u1 = Number.MIN_VALUE;
+
+  const R = Math.sqrt(-2.0 * Math.log(u1));
+  const theta = 2.0 * Math.PI * u2;
+
+  // sólo se usa z0 o z1
+  simulacion.bm_estatico = R * Math.cos(theta);
 }
 
 function renderizar_tabla() {
@@ -924,6 +965,7 @@ function agregar_medida() {
 
   simulacion.medidas.push(medida);
   renderizar_tabla();
+  muestrear_bm();
 }
 
 function verificar_input(input, min, max, variable) {
