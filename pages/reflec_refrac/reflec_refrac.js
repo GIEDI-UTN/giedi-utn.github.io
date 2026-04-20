@@ -35,7 +35,7 @@ let simulacion = {
   error: 0,
   material: "vidrio",
   medio_exterior: "aire",
-  ancho_placa: 5,
+  ancho_placa: 10,
   angulo_incidencia: 30,
   espacio_grilla: 10,
   gridOffset: { x: 0, y: 0 },
@@ -108,7 +108,7 @@ function reset_sim() {
     error: 0,
     material: "vidrio",
     medio_exterior: "aire",
-    ancho_placa: 5,
+    ancho_placa: 10,
     angulo_incidencia: 30,
     espacio_grilla: 10,
     gridOffset: { x: 0, y: 0 },
@@ -846,20 +846,17 @@ function renderizar_tabla() {
     const cellMaterial = fila.insertCell(2);
     cellMaterial.textContent = medida.material;
 
-    const cellRI = fila.insertCell(3);
-    cellRI.textContent = medida.indice_refrac;
-
-    const cellIncidence = fila.insertCell(4);
+    const cellIncidence = fila.insertCell(3);
     cellIncidence.textContent = medida.angulo_incidencia;
 
-    const cellRefraction = fila.insertCell(5);
+    const cellRefraction = fila.insertCell(4);
     cellRefraction.textContent = medida.angulo_refraccion;
 
-    const cellExpRI = fila.insertCell(6);
+    const cellExpRI = fila.insertCell(5);
     cellExpRI.textContent = medida.experimentalRI;
 
     // esto se usa para crear el botón de eliminación y asignarle su respectivo índice
-    const cellAction = fila.insertCell(7);
+    const cellAction = fila.insertCell(6);
     const btnEliminar = document.createElement("button");
     btnEliminar.textContent = "Eliminar";
     btnEliminar.className =
@@ -884,38 +881,32 @@ function eliminar_medida(indice) {
 }
 
 function agregar_medida() {
-  const ang_refrac_input = prompt(
+  const incidencia_input = prompt(
+    "Ingrese el ángulo de incidencia medido usando '.' para decimales",
+    "",
+  );
+
+  const ang_incidencia = parseFloat(incidencia_input);
+  verificar_input(ang_incidencia, 0, 90, "el ángulo de incidencia medido");
+
+  const refraccion_input = prompt(
     "Ingrese el ángulo de refracción medido usando '.' para decimales",
     "",
   );
-  if (ang_refrac_input === null || ang_refrac_input === "") {
+
+  const ang_refraccion = parseFloat(refraccion_input);
+  verificar_input(ang_refraccion, 0, 90, "el ángulo de refracción medido");
+
+  const irexp_input = prompt(
+    "Ingrese el índice de refracción calculado usando '.' para decimales",
+    "",
+  );
+
+  const ir_exp = parseFloat(irexp_input);
+  verificar_input(ir_exp, 0, 5, "el índice de refracción calculado");
+
+  if (isNaN(ang_incidencia) || isNaN(ang_refraccion) || isNaN(ir_exp)) {
     return;
-  }
-
-  const angulo_refraccion = parseFloat(ang_refrac_input);
-  if (
-    angulo_refraccion <= 0 ||
-    angulo_refraccion > 90 ||
-    isNaN(angulo_refraccion)
-  ) {
-    alert(
-      "Por favor, ingrese un valor numérico válido para el ángulo de refracción.",
-    );
-    return;
-  }
-
-  const angulo_incidenciaRad =
-    (simulacion.angulos_calculados.incidence * Math.PI) / 180;
-  const angulo_refraccionRad = (angulo_refraccion * Math.PI) / 180;
-  const experimentalRI =
-    (simulacion.medio_actual.indice_refrac * Math.sin(angulo_incidenciaRad)) /
-    Math.sin(angulo_refraccionRad);
-
-  let IR_error;
-  if (hayEscenario) {
-    IR_error = boxmuller(experimentalRI, simulacion.error).toFixed(3);
-  } else {
-    IR_error = boxmuller(experimentalRI, 0.1).toFixed(3);
   }
 
   const medida = {
@@ -926,17 +917,24 @@ function agregar_medida() {
         ? "Desconocido"
         : simulacion.material_actual.name,
     medio_exterior: simulacion.medio_actual.name,
-    indice_refrac:
-      simulacion.material === "unknown"
-        ? "?"
-        : simulacion.material_actual.indice_refrac.toFixed(2),
-    angulo_incidencia: simulacion.angulos_calculados.incidence.toFixed(2),
-    angulo_refraccion: angulo_refraccion.toFixed(2),
-    experimentalRI: IR_error,
+    angulo_incidencia: ang_incidencia.toFixed(2),
+    angulo_refraccion: ang_refraccion.toFixed(2),
+    experimentalRI: ir_exp.toFixed(2),
   };
 
   simulacion.medidas.push(medida);
   renderizar_tabla();
+}
+
+function verificar_input(input, min, max, variable) {
+  if (input === null || input === "") {
+    return;
+  }
+
+  if (input <= min || input > max || isNaN(input)) {
+    alert(`Por favor, ingrese un valor numérico válido para ${variable}.`);
+    return;
+  }
 }
 
 // carga y descarga de archivos
@@ -1027,12 +1025,12 @@ function exportar_txt() {
 
   text += "MEDICIONES:\n";
   text +=
-    "N°\tEspesor(mm)\tMaterial\tIR\tMedio ext.\tÁng. inc.\tÁng. ref.\tIR Exp.\n";
+    "N°\tEspesor(mm)\tMaterial\tMedio ext.\tÁng. inc.\tÁng. ref.\tIR Exp.\n";
   text +=
     "---------------------------------------------------------------------------------------------------------------\n";
 
   simulacion.medidas.forEach((m) => {
-    text += `${m.number}\t${m.ancho_placa}\t\t${m.material}\t\t${m.indice_refrac}\t${m.medio_exterior}\t\t${m.angulo_incidencia}\t\t${m.angulo_refraccion}\t\t${m.experimentalRI}\n`;
+    text += `${m.number}\t${m.ancho_placa}\t\t${m.material}\t\t${m.medio_exterior}\t\t${m.angulo_incidencia}\t\t${m.angulo_refraccion}\t\t${m.experimentalRI}\n`;
   });
 
   descargar_archivo(text, "datos_sim_optica.txt", "text/plain");
@@ -1048,7 +1046,6 @@ function exportar_csv() {
     "N°",
     "Espesor (mm)",
     "Material",
-    "IR",
     "Medio Ext.",
     "Áng. Inc.",
     "Áng. Ref.",
@@ -1059,7 +1056,6 @@ function exportar_csv() {
       m.number,
       m.ancho_placa,
       m.material,
-      m.indice_refrac,
       m.medio_exterior,
       m.angulo_incidencia,
       m.angulo_refraccion,
