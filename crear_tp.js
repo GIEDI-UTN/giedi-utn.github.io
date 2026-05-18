@@ -37,6 +37,44 @@ function compilar() {
     const rutaHtmlSalida = path.join(directorioActual, nombreSalidaHtml);
 
     const txt_markdown = fs.readFileSync(rutaMd, "utf-8");
+
+    marked.use({
+      extensions: [
+        {
+          name: "inlineMath",
+          level: "inline",
+          start(src) {
+            return src.indexOf("$");
+          },
+          tokenizer(src) {
+            const match = /^\$([^$\n]+)\$/.exec(src);
+            if (match) {
+              return { type: "inlineMath", raw: match[0], text: match[1] };
+            }
+          },
+          renderer(token) {
+            return `$${token.text}$`;
+          },
+        },
+        {
+          name: "blockMath",
+          level: "block",
+          start(src) {
+            return src.indexOf("$$");
+          },
+          tokenizer(src) {
+            const match = /^\$\$([\s\S]+?)\$\$/.exec(src);
+            if (match) {
+              return { type: "blockMath", raw: match[0], text: match[1] };
+            }
+          },
+          renderer(token) {
+            return `$$${token.text}$$`;
+          },
+        },
+      ],
+    });
+
     const contenido_html = marked.parse(txt_markdown);
 
     const rutaRelativaDesdeRaiz = path.relative(__dirname, directorioActual);
