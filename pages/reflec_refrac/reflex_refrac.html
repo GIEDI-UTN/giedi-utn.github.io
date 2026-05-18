@@ -19,6 +19,17 @@
     <!--Metadata-->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://unpkg.com;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  img-src 'self' data: https://www.googletagmanager.com;
+  font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
+  connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
+"
+    />
     <meta name="copyright" content="© 2025 GIEDI UTN FRSF" />
     <link rel="author" href="Ing. Rodrigo Agosta" />
 
