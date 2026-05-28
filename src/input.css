@@ -1,9 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-    --color-utn-regular: oklch(0.68 0.141385 233.5329);
-    --color-utn-light: oklch(0.96 0.0103 247.93);
-    --color-utn-dark: oklch(0.7156 0.0449 233.5329);
+  --color-utn-regular: oklch(0.68 0.141385 233.5329);
+  --color-utn-light: oklch(0.96 0.0103 247.93);
+  --color-utn-dark: oklch(0.7156 0.0449 233.5329);
 
-    --font-rubik: "Rubik", sans-serif;
+  --font-rubik: "Rubik", sans-serif;
+}
+
+@layer components {
+  .list-bracketed {
+    list-style: none;
+    counter-reset: item;
+  }
+
+  .list-bracketed li {
+    counter-increment: item;
+  }
+
+  .list-bracketed li::before {
+    content: "[" counter(item) "]";
+    @apply font-mono;
+  }
 }

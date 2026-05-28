@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Google tag (gtag.js) -->
     <script
@@ -66,23 +66,6 @@
         </a>
 
         <div class="flex items-center lg:order-2">
-          <div class="hidden mt-2 mr-4 sm:inline-block">
-            <span></span>
-          </div>
-
-          <!--Menú de accesibilidad-->
-          <a
-            href="#"
-            class="border-2 border-utn-dark rounded-full px-3 py-2 lg:px-3 lg:py-2 lg:rounded-full lg:mr-0"
-            alt="Accesibilidad"
-          >
-            <img
-              src="../../src/media/accessibilidad.png"
-              alt="Accesiblidad"
-              class="w-5 h-5 lg:w-5 lg:h-5"
-            />
-          </a>
-
           <!--Toggle hamburguesa-->
           <button
             data-collapse-toggle="mobile-menu-2"
@@ -170,6 +153,19 @@
         Para reiniciar la simulación a los valores por defecto, toca en
         "Reiniciar"
       </p>
+      <div id="boton-tp" class="mt-4">
+        <a
+          href="tp1_optica.html"
+          class="flex flex-col sm:flex-row justify-center"
+        >
+          <button
+            id="ver-tp"
+            class="cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors"
+          >
+            Ver trabajo práctico
+          </button>
+        </a>
+      </div>
 
       <!--COMIENZO DE INTERFACE SIMULADOR-->
       <div
@@ -427,11 +423,11 @@
       </div>
     </div>
     <!--FIN DE TABLA DE DATOS-->
-    <div class="flex flex-col gap-2 w-full">
+    <div class="flex flex-col gap-2">
       <label class="text-2xl font-semibold dark:text-white text-center mt-8"
         >Exportar resultados</label
       >
-      <div class="flex flex-row justify-center gap-2">
+      <div class="flex flex-row justify-center gap-2 min-w-3xl mx-auto">
         <button
           id="export-txt"
           class="flex-1 cursor-pointer hover:bg-utn-regular hover:text-white dark:hover:text-slate-900 dark:text-white py-1 px-3 font-semibold rounded-xl border-2 border-utn-regular transition-colors"
