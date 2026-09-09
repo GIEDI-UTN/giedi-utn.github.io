@@ -47,13 +47,10 @@
   </head>
   <body class="bg-utn-light dark:bg-slate-950 font-rubik">
     <!--Comienzo de navbar-->
-    <nav
-      class="sticky top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b-1 rounded-3xl border-utn-dark/50"
-    >
-      <div
-        class="flex flex-wrap items-center justify-around max-w-screen-2xl mx-auto"
-      >
+    <nav class="top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b rounded-3xl border-utn-dark/50">
+      <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <a href="../../index.html" class="flex items-center">
+          
           <img
             src="../../src/media/GIEDI-LOGO-LIGHT.png"
             class="h-7 ml-4 sm:h-9 block dark:hidden"
@@ -72,9 +69,25 @@
         </a>
 
         <div class="flex items-center lg:order-2">
-          <div class="hidden mt-2 mr-4 sm:inline-block">
+          <div class="hidden mt-2 mr-4">
             <span></span>
           </div>
+
+          <!--TO-DO: Menú de accesibilidad-->
+          <div class="hidden"> 
+            <a
+            href="#"
+            class="border-2 border-utn-dark rounded-full px-3 py-2 lg:px-3 lg:py-2 lg:rounded-full lg:mr-0"
+            alt="Accesibilidad"
+          >
+            <img
+              src="./src/media/accessibilidad.png"
+              alt="Accesiblidad"
+              class="w-5 h-5 lg:w-5 lg:h-5"
+            />
+          </a>
+          </div>
+          
 
           <!--Toggle hamburguesa-->
           <button
@@ -115,7 +128,7 @@
         >
           <!--Comienzo listado menú-->
           <ul
-            class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 text-lg lg:mr-60"
+            class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 text-lg lg:mr-40"
           >
             <li>
               <a
@@ -127,7 +140,7 @@
             </li>
             <li>
               <a
-                href="../../index.html#simuladores"
+                href="#simuladores"
                 class="block py-2 pl-3 pr-4 border-b border-gray-100 font-semibold lg:hover:bg-transparent lg:border-0 lg:hover:text-utn-regular lg:p-0 dark:text-gray-400 lg:text-gray-800 lg:dark:hover:text-utn-regular dark:hover:bg-slate-900 dark:hover:rounded-full lg:dark:hover:bg-transparent dark:border-gray-700 lg:dark:font-semibold hover:bg-blue-100 hover:rounded-full"
                 >Simuladores</a
               >
@@ -142,17 +155,18 @@
     <!-- INICIO CONTENIDO -->
     <div class="flex flex-col justify-center items-center" id="main">
       <!-- Comienzo main: Paneles superiores valores calc y parametros-->
+
       <div
-        class="flex flex-col justify-center w-full px-4 mx-auto max-w-screen-lg lg:max-w-screen-2xl"
+        class="flex flex-col items-center justify-center min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl w-full px-4 mx-auto lg:max-w-screen-2xl"
         id="contenedor-0"
       >
         <h1
-          class="dark:text-white text-slate-950 text-2xl lg:text-5xl font-bold text-center mt-4"
+          class="flex text-3xl md:text-4xl font-bold text-center mt-8 text-slate-900 dark:text-white"
         >
           Simulador de circuito RLC
         </h1>
         <p
-          class="text-base sm:text-lg md:text-xl dark:text-white text-slate-950 text-center break-words mt-2"
+          class="text-base sm:text-md md:text-lg dark:text-white text-slate-950 text-center break-words mt-2"
         >
           Modifica las variables para aplicar la resonancia del circuito. Luego,
           podrás sacar conclusiones a partir de las variables calculadas.
@@ -248,21 +262,21 @@
               class="value-item flex flex-col justify-center items-center p-4"
             >
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">Frecuencia angular (ω):</span>
                 <span id="freq-value">15.92 rad/s</span>
               </div>
 
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center"
               >
                 <span class="label">Período (T):</span>
                 <span id="period-value">0.063 s</span>
               </div>
 
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">Ángulo de Fase (φ):</span>
                 <span id="phase-value">-87.1°</span>
@@ -271,19 +285,19 @@
 
             <div class="value-item flex flex-col justify-center items-center">
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">XL:</span>
                 <span id="xl-value">10 Ω</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center"
               >
                 <span class="label">XC:</span>
                 <span id="xc-value">1000 Ω</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">Impedancia (Z):</span>
                 <span id="z-value">990.1 Ω</span>
@@ -292,19 +306,19 @@
 
             <div class="value-item flex flex-col justify-center items-center">
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">Pot. Aparente (S):</span>
                 <span id="s-value">0.165 VA</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center"
               >
                 <span class="label">Pot. Activa (P):</span>
                 <span id="p-value">0.008 W</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">Pot. Reactiva (Q):</span>
                 <span id="q-value">-0.164 VAR</span>
@@ -313,19 +327,19 @@
 
             <div class="value-item flex flex-col justify-center items-center">
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">VL:</span>
                 <span id="vl-value">0.11 V</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center"
               >
                 <span class="label">VC:</span>
                 <span id="vc-value">10.6 V</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">VR:</span>
                 <span id="vr-value">0.53 V</span>
@@ -334,19 +348,19 @@
 
             <div class="value-item flex flex-col justify-center items-center">
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">VpL:</span>
                 <span id="vpl-value">0.11 V</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center"
               >
                 <span class="label">VpC:</span>
                 <span id="vpc-value">10.6 V</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">VpR:</span>
                 <span id="vpr-value">0.53 V</span>
@@ -355,13 +369,13 @@
 
             <div class="value-item flex flex-col justify-center items-center">
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center m-4"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center m-4"
               >
                 <span class="label">i pico:</span>
                 <span id="ipeak-value">0.015 A</span>
               </div>
               <div
-                class="value-item border-1 rounded-2xl p-2 min-w-s w-60 text-center"
+                class="value-item border rounded-2xl p-2 min-w-s w-60 text-center"
               >
                 <span class="label">i RMS:</span>
                 <span id="irms-value">0.011 A</span>
@@ -414,7 +428,7 @@
                 max="100"
                 value="5"
                 step="0.1"
-                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">De 1 Ω a 100 Ω</p>
             </div>
@@ -434,7 +448,7 @@
                 max="1000"
                 value="300"
                 step="1"
-                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
                 De 10 mH a 1000 mH
@@ -456,7 +470,7 @@
                 max="1000"
                 value="1000"
                 step="1"
-                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
                 De 1 µF a 1000 µF
@@ -478,7 +492,7 @@
                 max="500"
                 value="20"
                 step="0.01"
-                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
                 De 1 Hz a 500 Hz
@@ -500,7 +514,7 @@
                 max="50"
                 value="15"
                 step="1"
-                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">De 1 V a 50 V</p>
             </div>
@@ -520,7 +534,7 @@
                 max="600"
                 value="300"
                 step="10"
-                class="rounded-lg border-1 border-utn-dark dark:border-white dark:text-white w-full text-center"
+                class="rounded-lg border border-utn-dark dark:border-white dark:text-white w-full text-center"
               />
               <p class="text-center dark:text-gray-500 mt-2">
                 De 10 ms a 600ms
@@ -537,7 +551,7 @@
               />
               <button
                 id="resonanceBtn"
-                class="dark:bg-utn-regular mt-4 dark:text-slate-950 text-xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border-1 border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer"
+                class="dark:bg-utn-regular mt-4 dark:text-slate-950 text-xl hover:bg-utn-light bg-utn-regular text-utn-light hover:text-utn-regular dark:hover:bg-slate-950 dark:hover:text-utn-regular border border-utn-regular font-semibold px-8 py-1 rounded-full cursor-pointer"
               >
                 Configurar circuito
               </button>
@@ -548,13 +562,13 @@
               />
               <button
                 id="resonancia_si"
-                class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer"
+                class="text-utn-regular text-xl border border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer"
               >
                 Buscar resonancia
               </button>
               <button
                 id="osci_on"
-                class="text-utn-regular text-xl border-1 border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer"
+                class="text-utn-regular text-xl border border-utn-regular px-8 py-1 mt-4 rounded-full cursor-pointer"
               >
                 Iniciar osciloscopio
               </button>
@@ -581,7 +595,7 @@
           >
             <!--Inicio canvas-->
             <div
-              class="graph-container border-1 border-utn-regular rounded-2xl p-4 mt-4 relative w-full max-w-full sm:max-w-2xl"
+              class="graph-container border border-utn-regular rounded-2xl p-4 mt-4 relative w-full max-w-full sm:max-w-2xl"
             >
               <canvas
                 id="waveforms"
@@ -597,7 +611,7 @@
           <div id="panel-der">
             <!--Comienzo botonera osciloscopio-->
             <div
-              class="border-1 mt-4 ml-4 p-4 border-utn-regular rounded-2xl flex flex-col"
+              class="border mt-4 ml-4 p-4 border-utn-regular rounded-2xl flex flex-col"
             >
               <label class="inline-flex items-center cursor-pointer">
                 <input
@@ -717,51 +731,51 @@
           </h3>
           <div class="flex flex-col text-center justify-center">
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$\omega = {2\pi}.f$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl mb-2"
             >
               $$T = \frac 1 f$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl"
+              class="border border-utn-dark dark:border-utn-light rounded-xl"
             >
               $$\phi = \arctan \frac {XL-XC}{R}$$
             </p>
           </div>
           <div class="flex flex-col text-center justify-center">
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$i p = irms.\sqrt{2}$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$i rms = \frac {Vrms}{Z}$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl"
+              class="border border-utn-dark dark:border-utn-light rounded-xl"
             >
               $$Z = \frac {Vrms}{i rms}$$
             </p>
           </div>
           <div class="flex flex-col text-center justify-center">
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$Z = \sqrt{R² + (XL - XC)²}$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$XL = \omega L$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2"
             >
               $$XC = \omega C$$
             </p>
@@ -769,17 +783,17 @@
 
           <div class="flex flex-col text-center justify-center">
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$VL = irms.XL$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$VC = irms.XC$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2"
             >
               $$VR = irms.R$$
             </p>
@@ -787,35 +801,35 @@
 
           <div class="flex flex-col text-center justify-center">
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$VpL = ip.XL$$
             </p>
 
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$VpC = ip.XC$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2"
             >
               $$VpR = ip.R$$
             </p>
           </div>
           <div class="flex flex-col text-center justify-center">
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$P = irms².R$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2 mb-2"
             >
               $$Q = irms.(VL - VC)$$
             </p>
             <p
-              class="border-1 border-utn-dark dark:border-utn-light rounded-xl p-2"
+              class="border border-utn-dark dark:border-utn-light rounded-xl p-2"
             >
               $$S = irms.Vrms$$
             </p>

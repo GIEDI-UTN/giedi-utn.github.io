@@ -1,64 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
-    <!--IMPORTANTE: AGREGAR METADATA AUTOR-->
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XLJH6E9S1H"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-XLJH6E9S1H");
+    </script>
+
+    <!--Metadata-->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="copyright" content="© 2025 GIEDI UTN FRSF" />
     <link rel="author" href="Ing. Rodrigo Agosta" />
-    <link rel="stylesheet" href="../../src/output.css" />
-    <link rel="icon" href="../../src/icon-page-giedi.png" type="image/x-icon" />
 
-    <title>GIEDI - UTN FRSF</title>
+    <!--Fuente RUBIK-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../../src/output.css" />
+    <link
+      rel="icon"
+      href="../../src/media/LOGO-UTN-GIEDI.png"
+      type="image/x-icon"
+    />
+    <title>GIEDI - UTN</title>
   </head>
 
-  <body class="dark:bg-slate-950 bg-white">
+  <body class="dark:bg-slate-950 bg-utn-light font-rubik">
     <!--Comienzo de navbar-->
-    <!--Comienzo de navbar-->
-    <nav class="bg-white border-gray-200 py-2.5 dark:bg-slate-950">
-      <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
-        <a href="./index.html" class="flex items-center">
+    <nav class="top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b rounded-3xl border-utn-dark/50">
+      <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
+        <a href="../../index.html" class="flex items-center">
+          
           <img
-            src="./src/GIEDI-SVG-NARANJA.svg"
-            class="h-7 mr-3 sm:h-9"
+            src="../../src/media/GIEDI-LOGO-LIGHT.png"
+            class="h-7 ml-4 sm:h-9 block dark:hidden"
             alt="Logo institucional GIEDI"
           />
           <img
-            src="./src/UTN-SVG-NARANJA.svg"
-            class="h-5 mr-3 sm:h-6"
+            src="../../src/media/GIEDI-LOGO-DARK.png"
+            class="h-7 ml-4 sm:h-9 hidden dark:block"
+            alt="Logo institucional GIEDI"
+          />
+          <img
+            src="../../src/media/UTN-LOGO.png"
+            class="ml-4 w-25 h-5 sm:h-7 sm:w-40"
             alt="Logo institucional UTN"
           />
         </a>
+
         <div class="flex items-center lg:order-2">
-          <div class="hidden mt-2 mr-4 sm:inline-block">
+          <div class="hidden mt-2 mr-4">
             <span></span>
           </div>
 
-          <!--Menú de accesibilidad-->
-          <a
+          <!--TO-DO: Menú de accesibilidad-->
+          <div class="hidden"> 
+            <a
             href="#"
-            class="text-white border-2 border-amber-400 font-medium rounded-full text-md px-4
-            lg:px-3 py-3 lg:py-1.5 lg:rounded-full lg:mr-0
-            dark:border-2 dark:border-amber-400 dark:text-amber-400"
-            ><img src="./src/accesibility-sign-svg.svg" alt="Opciones de accesibilidad"  class="h-4 sm:h-5"></a
+            class="border-2 border-utn-dark rounded-full px-3 py-2 lg:px-3 lg:py-2 lg:rounded-full lg:mr-0"
+            alt="Accesibilidad"
           >
+            <img
+              src="./src/media/accessibilidad.png"
+              alt="Accesiblidad"
+              class="w-5 h-5 lg:w-5 lg:h-5"
+            />
+          </a>
+          </div>
+          
 
           <!--Toggle hamburguesa-->
           <button
             data-collapse-toggle="mobile-menu-2"
             type="button"
-            class="inline-flex items-center p-2 ml-2 text-sm text-gray-500 rounded-lg
-            lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200
-            dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            class="inline-flex items-center p-2 ml-2 text-sm text-utn-dark rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-utn-dark dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="mobile-menu-2"
             aria-expanded="false"
+            alt="Menú"
           >
             <span class="sr-only"></span>
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fill-rule="evenodd"
                 d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
@@ -85,48 +120,31 @@
           class="items-center justify-between w-full lg:flex lg:w-auto lg:order-1 hidden"
           id="mobile-menu-2"
         >
-        <!--Comienzo listado menú-->
+          <!--Comienzo listado menú-->
           <ul
-            class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 text-lg"
+            class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 text-lg lg:mr-40"
           >
             <li>
               <a
-                href="#"
-                class="block py-2 pl-3 pr-4 text-gray-800 bg-gray-200 rounded-full font-semibold dark:bg-gray-800
-                dark:text-white lg:dark:font-semibold lg:dark:hover:text-amber-600
-                lg:bg-transparent lg:dark:bg-transparent lg:text-gray-800 lg:p-0 lg:hover:text-amber-600"
+                href="../../index.html"
+                class="block py-2 pl-3 pr-4 border-b border-gray-100 font-semibold lg:hover:bg-transparent lg:border-0 lg:hover:text-utn-regular lg:p-0 dark:text-gray-400 lg:text-gray-800 lg:dark:hover:text-utn-regular dark:hover:bg-slate-900 dark:hover:rounded-full lg:dark:hover:bg-transparent dark:border-gray-700 lg:dark:font-semibold hover:bg-blue-100 hover:rounded-full"
                 aria-current="page"
                 >Inicio</a
               >
             </li>
             <li>
               <a
-                href="#simuladores"
-                class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 font-semibold
-                lg:hover:bg-transparent lg:border-0 lg:hover:text-amber-600 lg:p-0 dark:text-gray-400 lg:text-gray-800
-                lg:dark:hover:text-amber-600 dark:hover:bg-gray-700 lg:dark:hover:bg-transparent dark:border-gray-700 lg:dark:font-semibold"
+                href="../../index.html/"
+                class="block py-2 pl-3 pr-4 border-b border-gray-100 font-semibold lg:hover:bg-transparent lg:border-0 lg:hover:text-utn-regular lg:p-0 dark:text-gray-400 lg:text-gray-800 lg:dark:hover:text-utn-regular dark:hover:bg-slate-900 dark:hover:rounded-full lg:dark:hover:bg-transparent dark:border-gray-700 lg:dark:font-semibold hover:bg-blue-100 hover:rounded-full"
                 >Simuladores</a
               >
             </li>
-            <li>
-              <a
-                href="#"
-                class="block py-2 pl-3 pr-4 border-b border-gray-100 hover:bg-gray-50 font-semibold
-                lg:text-gray-800 lg:hover:bg-transparent lg:border-0 lg:hover:text-amber-600 lg:p-0
-                dark:text-gray-400 lg:dark:hover:text-amber-600 lg:dark:font-semibold dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >Teoría</a
-              >
-            </li>
-           
           </ul>
           <!--Fin listado menú-->
-
         </div>
       </div>
     </nav>
     <!--Fin de navbar-->
-
-
 
     <!--COMIENZO FOOTER-->
     <footer class="bg-white mt-20 lg:mt-30 mb:0 lg:mb-0 dark:bg-slate-950">

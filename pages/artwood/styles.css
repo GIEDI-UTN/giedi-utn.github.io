@@ -5,10 +5,21 @@
     font-family: Arial, sans-serif;
 }
 
+.en-linea{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-link {
+    link-decoration: none;  
+    color: white;
+}
+
 .construccion {
     background-color: #9b5951;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 6px;

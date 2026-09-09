@@ -33,21 +33,18 @@
     <link rel="stylesheet" href="../../src/output.css" />
     <link
       rel="icon"
-      href="../../src/media/icon-page-giedi.png"
+      href="../../src/media/LOGO-UTN-GIEDI.png"
       type="image/x-icon"
     />
     <title>GIEDI - UTN</title>
   </head>
 
   <body class="dark:bg-slate-950 bg-utn-light font-rubik">
-    <!--COMIENZO NAVBAR-->
-    <nav
-      class="top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b rounded-3xl border-utn-dark/50 min-w-[350px]"
-    >
-      <div
-        class="flex flex-wrap items-center justify-between max-w-7xl mx-auto"
-      >
+    <!--Comienzo de navbar-->
+    <nav class="top-0 bg-utn-light py-2.5 dark:bg-slate-950 border-b rounded-3xl border-utn-dark/50">
+      <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <a href="../../index.html" class="flex items-center">
+          
           <img
             src="../../src/media/GIEDI-LOGO-LIGHT.png"
             class="h-7 ml-4 sm:h-9 block dark:hidden"
@@ -66,6 +63,26 @@
         </a>
 
         <div class="flex items-center lg:order-2">
+          <div class="hidden mt-2 mr-4">
+            <span></span>
+          </div>
+
+          <!--TO-DO: Menú de accesibilidad-->
+          <div class="hidden"> 
+            <a
+            href="#"
+            class="border-2 border-utn-dark rounded-full px-3 py-2 lg:px-3 lg:py-2 lg:rounded-full lg:mr-0"
+            alt="Accesibilidad"
+          >
+            <img
+              src="./src/media/accessibilidad.png"
+              alt="Accesiblidad"
+              class="w-5 h-5 lg:w-5 lg:h-5"
+            />
+          </a>
+          </div>
+          
+
           <!--Toggle hamburguesa-->
           <button
             data-collapse-toggle="mobile-menu-2"
@@ -117,7 +134,7 @@
             </li>
             <li>
               <a
-                href="../../index.html#simuladores"
+                href="../../index.html/"
                 class="block py-2 pl-3 pr-4 border-b border-gray-100 font-semibold lg:hover:bg-transparent lg:border-0 lg:hover:text-utn-regular lg:p-0 dark:text-gray-400 lg:text-gray-800 lg:dark:hover:text-utn-regular dark:hover:bg-slate-900 dark:hover:rounded-full lg:dark:hover:bg-transparent dark:border-gray-700 lg:dark:font-semibold hover:bg-blue-100 hover:rounded-full"
                 >Simuladores</a
               >
@@ -127,7 +144,7 @@
         </div>
       </div>
     </nav>
-    <!--FIN NAVBAR-->
+    <!--Fin de navbar-->
 
     <div
       class="flex flex-col items-center justify-center min-w-[350px] sm:mx-auto mr-4 ml-4 max-w-screen-xl"
@@ -424,6 +441,8 @@
       </div>
     </div>
     <!--FIN DE TABLA DE DATOS-->
+
+    <!--BOTONERA RESULTADOS-->
     <div class="flex flex-col gap-2">
       <label class="text-2xl font-semibold dark:text-white text-center mt-8"
         >Exportar resultados</label
@@ -443,6 +462,7 @@
         </button>
       </div>
     </div>
+    <!--FIN BOTONERA RESULTADOS-->
 
     <!--COMIENZO MINI WIKI-->
     <div
