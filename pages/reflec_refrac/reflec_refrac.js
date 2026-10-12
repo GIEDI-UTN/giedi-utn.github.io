@@ -383,7 +383,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const incidentEndY = incidencia_ejeY - largo_incidencia * Math.sin(angulo_radianes);
 
   ctx.strokeStyle = color_laser;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 3;
 
   ctx.beginPath();
   ctx.moveTo(incidencia_ejeX, incidencia_ejeY);
@@ -496,7 +496,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const largo_refractado_Y = exitY + dy_refrac * escala_refrac;
 
   ctx.strokeStyle = color_laser;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 3;
 
   ctx.beginPath();
   ctx.moveTo(exitX, exitY);
@@ -541,7 +541,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const aux_Y = exitY + dy_aux * escala_aux;
 
   ctx.strokeStyle = color_laser;
-  ctx.lineWidth = 1;
+  ctx.lineWidth = 3;
   ctx.setLineDash([5, 5]);
 
   ctx.beginPath();
