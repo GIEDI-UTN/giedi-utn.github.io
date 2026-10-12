@@ -30,9 +30,12 @@ const EXTERIOR_MEDIUMS = {
   benceno: { name: "Benceno", indice_refrac: 1.501 },
 };
 
+const ERROR_INICIAL = 1.5; 
+const ERRORES_VALIDOS = [0.1, 0.5, 1, 2];
+
 // estado de la simulación
 let simulacion = {
-  error: 0,
+  error: ERROR_INICIAL,
   material: "vidrio",
   medio_exterior: "aire",
   ancho_placa: 10,
@@ -42,7 +45,7 @@ let simulacion = {
   medidas: [],
   material_actual: "vidrio",
   medio_actual: "aire",
-  bm_estatico: 0,
+  e_bm: 0,
 };
 
 // inicialización del canvas
@@ -56,9 +59,7 @@ const ancho_placaSlider = document.getElementById("ancho_placa_value");
 const angleSlider = document.getElementById("angle_value");
 const MATERIALESSelect = document.getElementById("material");
 const exteriorSelect = document.getElementById("exterior");
-const datos_tabla = document
-  .getElementById("data-table")
-  .getElementsByTagName("tbody")[0];
+const datos_tabla = document.getElementById("data-table").getElementsByTagName("tbody")[0];
 
 // botones
 const grid1mmBtn = document.getElementById("grid-1mm");
@@ -82,8 +83,8 @@ function iniciar_simulacion() {
   iniciar_render_loop();
   setupEventListeners();
 
-  // generar bm estático al inicio de la simulación
-  muestrear_bm();
+  // generar error bm para setear e_bm
+  generar_bm();
 }
 
 function iniciar_render_loop() {
@@ -109,7 +110,7 @@ function redim_canvas() {
 
 function reset_sim() {
   simulacion = {
-    error: 0,
+    error: ERROR_INICIAL,
     material: "vidrio",
     medio_exterior: "aire",
     ancho_placa: 10,
@@ -140,7 +141,7 @@ function reset_sim() {
   hayEscenario = false;
 
   // regenerar error estático si hay recarga de página o simulación
-  muestrear_bm();
+  generar_bm();
 }
 
 // canvas: dibujo
@@ -163,11 +164,8 @@ function dibujar_sim() {
   // limpiar canvas
   ctx.clearRect(0, 0, width, height);
 
-  // dibujare el fondo
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  // dibujar el fondo
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     ctx.fillStyle = "oklch(12.9% 0.042 264.695)";
   } else {
     ctx.fillStyle = "oklch(0.96 0.0103 247.93)";
@@ -195,10 +193,7 @@ function dibujar_grilla(origen_x, origen_y, escala) {
   const offsetY = simulacion.gridOffset.y * escala;
 
   // líneas de la grilla
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     ctx.strokeStyle = "#474a56";
   } else {
     ctx.strokeStyle = "#cdd9e3";
@@ -237,10 +232,7 @@ function dibujar_grilla(origen_x, origen_y, escala) {
   }
 
   // ejes x-y
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
   } else {
     ctx.strokeStyle = "black";
@@ -261,10 +253,7 @@ function dibujar_grilla(origen_x, origen_y, escala) {
   ctx.stroke();
 
   // marcas de escala y etiquetas
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
   } else {
     ctx.strokeStyle = "rgba(63, 63, 63, 0.8)";
@@ -403,10 +392,8 @@ function dibujar_laser(origen_x, origen_y, escala) {
 
   // rayo incidente
   const largo_incidencia = 150 * escala;
-  const fin_x_incidencia =
-    incidencia_ejeX + largo_incidencia * Math.cos(angulo_radianes);
-  const incidentEndY =
-    incidencia_ejeY - largo_incidencia * Math.sin(angulo_radianes);
+  const fin_x_incidencia = incidencia_ejeX + largo_incidencia * Math.cos(angulo_radianes);
+  const incidentEndY = incidencia_ejeY - largo_incidencia * Math.sin(angulo_radianes);
 
   ctx.strokeStyle = color_laser;
   ctx.lineWidth = 2;
@@ -435,26 +422,15 @@ function dibujar_laser(origen_x, origen_y, escala) {
     angulo_refraccion = Math.asin(seno_refrac);
   }
 
-  {
-    let cant_error;
+  const cant_error = simulacion.error;
 
-    if (hayEscenario) {
-      cant_error = simulacion.error;
-    } else {
-      cant_error = 1.5;
-    }
+  // paso de rad a grados para calcular el error
+  const refrac_grados = (angulo_refraccion * 180) / Math.PI;
+  const refrac_con_error = aplicar_error(refrac_grados, cant_error);
 
-    // box muller necesita el ángulo en grados
-    const refrac_grados = (angulo_refraccion * 180) / Math.PI;
-    // aplico el bm estático para que no oscile
-    const refrac_con_error =
-      refrac_grados +
-      simulacion.bm_estatico * refrac_grados * (cant_error / 100);
-
-    // recorte de [0°, 89.99°]
-    const ang_refrac_corte = Math.max(0, Math.min(refrac_con_error, 89.99));
-    angulo_refraccion = (ang_refrac_corte * Math.PI) / 180;
-  }
+  // recorte de [0°, 89.99°]
+  const ang_refrac_corte = Math.max(0, Math.min(refrac_con_error, 89.99));
+  angulo_refraccion = (ang_refrac_corte * Math.PI) / 180;
 
   const reflexion_rad = Math.PI - angulo_radianes;
   const largo_reflejado = 100 * escala;
@@ -822,20 +798,15 @@ function actualizar_medio_ext() {
   simulacion.medio_actual = EXTERIOR_MEDIUMS[simulacion.medio_exterior];
 }
 
-/* BOX-MULLER
-let resto;
-let sobra = false;
-
-function boxmuller(real, cant_error) {
-  // pasar de porcentaje a decimal
-  cant_error = real * (cant_error / 100);
-
+// genera la normal estándar Z, la guarda en simulacion.e_bm
+function generar_bm() {
+  // como se calculan dos valores, se guarda uno para evitar evaluar toda la función 2 veces
   if (sobra) {
     sobra = false;
-    return resto * cant_error + real;
+    simulacion.e_bm = resto;
+    return;
   }
 
-  // valores aleatorios entre [0, 1). u1 con let para poder modificarlo si es 0
   let u1 = Math.random();
   const u2 = Math.random();
 
@@ -844,29 +815,24 @@ function boxmuller(real, cant_error) {
   }
 
   const R = Math.sqrt(-2.0 * Math.log(u1));
-  const theta = 2.0 * Math.PI * u2;
+  const tita = 2.0 * Math.PI * u2;
 
-  const z0 = R * Math.cos(theta);
-  const z1 = R * Math.sin(theta);
+  const z0 = R * Math.cos(tita);
+  const z1 = R * Math.sin(tita);
 
-  // guardo z1 para poder usarlo en la siguiente iteración sin que ejecute el bloque completo
+  // guardo z1 para poder usarlo en la siguiente
   sobra = true;
   resto = z1;
 
-  return z0 * cant_error + real;
-}*/
+  simulacion.e_bm = z0;
+}
 
-// cálculo estático de box-muller
-function muestrear_bm() {
-  let u1 = Math.random();
-  const u2 = Math.random();
-  if (u1 === 0) u1 = Number.MIN_VALUE;
+function aplicar_error(real, cant_error) {
+  // pasar de porcentaje a decimal
+  cant_error = real * (cant_error / 100);
+  let rta = simulacion.e_bm * cant_error + real;
 
-  const R = Math.sqrt(-2.0 * Math.log(u1));
-  const theta = 2.0 * Math.PI * u2;
-
-  // sólo se usa z0 o z1
-  simulacion.bm_estatico = R * Math.cos(theta);
+  return rta;
 }
 
 function renderizar_tabla() {
@@ -965,7 +931,7 @@ function agregar_medida() {
 
   simulacion.medidas.push(medida);
   renderizar_tabla();
-  muestrear_bm();
+  generar_bm();
 }
 
 function verificar_input(input, min, max, variable) {
