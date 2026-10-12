@@ -346,9 +346,9 @@ function dibujar_placa(origen_x, origen_y, escala) {
   ctx.font = "17px Arial";
   ctx.textAlign = "center";
 
-  let materialName;
-  if (simulacion.material === "unknown") {
-  } else {
+  // si el nombre del material es distinto a desconocido, le doy el nombre. si no, se queda con "Desconocido"
+  let materialName = "Desconocido";
+  if (simulacion.material !== "unknown") {
     materialName = simulacion.material_actual.name;
   }
 
@@ -477,15 +477,21 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const dy_refrac = largo_refractado * Math.cos(incidencia_normal);
   const dx_refrac = largo_refractado * Math.sin(incidencia_normal);
   let escala_refrac = 1;
+
   if (dy_refrac > 0)
     escala_refrac = Math.min(
       escala_refrac,
       (canvas.height - exitY) / dy_refrac,
     );
-  if (dx_refrac > 0)
+
+  if (dx_refrac > 0) {
     escala_refrac = Math.min(escala_refrac, (canvas.width - exitX) / dx_refrac);
-  if (dx_refrac < 0)
+  }
+
+  if (dx_refrac < 0){
     escala_refrac = Math.min(escala_refrac, -exitX / dx_refrac);
+  }
+
   const largo_refractado_X = exitX + dx_refrac * escala_refrac;
   const largo_refractado_Y = exitY + dy_refrac * escala_refrac;
 
@@ -504,7 +510,6 @@ function dibujar_laser(origen_x, origen_y, escala) {
     Math.PI + angulo_radianes,
     -Math.PI / 2,
     30,
-    "α",
     "#52bfa0",
   );
 
@@ -514,7 +519,6 @@ function dibujar_laser(origen_x, origen_y, escala) {
     -Math.PI / 2,
     -angulo_reflexion,
     30,
-    "β",
     "#e57f71",
   );
 
@@ -548,7 +552,7 @@ function dibujar_laser(origen_x, origen_y, escala) {
   ctx.setLineDash([]);
 }
 
-function dibujar_angulo(x, y, ang_1, ang_2, radio, etiqueta, color) {
+function dibujar_angulo(x, y, ang_1, ang_2, radio, color) {
   ctx.strokeStyle = color;
   ctx.fillStyle = color;
   ctx.lineWidth = 1.5;
@@ -627,7 +631,7 @@ function generar_transportador() {
   const origen_x = width / 2;
   const origen_y = height * 0.5;
 
-  const desiredXRange = 160;
+  const desiredXRange = 180;
   const escala = width / desiredXRange;
 
   const r_out = 65 * escala;
@@ -785,6 +789,9 @@ function actualizar_medio_ext() {
   simulacion.medio_actual = EXTERIOR_MEDIUMS[simulacion.medio_exterior];
 }
 
+let resto;
+let sobra = false;
+
 // genera la normal estándar Z, la guarda en simulacion.e_bm
 function generar_bm() {
   // como se calculan dos valores, se guarda uno para evitar evaluar toda la función 2 veces
@@ -877,7 +884,7 @@ function eliminar_medida(indice) {
 
 function agregar_medida() {
   // mensaje para usuario, minimo, maximo, "el [nombre medida][accion {medido, calculado}]" 
-  const ang_incidencia = pedir_numero("Ingrese el ángulo de incidencia medido usando '.' para decimales", 0, 90, "el ángulo de incidencia medido");
+  const ang_incidencia = pedir_numero("Ingrese el ángulo de incidencia medido usando '.' para decimales", 0, Number(angleSlider.max), "el ángulo de incidencia medido");
   if (ang_incidencia === null) return;
 
   const ang_refraccion = pedir_numero("Ingrese el ángulo de refracción medido usando '.' para decimales", 0, 90, "el ángulo de refracción medido");
@@ -946,25 +953,32 @@ function importarJSON(event) {
 }
 
 function validar_escenario(data) {
-     if (!Array.isArray(data) || data.length !== 6)
-       return "El archivo no tiene el formato correcto de un escenario.";
-     if (data[0] !== "reflexion")
-       return "El escenario cargado no corresponde a este simulador.";
-     if (!ERRORES_VALIDOS.includes(Number(data[1])))
-       return "El escenario cuenta con un valor de error fuera de rango. Asegurate de usar el escenario original.";
-    // Object.hasOwn se asegura de que exista dentro de la lista
-     if (!Object.hasOwn(MATERIALES, data[2]))
-       return "El material para la placa no es válido.";
-     if (!Object.hasOwn(EXTERIOR_MEDIUMS, data[3]))
-       return "El medio exterior no es válido.";
-     const ancho = Number(data[4]);
-     // Number.isFinite verifica que sea un número finito y no NaN o Infinity
-     if (!Number.isFinite(ancho) || ancho < ANCHO_MIN || ancho > ANCHO_MAX)
-       return "El espesor de la placa está fuera de rango.";
-     const ang = Number(data[5]);
-     if (!Number.isFinite(ang) || ang < ANG_MIN || ang > ANG_MAX)
-       return "El ángulo de incidencia está fuera de rango.";
-     return null;
+  if (!Array.isArray(data) || data.length !== 6)
+  return "El archivo no tiene el formato correcto de un escenario.";
+  if (data[0] !== "reflexion")
+  return "El escenario cargado no corresponde a este simulador.";
+  if (!ERRORES_VALIDOS.includes(Number(data[1])))
+  return "El escenario cuenta con un valor de error fuera de rango. Asegurate de usar el escenario original.";
+
+  // volcar todas las opciones del desplegable en opciones
+  const opciones = (select) => [...select.options].map((o) => o.value);
+
+  if (!opciones(MATERIALESSelect).includes(data[2]))
+  return "El material para la placa no es válido.";
+  if (!opciones(exteriorSelect).includes(data[3]))
+  return "El medio exterior no es válido.";
+
+  const ancho = Number(data[4]);
+  // Number.isFinite verifica que sea un número finito y no NaN o Infinity
+  if (!Number.isInteger(ancho) || ancho < Number(ancho_placaSlider.min) || ancho > Number(ancho_placaSlider.max))
+  return "El espesor de la placa está fuera de rango.";
+
+  const ang = Number(data[5]);
+  if (!Number.isFinite(ang) || ang < Number(angleSlider.min) || ang > Number(angleSlider.max))
+  return "El ángulo de incidencia está fuera de rango.";
+  
+  // si no sale por ningún error, null
+  return null;
 }
 
 function set_escenario(data) {
@@ -978,6 +992,9 @@ function set_escenario(data) {
   angleSlider.value = simulacion.angulo_incidencia;
   MATERIALESSelect.value = simulacion.material;
   exteriorSelect.value = simulacion.medio_exterior;
+
+  // si quedó alguna tabla anterior, se limpia
+  simulacion.medidas = []; renderizar_tabla();
 
   actualizar_material();
   actualizar_medio_ext();
@@ -1065,7 +1082,7 @@ function exportar_csv() {
 
   const csvContent = [headers.join(","), ...rows].join("\n");
   descargar_archivo(
-    csvContent,
+    "\uFEFF" + csvContent,
     "datos_sim_optica.csv",
     "text/csv;charset=utf-8;",
   );
