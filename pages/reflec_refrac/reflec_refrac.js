@@ -120,7 +120,6 @@ function reset_sim() {
     material_actual: MATERIALES.vidrio,
     medio_actual: EXTERIOR_MEDIUMS.aire,
   };
-
   
   // restablecer los controles de UI
   habInput();
@@ -877,33 +876,15 @@ function eliminar_medida(indice) {
 }
 
 function agregar_medida() {
-  const incidencia_input = prompt(
-    "Ingrese el ángulo de incidencia medido usando '.' para decimales",
-    "",
-  );
+  // mensaje para usuario, minimo, maximo, "el [nombre medida][accion {medido, calculado}]" 
+  const ang_incidencia = pedir_numero("Ingrese el ángulo de incidencia medido usando '.' para decimales", 0, 90, "el ángulo de incidencia medido");
+  if (ang_incidencia === null) return;
 
-  const ang_incidencia = parseFloat(incidencia_input);
-  verificar_input(ang_incidencia, 0, 90, "el ángulo de incidencia medido");
+  const ang_refraccion = pedir_numero("Ingrese el ángulo de refracción medido usando '.' para decimales", 0, 90, "el ángulo de refracción medido");
+  if (ang_refraccion === null) return;
 
-  const refraccion_input = prompt(
-    "Ingrese el ángulo de refracción medido usando '.' para decimales",
-    "",
-  );
-
-  const ang_refraccion = parseFloat(refraccion_input);
-  verificar_input(ang_refraccion, 0, 90, "el ángulo de refracción medido");
-
-  const irexp_input = prompt(
-    "Ingrese el índice de refracción calculado usando '.' para decimales",
-    "",
-  );
-
-  const ir_exp = parseFloat(irexp_input);
-  verificar_input(ir_exp, 0, 5, "el índice de refracción calculado");
-
-  if (isNaN(ang_incidencia) || isNaN(ang_refraccion) || isNaN(ir_exp)) {
-    return;
-  }
+  const ir_exp = pedir_numero("Ingrese el índice de refracción calculado usando '.' para decimales", 0, 5, "el índice de refracción calculado");
+  if (ir_exp === null) return;
 
   const medida = {
     number: simulacion.medidas.length + 1,
@@ -923,15 +904,20 @@ function agregar_medida() {
   generar_bm();
 }
 
-function verificar_input(input, min, max, variable) {
-  if (input === null || input === "") {
-    return;
+function pedir_numero(mensaje, min, max, nombre) {
+  const texto = prompt(mensaje, "");
+  if (texto === null) return null;
+
+  const limpio = texto.trim();
+  const valor = Number(limpio);
+  const es_erroneo = limpio === "" || !Number.isFinite(valor) || valor <= min || valor >= max;
+
+  if (es_erroneo) {
+    alert(`Ingrese un valor numérico válido para ${nombre} (entre ${min} y ${max}, usando '.' para decimales).`,);
+    return null;
   }
 
-  if (input <= min || input > max || isNaN(input)) {
-    alert(`Por favor, ingrese un valor numérico válido para ${variable}.`);
-    return;
-  }
+  return valor;
 }
 
 // carga y descarga de archivos
