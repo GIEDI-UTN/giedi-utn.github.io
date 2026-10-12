@@ -121,7 +121,9 @@ function reset_sim() {
     medio_actual: EXTERIOR_MEDIUMS.aire,
   };
 
+  
   // restablecer los controles de UI
+  habInput();
   ancho_placaSlider.value = simulacion.ancho_placa;
   angleSlider.value = simulacion.angulo_incidencia;
 
@@ -1005,6 +1007,13 @@ function inhabInput() {
   const exitoEsc = document.getElementById("exito-esc");
   exitoEsc.className = "text-center text-green-400 italic mt-4";
   exitoEsc.textContent = "Escenario cargado con éxito.";
+}
+
+function habInput() {
+  ancho_placaSlider.disabled = false;
+  angleSlider.disabled = false;
+  MATERIALESSelect.disabled = false;
+  exteriorSelect.disabled = false;
 }
 
 function descargar_archivo(contenido, nombre, tipo) {
