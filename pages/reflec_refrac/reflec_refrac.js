@@ -122,7 +122,7 @@ function reset_sim() {
     medio_actual: EXTERIOR_MEDIUMS.aire,
   };
 
-  // esto se usa para restablecer los controles de UI
+  // restablecer los controles de UI
   ancho_placaSlider.value = simulacion.ancho_placa;
   angleSlider.value = simulacion.angulo_incidencia;
 
@@ -140,7 +140,7 @@ function reset_sim() {
 
   hayEscenario = false;
 
-  // regenerar error estático si hay recarga de página o simulación
+  // regenerar error si hay recarga de página o simulación
   generar_bm();
 }
 
@@ -318,10 +318,7 @@ function dibujar_placa(origen_x, origen_y, escala) {
   const placa_top = origen_y;
 
   // gris circonio, rosa cuarzo, azul el resto
-  if (
-    simulacion.material_actual == MATERIALES.circonio ||
-    simulacion.material_actual == MATERIALES.diamante
-  ) {
+  if (simulacion.material_actual == MATERIALES.circonio || simulacion.material_actual == MATERIALES.diamante) {
     ctx.fillStyle = "rgba(243, 243, 243, 0.5)";
     ctx.strokeStyle = "rgba(243, 243, 243, 0.5)";
     ctx.lineWidth = 2;
@@ -341,10 +338,7 @@ function dibujar_placa(origen_x, origen_y, escala) {
   ctx.stroke();
 
   // etiqueta de material
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     ctx.fillStyle = "rgba(70, 130, 180, 1)";
     ctx.strokeStyle = "rgba(70, 130, 180, 1)";
   } else {
@@ -357,7 +351,6 @@ function dibujar_placa(origen_x, origen_y, escala) {
 
   let materialName;
   if (simulacion.material === "unknown") {
-    materialName = "Material desconocido";
   } else {
     materialName = simulacion.material_actual.name;
   }
@@ -367,10 +360,7 @@ function dibujar_placa(origen_x, origen_y, escala) {
   ctx.fillText(simulacion.medio_actual.name, origen_x - 80, placa_top + 120);
 
   // etiqueta con el material de la placa
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     ctx.fillStyle = "white";
     ctx.strokeStyle = "white";
   } else {
@@ -827,6 +817,7 @@ function generar_bm() {
   simulacion.e_bm = z0;
 }
 
+// llamada por dibujar_laser para el ángulo de refracción. le pasa de param el valor del ángulo
 function aplicar_error(real, cant_error) {
   // pasar de porcentaje a decimal
   cant_error = real * (cant_error / 100);
@@ -952,33 +943,44 @@ function importarJSON(event) {
 
   const reader = new FileReader();
   reader.onload = function (e) {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (data[0] != "reflexion") {
-        alert("El escenario subido no corresponde a este simulador.");
-      } else {
-        set_escenario(data);
-      }
-      if (data[1] != 0.1 || data[1] != 0.5 || data[1] != 1 || data[1] != 2) {
-        alert(
-          "El escenario cuenta con un valor fuera de rango. Asegurate de usar el escenario original válido.",
-        );
-      }
+     let data;
+     try {
+       data = JSON.parse(e.target.result);
+     } catch {
+       alert("Error al leer el archivo JSON");
+       return;
+     }
+     const error = validar_escenario(data);
+     if (error) {
+       alert(error);
+       return;
+     }
+     set_escenario(data);
+   };
+   reader.readAsText(file);
+   event.target.value = "";
+}
 
-      for (key in MATERIALES) {
-        if (data[2] != MATERIALES[key].name) {
-          alert("El material para la placa no es válido.");
-        }
-        if (data[3] != EXTERIOR_MEDIUMS.name) {
-          alert("El medio exterior no es válido.");
-        }
-      }
-    } catch (err) {
-      alert("Error al leer el archivo JSON");
-    }
-  };
-
-  reader.readAsText(file);
+function validar_escenario(data) {
+     if (!Array.isArray(data) || data.length !== 6)
+       return "El archivo no tiene el formato correcto de un escenario.";
+     if (data[0] !== "reflexion")
+       return "El escenario cargado no corresponde a este simulador.";
+     if (!ERRORES_VALIDOS.includes(Number(data[1])))
+       return "El escenario cuenta con un valor de error fuera de rango. Asegurate de usar el escenario original.";
+    // Object.hasOwn se asegura de que exista dentro de la lista
+     if (!Object.hasOwn(MATERIALES, data[2]))
+       return "El material para la placa no es válido.";
+     if (!Object.hasOwn(EXTERIOR_MEDIUMS, data[3]))
+       return "El medio exterior no es válido.";
+     const ancho = Number(data[4]);
+     // Number.isFinite verifica que sea un número finito y no NaN o Infinity
+     if (!Number.isFinite(ancho) || ancho < ANCHO_MIN || ancho > ANCHO_MAX)
+       return "El espesor de la placa está fuera de rango.";
+     const ang = Number(data[5]);
+     if (!Number.isFinite(ang) || ang < ANG_MIN || ang > ANG_MAX)
+       return "El ángulo de incidencia está fuera de rango.";
+     return null;
 }
 
 function set_escenario(data) {
@@ -987,7 +989,7 @@ function set_escenario(data) {
   simulacion.material = data[2];
   simulacion.medio_exterior = data[3];
   simulacion.ancho_placa = parseFloat(data[4]);
-  simulacion.angulo_incidencia = parseInt(data[5]);
+  simulacion.angulo_incidencia = parseFloat(data[5]);
 
   ancho_placaSlider.value = simulacion.ancho_placa;
   angleSlider.value = simulacion.angulo_incidencia;
