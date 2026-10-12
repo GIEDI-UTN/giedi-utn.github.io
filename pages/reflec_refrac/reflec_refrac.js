@@ -52,7 +52,6 @@ let simulacion = {
 const canvas = document.getElementById("simulacion-canvas");
 const ctx = canvas.getContext("2d");
 let animationFrameId = null;
-let hayEscenario = false;
 
 // referencias del DOM
 const ancho_placaSlider = document.getElementById("ancho_placa_value");
@@ -137,9 +136,6 @@ function reset_sim() {
   if (exitoEsc) {
     exitoEsc.innerHTML = "";
   }
-
-  hayEscenario = false;
-
   // regenerar error si hay recarga de página o simulación
   generar_bm();
 }
@@ -984,7 +980,6 @@ function validar_escenario(data) {
 }
 
 function set_escenario(data) {
-  hayEscenario = true;
   simulacion.error = parseFloat(data[1]);
   simulacion.material = data[2];
   simulacion.medio_exterior = data[3];
