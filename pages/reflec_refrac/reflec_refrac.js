@@ -367,6 +367,35 @@ function dibujar_placa(origen_x, origen_y, escala) {
   ctx.fillText(materialName, origen_x - 80, placa_top + 40);
 }
 
+const PATH_LASER_CUERPO = new Path2D(
+  "M-40,-10 H-8 V10 H-40 A4,4 0 0 1 -44,6 V-6 A4,4 0 0 1 -40,-10 Z",
+);
+const PATH_LASER_BOQUILLA = new Path2D("M-8,-5 H0 V5 H-8 Z");
+
+function dibujar_fuente_laser(x, y, angulo, largo) {
+  const s = largo / 44; // los paths están definidos en un cuadro de 44 de largo
+
+  let color_cuerpo = "#475569";
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    color_cuerpo = "#64748b";
+  }
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angulo);
+  ctx.scale(s, s);
+
+  ctx.fillStyle = color_cuerpo;
+  ctx.fill(PATH_LASER_CUERPO);
+  ctx.fillStyle = "rgb(0, 162, 255)";
+  ctx.fill(PATH_LASER_BOQUILLA);
+
+  ctx.restore();
+}
+
 function dibujar_laser(origen_x, origen_y, escala) {
   // punto de incidencia del láser
   const incidencia_ejeX = origen_x;
@@ -378,17 +407,29 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const color_laser = "rgb(0, 162, 255)";
 
   // rayo incidente
-  const largo_incidencia = 150 * escala;
-  const fin_x_incidencia = incidencia_ejeX + largo_incidencia * Math.cos(angulo_radianes);
-  const incidentEndY = incidencia_ejeY - largo_incidencia * Math.sin(angulo_radianes);
+  const largo_laser = Math.max(24, Math.min(10 * escala, 44));
+  const largo_incidencia = radio_transportador(canvas.width, canvas.height) + 2;
+  const fin_x_incidencia =
+    incidencia_ejeX - largo_incidencia * Math.cos(angulo_radianes);
+  const incidentEndY =
+    incidencia_ejeY - largo_incidencia * Math.sin(angulo_radianes);
 
   ctx.strokeStyle = color_laser;
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 2;
 
   ctx.beginPath();
-  ctx.moveTo(incidencia_ejeX, incidencia_ejeY);
-  ctx.lineTo(fin_x_incidencia, incidentEndY);
+  ctx.moveTo(fin_x_incidencia, incidentEndY);
+  ctx.lineTo(incidencia_ejeX, incidencia_ejeY);
   ctx.stroke();
+
+  dibujar_fuente_laser(
+    fin_x_incidencia,
+    incidentEndY,
+    angulo_radianes,
+    largo_laser,
+  );
+
+  dibujar_fuente_laser(fin_x_incidencia, incidentEndY, angulo_radianes, largo_laser);
 
   // índices de refracción
   const n1 = simulacion.medio_actual.indice_refrac;
@@ -419,8 +460,8 @@ function dibujar_laser(origen_x, origen_y, escala) {
   const ang_refrac_corte = Math.max(0, Math.min(refrac_con_error, 89.99));
   angulo_refraccion = (ang_refrac_corte * Math.PI) / 180;
 
-  const reflexion_rad = Math.PI - angulo_radianes;
-  const largo_reflejado = 100 * escala;
+  const reflexion_rad = angulo_radianes;
+  const largo_reflejado = 150 * escala;
   const reflectedEndX =
     incidencia_ejeX + largo_reflejado * Math.cos(reflexion_rad);
   const reflectedEndY =
@@ -576,7 +617,7 @@ function dibujar_medidas(origen_x, origen_y, escala) {
   ctx.fillStyle = "#e74c3c";
   ctx.lineWidth = 1;
 
-  const dimX = placa_der + 30;
+  const dimX = placa_der - 50;
 
   ctx.beginPath();
   ctx.moveTo(dimX, origen_y);
@@ -589,11 +630,7 @@ function dibujar_medidas(origen_x, origen_y, escala) {
   // etiqueta de distancias
   ctx.font = "15px Arial";
   ctx.textAlign = "center";
-  ctx.fillText(
-    `${simulacion.ancho_placa} mm`,
-    dimX + 25,
-    5 + origen_y + grosor_placa / 2,
-  );
+    ctx.fillText(`${simulacion.ancho_placa} mm`, dimX, placa_bot + 22);
 }
 
 function dibujar_flecha(fromX, fromY, toX, toY) {
@@ -614,32 +651,45 @@ function dibujar_flecha(fromX, fromY, toX, toY) {
   ctx.fill();
 }
 
+function radio_transportador(ancho, alto) {
+  if (ancho < 640) {
+    return Math.min(ancho * 0.47, alto * 0.48);
+  }
+  return (65 * ancho) / 180;
+}
+
 function generar_transportador() {
   const svg = document.getElementById("protractor-svg");
   if (!svg) return;
 
   svg.innerHTML = "";
-  const width = canvas.width;
-  const height = canvas.height;
+  const ancho = canvas.width;
+  const alto = canvas.height;
 
-  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.setAttribute("viewBox", `0 0 ${ancho} ${alto}`);
   svg.setAttribute(
     "class",
     "absolute inset-0 w-full h-full text-slate-800 dark:text-slate-300 pointer-events-none drop-shadow-md",
   );
 
-  const origen_x = width / 2;
-  const origen_y = height * 0.5;
+  const origen_x = ancho / 2;
+  const origen_y = alto * 0.5;
 
-  const desiredXRange = 180;
-  const escala = width / desiredXRange;
+  const r_out = radio_transportador(ancho, alto);
+  let factor_trazo = 1.3;
+  let factor_texto = 0.065;
+  let tickHalf_rel = 0.02;
 
-  const r_out = 65 * escala;
+  if (ancho < 640) {
+    factor_trazo = 1.8;
+    factor_texto = 0.07;
+    tickHalf_rel = 0.025;
+  }
 
   const tickLong = r_out * 0.08;
   const tickMed = r_out * 0.05;
   const tickShort = r_out * 0.03;
-  const tickHalf = r_out * 0.015;
+  const tickHalf = r_out * tickHalf_rel;
 
   const svgns = "http://www.w3.org/2000/svg";
 
@@ -663,16 +713,16 @@ function generar_transportador() {
 
     if (a % 10 === 0) {
       outerTickLen = tickLong;
-      strokeWidth = "1.5";
+      strokeWidth = 1.5 * factor_trazo;
     } else if (a % 5 === 0) {
       outerTickLen = tickMed;
-      strokeWidth = "1";
+      strokeWidth = 1 * factor_trazo;
     } else if (a % 1 === 0) {
       outerTickLen = tickShort;
-      strokeWidth = "0.5";
+      strokeWidth = 0.5;
     } else {
       outerTickLen = tickHalf;
-      strokeWidth = "0.3";
+      strokeWidth = 0.3;
     }
 
     const lineOut = document.createElementNS(svgns, "line");
@@ -1059,6 +1109,10 @@ function exportar_csv() {
     return;
   }
 
+  const separador = ";";
+  // Excel en español usa coma decimal
+  const decimal = (valor) => String(valor).replace(".", ",");
+
   const headers = [
     "N°",
     "Espesor (mm)",
@@ -1074,13 +1128,15 @@ function exportar_csv() {
       m.ancho_placa,
       m.material,
       m.medio_exterior,
-      m.angulo_incidencia,
-      m.angulo_refraccion,
-      m.experimentalRI,
-    ].join(","),
+      decimal(m.angulo_incidencia),
+      decimal(m.angulo_refraccion),
+      decimal(m.experimentalRI),
+    ].join(separador),
   );
 
-  const csvContent = [headers.join(","), ...rows].join("\n");
+  const csvContent = [headers.join(separador), ...rows].join("\n");
+
+  // BOM para que Excel detecte UTF-8 y muestre bien los acentos
   descargar_archivo(
     "\uFEFF" + csvContent,
     "datos_sim_optica.csv",
