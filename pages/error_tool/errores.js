@@ -6,13 +6,13 @@ $(function () {
   // parametrosHTML guarda el HTML de cada cajita de parámetros
   const parametrosHTML = {
     reflec: `
-    <div class="p-2 m-4 dark:text-white text-utn-dark place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
-      <h2 class="dark:text-white text-utn-dark text-2xl font-semibold mt-4">
+    <div class="p-2 m-4 text-slate-800 dark:text-white  place-items-center flex flex-col items-center border-2 border-utn-regular rounded-2xl w-full max-w-7xl">
+      <h2 class="dark:text-white  text-2xl font-semibold mt-4">
         Configurá los parámetros del simulador de reflexión y refracción
       </h2>
-            <p class="dark:text-white text-utn-dark text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
+            <p class="dark:text-white  text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
             <p class="text-md  text-amber-500">El generador de escenarios sólo soporta números decimales que usen puntos</p>   
-            <p class="text-gray-500 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>  
+            <p class="text-gray-800 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>  
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl">
       <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
         <p>Error porcentual</p>
@@ -21,25 +21,25 @@ $(function () {
           class="border-2 border-utn-regular rounded-lg px-2 py-1 mt-2 bg-transparent min-w-52">
           <option
             value="0.1"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+            class="dark:bg-slate-950  dark:text-white"
           >
             ± 0.1%
           </option>
           <option
             value="0.5"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+            class="dark:bg-slate-950 dark:text-white"
           >
             ± 0.5%
           </option>
           <option
             value="1"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+            class="dark:bg-slate-950  dark:text-white"
           >
             ± 1%
           </option>
           <option
             value="2"
-            class="dark:bg-slate-950 text-utn-dark dark:text-white"
+            class="dark:bg-slate-950  dark:text-white"
           >
             ± 2%
           </option>
@@ -83,7 +83,7 @@ $(function () {
       </select>
     </div>
 
-    <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
+    <div class="w-full h-24 bg-utn-light text-slate-800 dark:bg-slate-950 rounded-xl items-center justify-center">
       <label for="espesor" class="mb-2 block text-center"
         >Espesor del material (mm)</label
       >
@@ -96,7 +96,7 @@ $(function () {
         placeholder="Por defecto: 10 mm"
         class="min-w-52 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
       />
-      <p class="text-gray-500 text-sm mt-[5px]">
+      <p class="text-sm mt-[5px]">
         Rango válido: De 5 mm a 20 mm
       </p>
     </div>
@@ -114,7 +114,7 @@ $(function () {
         placeholder="Por defecto: 30°"
         class="min-w-52 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
       />
-      <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 1° a 89°</p>
+      <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 1° a 89°</p>
     </div>
     <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl items-center justify-center">
       <label for="titulo">Título del escenario</label>
@@ -183,7 +183,7 @@ $(function () {
               placeholder="Por defecto: 75 kg"
               class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
             />
-            <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 1 kg a 150 kg</p>
+            <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 1 kg a 150 kg</p>
           </div>
 
           <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -197,7 +197,7 @@ $(function () {
               placeholder="Por defecto: 1g"
               class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
             />
-            <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De -10g a 10g</p>
+            <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De -10g a 10g</p>
           </div>
 
           <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -211,7 +211,7 @@ $(function () {
               placeholder="Por defecto: 1g"
               class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
             />
-            <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De -10g a 10g</p>
+            <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De -10g a 10g</p>
           </div>
 
           <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -276,7 +276,7 @@ $(function () {
                   placeholder="Por defecto: 50g"
                   class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 10g a 500g</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 10g a 500g</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -290,7 +290,7 @@ $(function () {
                   placeholder="Por defecto: 100 cm"
                   class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 10 cm a 300 cm</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 10 cm a 300 cm</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -304,7 +304,7 @@ $(function () {
                   placeholder="Por defecto: 10 ciclos"
                   class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 1 a 1000 ciclos</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 1 a 1000 ciclos</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -316,7 +316,7 @@ $(function () {
                 max="89"
                 placeholder="Por defecto: 10°"
                 class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent">
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 1° a 89°</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 1° a 89°</p>
                 </div>
 
             <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -388,7 +388,7 @@ $(function () {
                   placeholder="Por defecto: 0.5 kg"
                   class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -402,7 +402,7 @@ $(function () {
                   placeholder="Por defecto: 0.5 kg"
                   class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -416,7 +416,7 @@ $(function () {
                   placeholder="Por defecto: 10 cm"
                   class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 10 cm a 300 cm</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 10 cm a 300 cm</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -430,7 +430,7 @@ $(function () {
                   placeholder="Por defecto: 5 m/s"
                   class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 1 m/s a 100 m/s</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 1 m/s a 100 m/s</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -441,7 +441,7 @@ $(function () {
                 max="45"
                 placeholder="Por defecto: 0°" 
                 class="w-48 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"/>
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0° a 89°</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0° a 89°</p>
               </div>
 
             <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -514,7 +514,7 @@ $(function () {
                   placeholder="Por defecto: 100 cm"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 10 cm a 150 cm</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 10 cm a 150 cm</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -550,7 +550,7 @@ $(function () {
                   placeholder="Por defecto: 1 kg"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -564,7 +564,7 @@ $(function () {
                   placeholder="Por defecto: 0.1 kg"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0.1 kg a 10 kg</p>
               </div>
 
             <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -594,7 +594,7 @@ $(function () {
                   placeholder="Por defecto: 0.5 kg"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 kg a 1 kg</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0.1 kg a 1 kg</p>
             </div>
 
             <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl" id="radio_polea">
@@ -608,7 +608,7 @@ $(function () {
                   placeholder="Por defecto: 5 cm"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 2 cm a 10 cm</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 2 cm a 10 cm</p>
             </div>
 
 
@@ -621,7 +621,7 @@ $(function () {
             </h2>
             <p class="dark:text-white text-utn-dark text-md">Importante: En caso de no introducir un valor de parámetro, tomará el valor por defecto</p>   
             <p class="text-md  text-amber-500">El generador de escenarios sólo soporta números decimales que usen puntos</p>   
-            <p class="text-gray-500 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>  
+            <p class="text-gray-800 text-md mb-4">Ej: 2/10 -> 0.2 | 2/100 -> 0.02</p>  
             <div
               class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-3 justify-items-center w-full max-w-5xl"
             >
@@ -672,7 +672,7 @@ $(function () {
                   placeholder="Por defecto: 0.5 cm"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0.1 cm a 10 cm</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0.1 cm a 10 cm</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -780,7 +780,7 @@ $(function () {
                   placeholder="Por defecto: 5"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0 m³/h a 20 m³/h</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0 m³/h a 20 m³/h</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -794,7 +794,7 @@ $(function () {
                   placeholder="Por defecto: 200 kPa"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0 kPa a 1000 kPa</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0 kPa a 1000 kPa</p>
               </div>
 
               <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
@@ -808,7 +808,7 @@ $(function () {
                   placeholder="Por defecto: 20°C"
                   class="w-56 mt-2 border-utn-regular border-2 rounded-lg px-2 py-1 bg-transparent"
                 />
-                <p class="text-gray-500 text-sm mt-[5px]">Rango válido: De 0°C a 100°C</p>
+                <p class="text-gray-800 text-sm mt-[5px]">Rango válido: De 0°C a 100°C</p>
               </div>
 
             <div class="w-full h-24 bg-utn-light dark:bg-slate-950 rounded-xl">
