@@ -76,6 +76,7 @@ function iniciar_simulacion() {
   window.addEventListener("resize", redim_canvas);
 
   actualizar_material();
+  set_grilla(simulacion.espacio_grilla);
   actualizar_medio_ext();
 
   // iniciar el bucle de renderizado
@@ -145,13 +146,9 @@ function reset_sim() {
 function set_grilla(spacing) {
   simulacion.espacio_grilla = spacing;
 
-  [grid1mmBtn, grid5mmBtn, grid10mmBtn].forEach((btn) => {
-    btn.classList.remove("active");
-  });
-
-  if (spacing === 1) grid1mmBtn.classList.add("active");
-  else if (spacing === 5) grid5mmBtn.classList.add("active");
-  else if (spacing === 10) grid10mmBtn.classList.add("active");
+  grid1mmBtn.setAttribute("aria-pressed", spacing === 1);
+  grid5mmBtn.setAttribute("aria-pressed", spacing === 5);
+  grid10mmBtn.setAttribute("aria-pressed", spacing === 10);
 }
 
 function dibujar_sim() {
@@ -415,19 +412,12 @@ function dibujar_laser(origen_x, origen_y, escala) {
     incidencia_ejeY - largo_incidencia * Math.sin(angulo_radianes);
 
   ctx.strokeStyle = color_laser;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 3;
 
   ctx.beginPath();
   ctx.moveTo(fin_x_incidencia, incidentEndY);
   ctx.lineTo(incidencia_ejeX, incidencia_ejeY);
   ctx.stroke();
-
-  dibujar_fuente_laser(
-    fin_x_incidencia,
-    incidentEndY,
-    angulo_radianes,
-    largo_laser,
-  );
 
   dibujar_fuente_laser(fin_x_incidencia, incidentEndY, angulo_radianes, largo_laser);
 
